@@ -38,3 +38,7 @@ Technische Zustände und Handlung verständlich verbinden, beispielsweise „Dat
 ## Szenarien und Formatwechsel
 
 Aktivitätsszenario und Gerätezustand werden getrennt gewählt. Standard A / S01 / G01. Ausgewählte Einstellungen im Interviewbereich anzeigen. Hoch-/Querformat verwendet dieselbe Navigation und dieselben Inhalte; Anordnung darf sich ändern. Keine Vollbildgrafik ausserhalb der Bildschirmbreite. Diagramme zusätzlich in Textform erschliessbar.
+
+## Vorläufige Umsetzung 0.1.0
+
+Gemeinsames HTML/CSS-Layout, neutrale A/B-Auswahl in Interviewsteuerung und Textalternativen umgesetzt. Browserprüfungen und Grenzen stehen in IMPLEMENTATION_STATUS.md; die Gestaltung bleibt vorläufig.
