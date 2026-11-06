@@ -37,6 +37,7 @@ def run():
         assert page.locator('[data-testid=minutes]').inner_text() == '24'
         page.evaluate('navigator.serviceWorker.ready')
         page.wait_for_function('!!navigator.serviceWorker.controller')
+        assert page.locator('[data-action=update]').count() == 0, 'First install must not show an update banner'
 
         def click(action):
             page.locator(f'[data-action="{action}"]').first.click()

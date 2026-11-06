@@ -102,7 +102,13 @@ if ('serviceWorker' in navigator) {
     if (hadController && !reloading) { reloading = true; location.reload(); }
   });
   navigator.serviceWorker.register('./sw.js', { scope: './' }).then(async registration => {
-    const showWaiting = () => { if (registration.waiting) { pendingUpdate = registration.waiting; render(); } };
+    const showWaiting = () => {
+      // A first install can briefly be "waiting" before activation. It is not an update.
+      if (registration.waiting && navigator.serviceWorker.controller) {
+        pendingUpdate = registration.waiting;
+        render();
+      }
+    };
     showWaiting();
     registration.addEventListener('updatefound', () => registration.installing?.addEventListener('statechange', showWaiting));
     await navigator.serviceWorker.ready;
