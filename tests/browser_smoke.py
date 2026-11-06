@@ -83,7 +83,7 @@ def run():
 
         # Narrow reflow checks are not a claim of real Android/browser zoom coverage.
         page.set_viewport_size({'width': 400, 'height': 800})
-        for action in ['today', 'week', 'device', 'controls']:
+        for action in ['day', 'week', 'device', 'controls']:
             click(action)
             no_overflow()
         page.set_viewport_size({'width': 820, 'height': 1180})

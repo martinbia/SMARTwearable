@@ -24,6 +24,8 @@ npm run build
 python3 -m http.server 8000 --directory dist
 ```
 
+Optionaler echter Browser-Smoke-Test (zusätzliche reine Testabhängigkeit): `python3 -m pip install playwright==1.56.0`, `python3 -m playwright install chromium`, dann `python3 tests/browser_smoke.py`. GitHub Actions führt diesen Test automatisch aus.
+
 Danach `http://localhost:8000/` öffnen. Für Service Worker HTTPS oder localhost verwenden. Der Build erzeugt ausschliesslich in `dist/` die auszuliefernden Dateien, einschliesslich inhaltsabhängig versioniertem Offline-Cache. Nicht direkt `public/index.html` als Datei öffnen.
 
 ## Veröffentlichung
