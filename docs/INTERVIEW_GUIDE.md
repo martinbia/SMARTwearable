@@ -1,6 +1,6 @@
 # Interviewleitfaden – Entwurf
 
-Version 0.3 · 08.11.2026 · VORSCHLAG, kein klinisch validiertes Instrument.
+Version 0.4 · 08.11.2026 · VORSCHLAG, kein klinisch validiertes Instrument.
 
 ## Vorbereitung
 
@@ -28,3 +28,5 @@ Anschliessend S02, S03 und ausgewählte Gerätezustände zeigen. Fragen: „Wie 
 Demo-Version, Gerät/Browserversion, Variantenreihenfolge, Hilfestellungen, verständliche/unverständliche Begriffe, unbeabsichtigte Bewertungen und Informationswünsche notieren. Präferenz und Begründung getrennt festhalten. Kein pseudogenaues Bestehen/Nichtbestehen ohne vorher definierten Auswertungsplan.
 
 Aufgabe v0.3: Startseite im PWA-Modus mit Android-Status-/App-Leiste öffnen. Ohne Scrollen Woche nach Tagen, Wochenvergleich und Mein Armband finden. Prüfen, ob Aktivität als allgemeine Bewegung verstanden wird; Schritte und Puls erst in den Details suchen. Verfügbare App-Fläche und System-Schriftgrösse notieren.
+
+Aufgaben v0.4: In W2 eine vergangene Woche wählen, dort Tag öffnen und über „Zur Woche“ in dieselbe Woche zurückkehren. Puls-Min/Max/Kategorien und beide Bewegungsspuren erklären lassen. Weitere Angaben öffnen und Hauttemperatur/Strecke/Rohwerte finden. Sichtbarkeit der Grafiken mit Android-Systemleisten prüfen.

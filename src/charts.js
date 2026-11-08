@@ -18,19 +18,34 @@ export function bar(value, max, { goal = false, best = false } = {}) {
 }
 export function range(day, low = 50, high = 120) {
   if (day.pulseMin == null) return empty('Keine Daten');
-  const y = v => 100 - (v - low) / (high - low) * 80;
-  return `<span class="range-values">${n(day.pulseMin)}–${n(day.pulseMax)}</span><svg class="range-plot" viewBox="0 0 90 120" role="img" aria-label="Minimum ${day.pulseMin}, Maximum ${day.pulseMax}, Mittelwert ${day.pulseMean} Schläge pro Minute"><path d="M45 ${y(day.pulseMin)}V${y(day.pulseMax)}M33 ${y(day.pulseMin)}h24M33 ${y(day.pulseMax)}h24"/><circle cx="45" cy="${y(day.pulseMean)}" r="6"/></svg><span class="mean-label">Ø ${n(day.pulseMean)}</span>`;
+  const y = v => (high - v) / (high - low) * 100;
+  return `<span class="range-values">${n(day.pulseMin)}–${n(day.pulseMax)}</span><svg class="range-plot" viewBox="0 0 90 100" preserveAspectRatio="none" role="img" aria-label="Minimum ${day.pulseMin}, Maximum ${day.pulseMax}, Mittelwert ${day.pulseMean} Schläge pro Minute"><path d="M45 ${y(day.pulseMin)}V${y(day.pulseMax)}M33 ${y(day.pulseMin)}h24M33 ${y(day.pulseMax)}h24"/><circle cx="45" cy="${y(day.pulseMean)}" r="4"/></svg><span class="mean-label">Ø ${n(day.pulseMean)}</span>`;
+}
+// Both daily plots use exactly the same domain, including the device data cutoff.
+export function timeScale(day) {
+  const start = day.start;
+  const end = day.availableEnd;
+  const duration = Math.max(1, end - start);
+  const step = duration > 480 ? 120 : 60;
+  const ticks = [start];
+  for (let t = start + step; t < end; t += step) if (end - t >= step) ticks.push(t);
+  if (end > start) ticks.push(end);
+  return { start, end, ticks, percent: t => (t - start) / duration * 100 };
+}
+const timeAxis = scale => `<div class="time-axis" aria-hidden="true">${scale.ticks.map(t => `<span style="left:${scale.percent(t)}%">${time(t)}</span>`).join('')}</div>`;
+const gapShading = (day, scale) => day.gaps.map(g => `<span class="time-gap" style="left:${scale.percent(g.start)}%;width:${scale.percent(g.end) - scale.percent(g.start)}%" title="Datenlücke ${time(g.start)}–${time(g.end)}"></span>`).join('');
+export function activityTimeline(day) {
+  if (!day.hasData) return '<p class="empty-day">Noch keine verfügbaren Messdaten in diesem Zeitraum.</p>';
+  const scale = timeScale(day);
+  return `<div class="activity-timechart" data-time-start="${scale.start}" data-time-end="${scale.end}"><div class="time-grid"><div class="lane-labels"><span>Schrittbewegung<small>${day.activity.filter(a => a.kind === 'steps').reduce((sum, a) => sum + a.end - a.start, 0)} min</small></span><span>Sonstige Bewegung<small>${day.activity.filter(a => a.kind === 'other').reduce((sum, a) => sum + a.end - a.start, 0)} min</small></span></div><div class="time-lanes">${['steps', 'other'].map(kind => `<div class="time-lane" role="img" aria-label="${kind === 'steps' ? 'Schrittbewegung' : 'Sonstige Bewegung'}: ${day.activity.filter(a => a.kind === kind).reduce((total, a) => total + a.end - a.start, 0)} Minuten, Einzelabschnitte unter Weitere Angaben">${gapShading(day, scale)}${day.activity.filter(a => a.kind === kind).map(a => `<span class="movement-segment ${kind === 'steps' ? 'step-segment' : 'other-segment'}" data-duration="${a.end - a.start}" style="left:${scale.percent(a.start)}%;width:${scale.percent(a.end) - scale.percent(a.start)}%" title="${time(a.start)}–${time(a.end)} Uhr · ${a.end - a.start} min"></span>`).join('')}</div>`).join('')}</div></div>${timeAxis(scale)}</div>`;
 }
 export function pulseLine(day) {
-  if (!day.pulse.length) return '<p>Keine verfügbaren Pulswerte in diesem Zeitraum.</p>';
+  if (!day.pulse.length) return '<p class="empty-day">Keine verfügbaren Pulswerte in diesem Zeitraum.</p>';
+  const scale = timeScale(day);
   const groups = [];
   for (const p of day.pulse) {
     const previous = groups.at(-1);
     if (!previous || p.t - previous.at(-1).t > 1) groups.push([p]); else previous.push(p);
   }
-  const min = Math.floor(day.pulseMin / 10) * 10 - 10;
-  const max = Math.ceil(day.pulseMax / 10) * 10 + 10;
-  const x = t => 60 + (t - day.start) / Math.max(1, day.end - day.start) * 630;
-  const y = v => 160 - (v - min) / (max - min) * 130;
-  return `<svg class="pulse-line" viewBox="0 0 740 210" role="img" aria-label="Pulsverlauf von ${time(day.start)} bis ${time(day.availableEnd)} Uhr, Minimum ${day.pulseMin}, Maximum ${day.pulseMax} Schläge pro Minute. Datenlücken nicht verbunden."><path class="axis-line" d="M60 20V165H690"/><text x="5" y="35">${max}</text><text x="5" y="165">${min}</text>${groups.map(g => `<polyline points="${g.map(p => `${x(p.t)},${y(p.value)}`).join(' ')}"/>`).join('')}<text x="60" y="200">${time(day.start)}</text><text x="620" y="200">${time(day.end)}</text></svg>`;
+  return `<div class="pulse-timechart" data-time-start="${scale.start}" data-time-end="${scale.end}"><div class="time-grid"><div class="time-y-axis"><span class="unit-label">Schläge/min</span>${[120, 85, 50].map((value, i) => `<span class="y-tick" style="top:${i * 50}%">${value}</span>`).join('')}</div><div class="pulse-plot">${gapShading(day, scale)}<svg class="pulse-line" viewBox="0 0 1000 200" preserveAspectRatio="none" role="img" aria-label="Pulsverlauf von ${time(scale.start)} bis ${time(scale.end)} Uhr, Minimum ${day.pulseMin}, Maximum ${day.pulseMax} Schläge pro Minute. Datenlücken nicht verbunden.">${groups.map(g => `<polyline points="${g.map(p => `${scale.percent(p.t) * 10},${(120 - p.value) / 70 * 200}`).join(' ')}"/>`).join('')}</svg></div></div>${timeAxis(scale)}</div>`;
 }

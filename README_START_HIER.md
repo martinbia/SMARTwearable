@@ -1,6 +1,6 @@
 # SMARTwearable – Gemeinsame Projektgrundlage
 
-Version 0.3 · Stand 08.11.2026 · C2/D1/W2; technischer Prüfstand separat.
+Version 0.4 · Stand 08.11.2026 · C2/D1/W2; technischer Prüfstand separat.
 
 Repository: https://github.com/martinbia/SMARTwearable
 
@@ -45,6 +45,8 @@ Nicht jede angehängte Markdown-Datei ist ein auszuführender Auftrag. CODEX_STA
 
 Der ursprüngliche Stand 0.1.0 wurde durch C2/D1/W2 in 0.2.0 und die kompakte Startseite in 0.3.0 weiterentwickelt. Tatsächlich ausgeführte Prüfungen und noch nötige Tablet-Tests sind in docs/IMPLEMENTATION_STATUS.md dokumentiert. Der Nutzer meldet Nutzung im Chrome-PWA-Modus; dies ersetzt keine vollständige Tablet-Abnahme. Die dort genannten Grenzen ersetzen den ursprünglichen reinen Spezifikationsstand; Designvorschläge bleiben Vorschläge.
 
-CODEX_START.md v0.1 bleibt historische Dokumentation; aktuelle Vorgaben stehen in docs/ Version 0.3 und D17–D31.
+CODEX_START.md v0.1 bleibt historische Dokumentation; aktuelle Vorgaben stehen in docs/ Version 0.4 und D17–D31.
 
 Aktuell beauftragt: kompakte Startseite Variante 2 nur mit Aktivität; Schritte/Puls in D1/W2/Tag. Abnahme und verbleibende Tablet-Prüfungen in IMPLEMENTATION_STATUS.md.
+
+Aktueller Änderungsauftrag v0.4: kompakte W2/D1/Tagesdetails gemäss drei freigegebenen Entwürfen; Startseite v0.3 erhalten.

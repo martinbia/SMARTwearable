@@ -1,6 +1,6 @@
 # Nichtfunktionale Anforderungen
 
-Version 0.3 · 08.11.2026
+Version 0.4 · 08.11.2026
 
 Qualitätsziele stammen aus den Projektvorgaben. Alle hier vorgeschlagenen Zahlenwerte sind VORSCHLÄGE, keine bereits freigegebenen Norm- oder Gerätebehauptungen. P1 = für erste Interviewversion wichtig, P2 = ergänzend.
 
@@ -27,3 +27,5 @@ Prüfungen auf Desktop und simulierten Ansichtsgrössen ersetzen nicht die reale
 N16 (F): gleiche Datenbasis und Einheiten in C2/D1/W2; Zeit-/Datenstandfilter auch für Kategorie-Puls anwenden. Prüfen: Tages-/Wochensummen, Min/Max und Mittelwerte aus gültigen Rohproben identisch. Keine Reiter ohne Funktion.
 
 N17 (F, konkrete Grössen ANNAHME): Kompakte Startseite Variante 2 ohne vertikales/horizontales Scrollen bei Standard-Schrift in verfügbaren App-Ansichten 1280×640, 1180×620, 1024×560 und 820×1020 CSS-Pixel. Alle drei Hauptaktionen und Footer vollständig innerhalb des Viewports; keine überdeckten Inhalte. Dies sind Browser-Testfenster nach Abzug der Systemflächen, keine zugesicherten Lenovo-Gerätemasse. Bei 200-%-Zoom und kleinen Fenstern vertikales Scrollen als barrierearmer Rückfall zulassen. Reale verfügbare Höhe am Lenovo noch messen.
+
+N18 (F, Grössen ANNAHME): W2/D1/Tag bei normaler Schrift in verfügbaren App-Flächen 1280×640, 1180×620, 1024×640 und 820×1020 CSS-Pixel prüfen. Primäre Grafiken samt Navigation und Legenden sichtbar; bei sehr geringer Höhe, vergrösserter Schrift oder aufgeklappten Rohwerten vertikales Scrollen erlauben. Keine horizontale Seitennavigation/abgeschnittenen Werte. Werkzeugzeile möglichst einreihig, bei Platzmangel lesbar umbrechen; keine erzwungene Verkleinerung der Touch-Ziele. Numerische Skalen und Tageszeitachsen müssen mit Grafikwerten übereinstimmen. Keine von den Systemleisten verdeckten Bedienelemente. Reale Lenovo-Abnahme bleibt offen.

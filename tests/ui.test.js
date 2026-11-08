@@ -18,13 +18,19 @@ test('C2 → W2 → selected D1 → day; all subpages return home and reset work
     assert.match(app.innerHTML,/Woche nach Tagen →/);
     assert.match(app.innerHTML,/Mein Armband/);
     assert.match(app.innerHTML,/Armband-Akku 62 %/);assert.ok(!app.innerHTML.includes('data-action="home"'));
+    const homeMarkup = app.innerHTML;
     for(let i=0;i<10;i++) {
       await click('weeks');assert.match(app.innerHTML,/Meine Wochen im Vergleich/);assert.ok(!app.innerHTML.includes('role="tab"'));
       await click('selectWeek',{week:'2026-11-02'});assert.match(app.innerHTML,/95 Bewegungsminuten/);
       assert.match(app.innerHTML,/class="home-button"/);
+      assert.doesNotMatch(app.innerHTML,/brand-name|site-header|date-status/);
+      assert.match(app.innerHTML,/detail-toolbar/);
       await click('date',{date:'2026-11-05'});assert.match(app.innerHTML,/Puls im Tagesverlauf/);
+      assert.match(app.innerHTML,/class="more-details"/);
+      assert.ok(!app.innerHTML.includes('class="more-details" open'));
+      assert.doesNotMatch(app.innerHTML,/brand-name|site-header|date-status/);
       await click('back');assert.match(app.innerHTML,/95 Bewegungsminuten/);
-      await click('home');await click('currentWeek');assert.match(app.innerHTML,/Bei sonstiger Bewegung/);
+      await click('home');assert.equal(app.innerHTML,homeMarkup);await click('currentWeek');assert.match(app.innerHTML,/Puls bei Bewegung/);
       await click('controls');change('scenario','S03');change('device','G05');
       await click('home');assert.ok(!app.innerHTML.includes('data-testid="week-minutes">80<'));
       await click('controls');await click('reset');assert.match(app.innerHTML,/data-testid="week-minutes">80</);
