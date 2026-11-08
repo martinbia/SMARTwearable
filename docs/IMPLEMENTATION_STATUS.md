@@ -1,6 +1,6 @@
 # Implementierungs- und Prüfstand v0.4
 
-08.11.2026 · Anwendung 0.4.0 · Branch feat/compact-detail-pages · [Pull Request #4](https://github.com/martinbia/SMARTwearable/pull/4), ohne automatisches Merge.
+08.11.2026 · Anwendung 0.4.0 · [Pull Request #4](https://github.com/martinbia/SMARTwearable/pull/4) wurde während der abschliessenden Prüfungen auf GitHub manuell gemergt. Der übernommene Implementierungsstand ist erfolgreich geprüft. Die nachträgliche Prüfdokumentation wird separat als Dokumentations-PR vorgelegt; kein automatisches Merge.
 
 ## Änderung v0.4
 
