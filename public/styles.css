@@ -1073,3 +1073,14 @@ dd{
   .detail-shell { --plot-height:clamp(32px,calc((100dvh - 490px)/3),70px); }
   .scale-axis span:nth-child(2) { display:none; }
 }
+
+/* Three-row week comparison can use more plot height than the four-row D1. */
+.detail-weeks { --plot-height:clamp(60px,calc((100dvh - 320px)/3),160px); }
+.detail-weeks .scale-axis span:nth-child(2) { display:block; }
+@media(min-width:701px) and (max-width:1100px) and (max-height:660px) {
+  .detail-week { --plot-height:clamp(28px,calc((100dvh - 510px)/3),60px); }
+}
+
+.lane-labels span { flex-direction:column; justify-content:center; align-items:flex-start; }
+.lane-labels small { font-size:.9rem; }
+.time-lanes { min-height:88px; }

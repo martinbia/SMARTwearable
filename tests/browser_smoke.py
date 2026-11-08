@@ -161,7 +161,7 @@ def run():
                 assert page.locator('.detail-toolbar h1').count() == 1
                 assert page.locator('.site-header, .brand-name, .date-status').count() == 0
                 page.screenshot(path=f"test-results/detail-{action}-{size['width']}x{size['height']}.png",full_page=True)
-                assert page.evaluate('document.documentElement.scrollHeight <= innerHeight + 1'), f"vertical detail overflow {action} {size}"
+                assert page.evaluate('document.documentElement.scrollHeight <= innerHeight + 1'), f"vertical detail overflow {action} {size}: "+str(page.locator('.detail-shell > *, .detail-main > *, .matrix-row').evaluate_all('els => els.map(e => [e.className,Math.round(e.getBoundingClientRect().height)])'))
                 for control in page.locator('.detail-toolbar button').all():
                     box=control.bounding_box()
                     assert box and box['y'] >= 0 and box['y']+box['height'] <= size['height']+1

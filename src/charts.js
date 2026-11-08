@@ -28,7 +28,7 @@ export function timeScale(day) {
   const duration = Math.max(1, end - start);
   const step = duration > 480 ? 120 : 60;
   const ticks = [start];
-  for (let t = start + step; t < end; t += step) if (end - t >= step / 2) ticks.push(t);
+  for (let t = start + step; t < end; t += step) if (end - t >= step) ticks.push(t);
   if (end > start) ticks.push(end);
   return { start, end, ticks, percent: t => (t - start) / duration * 100 };
 }
@@ -37,7 +37,7 @@ const gapShading = (day, scale) => day.gaps.map(g => `<span class="time-gap" sty
 export function activityTimeline(day) {
   if (!day.hasData) return '<p class="empty-day">Noch keine verfügbaren Messdaten in diesem Zeitraum.</p>';
   const scale = timeScale(day);
-  return `<div class="activity-timechart" data-time-start="${scale.start}" data-time-end="${scale.end}"><div class="time-grid"><div class="lane-labels"><span>Schrittbewegung</span><span>Sonstige Bewegung</span></div><div class="time-lanes">${['steps', 'other'].map(kind => `<div class="time-lane" role="img" aria-label="${kind === 'steps' ? 'Schrittbewegung' : 'Sonstige Bewegung'}: ${day.activity.filter(a => a.kind === kind).reduce((total, a) => total + a.end - a.start, 0)} Minuten, Einzelabschnitte unter Weitere Angaben">${gapShading(day, scale)}${day.activity.filter(a => a.kind === kind).map(a => `<span class="movement-segment ${kind === 'steps' ? 'step-segment' : 'other-segment'}" data-duration="${a.end - a.start}" style="left:${scale.percent(a.start)}%;width:${scale.percent(a.end) - scale.percent(a.start)}%" title="${time(a.start)}–${time(a.end)} Uhr · ${a.end - a.start} min"></span>`).join('')}</div>`).join('')}</div></div>${timeAxis(scale)}</div>`;
+  return `<div class="activity-timechart" data-time-start="${scale.start}" data-time-end="${scale.end}"><div class="time-grid"><div class="lane-labels"><span>Schrittbewegung<small>${day.activity.filter(a => a.kind === 'steps').reduce((sum, a) => sum + a.end - a.start, 0)} min</small></span><span>Sonstige Bewegung<small>${day.activity.filter(a => a.kind === 'other').reduce((sum, a) => sum + a.end - a.start, 0)} min</small></span></div><div class="time-lanes">${['steps', 'other'].map(kind => `<div class="time-lane" role="img" aria-label="${kind === 'steps' ? 'Schrittbewegung' : 'Sonstige Bewegung'}: ${day.activity.filter(a => a.kind === kind).reduce((total, a) => total + a.end - a.start, 0)} Minuten, Einzelabschnitte unter Weitere Angaben">${gapShading(day, scale)}${day.activity.filter(a => a.kind === kind).map(a => `<span class="movement-segment ${kind === 'steps' ? 'step-segment' : 'other-segment'}" data-duration="${a.end - a.start}" style="left:${scale.percent(a.start)}%;width:${scale.percent(a.end) - scale.percent(a.start)}%" title="${time(a.start)}–${time(a.end)} Uhr · ${a.end - a.start} min"></span>`).join('')}</div>`).join('')}</div></div>${timeAxis(scale)}</div>`;
 }
 export function pulseLine(day) {
   if (!day.pulse.length) return '<p class="empty-day">Keine verfügbaren Pulswerte in diesem Zeitraum.</p>';
