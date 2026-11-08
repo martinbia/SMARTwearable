@@ -1075,7 +1075,7 @@ dd{
 }
 
 /* Three-row week comparison can use more plot height than the four-row D1. */
-.detail-weeks { --plot-height:clamp(60px,calc((100dvh - 360px)/3),220px); }
+.detail-weeks { --plot-height:clamp(60px,calc((100dvh - 360px)/3),210px); }
 .detail-weeks .scale-axis span:nth-child(2) { display:block; }
 @media(min-width:701px) and (max-width:1100px) and (max-height:660px) {
   .detail-week { --plot-height:clamp(28px,calc((100dvh - 510px)/3),60px); }
@@ -1090,3 +1090,7 @@ dd{
   .detail-day { --time-gutter:110px; }
   .detail-day .time-lanes { min-height:140px; }
 }
+
+/* Wrap by available layout width as well as by media query (e.g. CSS zoom). */
+.detail-toolbar { flex-wrap:wrap; }
+.detail-toolbar h1 { min-width:150px; }
