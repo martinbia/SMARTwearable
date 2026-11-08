@@ -1,6 +1,6 @@
 # Implementierungs- und Prüfstand v0.3
 
-08.11.2026 · Anwendung 0.3.0 · Branch feat/compact-activity-home. Neuer Pull Request ohne automatisches Merge.
+08.11.2026 · Anwendung 0.3.0 · Branch feat/compact-activity-home. [Pull Request #3](https://github.com/martinbia/SMARTwearable/pull/3), ohne automatisches Merge.
 
 ## Änderung v0.3
 
@@ -8,7 +8,16 @@ F22 / D28–D31: ausgewählte Variante 2, nur Aktivität auf der Startseite. Sch
 
 ## Prüfstand v0.3
 
-Syntaxprüfung lokal erfolgreich. Erweiterte Modell-/UI-/Offline- und Browserprüfungen werden für diesen Änderungsstand ausgeführt; Resultate vor Abschluss ergänzen. Vorläufige Prüfflächen N17 sind keine bestätigten Lenovo-Abmessungen.
+Lokal erfolgreich: Syntaxprüfung, elf automatisierte Node-Tests, statischer PWA-Build, Python-Syntax und git diff --check.
+
+[GitHub-Prüflauf #12](https://github.com/martinbia/SMARTwearable/actions/runs/42503352150) für Implementierungscommit b19115670872dceb1b29ab5e3398931baaf76af2 erfolgreich: Syntax, elf Tests, Build und echter Chromium-Browsertest. Deployment im PR übersprungen.
+
+- Startseite enthält keine Schritte-/Pulswerte und keine entsprechenden Karten; in Tages-/Wochendetails bleiben sie vorhanden.
+- Startseite ohne horizontalen UND vertikalen Überlauf bei 1280×640, 1180×620, 1024×560 und 820×1020 CSS-Pixeln. Grafiklink, Kopfbereich, alle drei Hauptaktionen und Footer innerhalb des Viewports; Touch-Ziele mindestens 48×48 Pixel. Screenshots visuell geprüft.
+- Vorhandene Navigation, rote Startseite-Buttons, Datenlücken, Puls-Kategorien, Kalender und zehn vollständige Aufgabenrunden erfolgreich; Übertragungs-/Fehlersimulation und Reset erhalten.
+- Weitere Ansichtsgrössen, 200-%-CSS-Zoom, Service Worker, vorbereiteter Offline-Neustart und Navigation unter /SMARTwearable/ erfolgreich.
+
+Vorläufige Prüfflächen N17 sind keine bestätigten Lenovo-Abmessungen. Browser-Zoom ist keine reale Android-Schriftvergrösserung. Ein eventuell angebotener Versionsupdate-Hinweis darf zusätzlich Platz benötigen und Scrollen auslösen. Kein Verbergen von Hinweisen zugunsten der Ein-Bildschirm-Darstellung.
 
 ## Am Lenovo vor Interview noch prüfen
 
