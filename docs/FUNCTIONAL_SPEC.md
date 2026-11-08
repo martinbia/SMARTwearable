@@ -1,6 +1,6 @@
 # Funktionale Spezifikation
 
-Version 0.3 · 08.11.2026. F = festgelegt, A = dokumentierte technische Annahme, V = Vorschlag. IDs bleiben erhalten, ersetzte Anforderungen werden explizit benannt.
+Version 0.4 · 08.11.2026. F = festgelegt, A = dokumentierte technische Annahme, V = Vorschlag. IDs bleiben erhalten, ersetzte Anforderungen werden explizit benannt.
 
 | ID | Funktion / Änderung | Status | Prüfkriterium |
 | --- | --- | --- | --- |
@@ -26,5 +26,9 @@ Version 0.3 · 08.11.2026. F = festgelegt, A = dokumentierte technische Annahme,
 | F20 | Puls erweitert | F | Min/Max/Mean aus gültigen Proben; Mittelwerte bei Schritten und sonstiger Bewegung gesondert. |
 | F21 | Roter Startseite-Button auf allen Unterseiten | F | Weiss auf Rot, gleich positioniert; Rückkehr nach C2. |
 | F22 | Kompakte Startseite Variante 2 | F | Keine Schritte-/Pulskarten; kompakte gemeinsame Kopfzeile; Woche nach Tagen, Wochenvergleich und Mein Armband direkt erreichbar. |
+| F23 | Kompakter Detailrahmen | F | W2/D1/Tag ohne Marken-/Heute-Banner; Navigation, Titel, Armbandstatus und Info gemeinsam, rote Startseite erhalten. |
+| F24 | Diagramme im Vordergrund | F | W2 drei, D1 vier kompakte Messreihen; Tag mit zwei ausgerichteten Bewegungsspuren und Pulsverlauf. Schritte/Puls und direkte Navigation bleiben erhalten. |
+| F25 | Zusätzliche Tagesangaben aufklappbar | F | Strecke, Hauttemperatur, Bewegungsabschnitte und Puls-Rohwerte vollständig über Weitere Angaben erreichbar; beim Einstieg geschlossen. |
+
 
 Annahmen: Zustand nur während der Sitzung; Neuladen beginnt neu. Erstinformation über ständig verfügbares Info statt Pflichtdialog. Appstart-Datum und -Uhrzeit werden für das Interview eingefroren. Reale Uhrzeit begrenzt heutige Beispieldaten; Beginn vor 08 Uhr zeigt keine Daten statt erfundener früher Messwerte. Kategorien sind hypothetische Klassifikation.

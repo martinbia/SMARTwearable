@@ -35,3 +35,5 @@ Alle Tages-/Wochenwerte und Kurven sind auf denselben Datenstand begrenzt. Über
 ## Scenarios
 
 S01 Basistag. S02 ruhigerer heutiger Tag (8 Minuten/400 Schritte als Rohvorlage, vor Datenstand gegebenenfalls weniger). S03 heutige Lücke10–12 Uhr; zusätzlich Mittwochs-Beispiellücke13–14 Uhr in der laufenden Woche, sobald sie vergangen ist. Lückengrund wählbar: Signal fehlt/nicht getragen. Keine automatische Übungserkennung.
+
+GUI v0.4 ändert keine Demodaten. Die kompakte Detailansicht benennt den ausgewählten Zeitraum statt einer zusätzlichen grossen Heute-Zeile. Bewegung und Puls im Tagesverlauf verwenden dieselbe verfügbare Zeitspanne; keine zukünftigen Proben und keine Verbindung über Lücken.

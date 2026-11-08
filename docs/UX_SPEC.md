@@ -1,10 +1,10 @@
 # Ansichten und Bedienkonzept
 
-Version 0.3 · 08.11.2026 · C2, D1 und W2 FESTGELEGT; Detailparameter als Annahmen gekennzeichnet.
+Version 0.4 · 08.11.2026 · C2, D1 und W2 FESTGELEGT; Detailparameter als Annahmen gekennzeichnet.
 
 ## Gemeinsamer Rahmen
 
-Auf der Startseite gemeinsame kompakte Kopfzeile: kleiner App-Name mit Info/Beispieldaten und ausdrücklich „Armband-Akku … % · Daten bis …“. Darunter aktueller lokaler Wochentag und Datum vom Appstart. Auf Unterseiten bleibt der bisherige Rahmen erhalten. Kein grosser Titelbanner. Info bleibt jederzeit erreichbar; ein obligatorischer Startdialog wurde nicht beschlossen.
+Auf der Startseite gemeinsame kompakte Kopfzeile: kleiner App-Name mit Info/Beispieldaten und ausdrücklich „Armband-Akku … % · Daten bis …“. Darunter aktueller lokaler Wochentag und Datum vom Appstart. Wochenvergleich, Woche nach Tagen und Tagesverlauf erhalten ab v0.4 einen gemeinsamen kompakten Detailrahmen ohne separate App-Marken-/Heute-Zeile. Geräte-/Info-/Interviewseiten behalten ihren bisherigen Rahmen. Kein grosser Titelbanner. Info bleibt jederzeit erreichbar; ein obligatorischer Startdialog wurde nicht beschlossen.
 
 Auf ALLEN Unterseiten ein roter Button mit weisser Schrift „← Startseite“, einschliesslich Geräte-, Info-, Tages- und Interviewansicht. Zusätzliche kontextbezogene Rückwege sind neutral/teal. Rot bezeichnet hier Navigation, keine Bewertung der Aktivität.
 
@@ -16,13 +16,13 @@ Variante 2 (Aktivität allein) ist FESTGELEGT und ersetzt die bisherigen Schritt
 
 Kompakte Überschrift „Aktivität diese Woche“ und Wochenzeitraum in einer Zeile, darunter drei Vergleichsreihen. Unter der Grafik kurzer Hinweis auf Bewegungsminuten, fiktiven Zielbereich und laufende/unvollständige Woche; ausführliche Erklärung über Info. Drei gut sichtbare Aktionen: „Woche nach Tagen“, „Wochen vergleichen“ und „Mein Armband“. Kleine Fusszeile mit Fiktiv-Hinweis, Info und Interviewsteuerung.
 
-Die tatsächlich verfügbare App-Höhe zwischen Android-Statusleiste und Taskleiste verwenden. Keine Systemleisten nachzeichnen oder deren angenommene Höhe nochmals abziehen; diese gehören Android. Bei Standard-Schriftgrösse soll die Startseite ohne Scrollen in reduzierten Tablet-Ansichten passen. D1/W2 dürfen weiterhin scrollen. Bei starker Schriftvergrösserung oder sehr kleinem Fenster Inhalte durch Scrollen erreichbar halten, nicht abschneiden oder hinter fixen Buttons verbergen. Keine Vollbildberechtigung verlangen.
+Die tatsächlich verfügbare App-Höhe zwischen Android-Statusleiste und Taskleiste verwenden. Keine Systemleisten nachzeichnen oder deren angenommene Höhe nochmals abziehen; diese gehören Android. Bei Standard-Schriftgrösse soll die Startseite ohne Scrollen in reduzierten Tablet-Ansichten passen. D1/W2/Tag nutzen ab v0.4 ebenfalls einen kompakten Detailrahmen; bei zu wenig Platz bleibt Scrollen erlaubt. Bei starker Schriftvergrösserung oder sehr kleinem Fenster Inhalte durch Scrollen erreichbar halten, nicht abschneiden oder hinter fixen Buttons verbergen. Keine Vollbildberechtigung verlangen.
 
 ## D1 – ausgewählte Woche nach Tagen
 
 Montag bis Sonntag mit datumsrichtigen Beschriftungen. Aktivität und Schritte als Grafik, Tagespuls mit Minimum/Maximum und optionalem Mittelwert. Separate Darstellung des mittleren Pulses während Schrittbewegung sowie während sonstiger Bewegung. Unabhängige Einheiten und Skalen; keine addierten Pulszahlen. Erläutern: Pulsgruppen enthalten nur Messungen während der jeweiligen Bewegungsart.
 
-Tipp auf beliebigen vorhandenen Tag öffnet dessen Tagesverlauf. Zukünftige Tage ohne Balken und ohne Nullwert: „Noch nicht“. Heute „bisher“. Datenlücke schraffiert und textlich erläutert, keine Ruhebehauptung. Vergangene Woche zeigt sieben tatsächliche Demo-Tage. Datum in Kopfzeile bleibt das aktuelle Appstart-Datum; Überschrift bezeichnet die ausgewählte Woche.
+Tipp auf beliebigen vorhandenen Tag öffnet dessen Tagesverlauf. Zukünftige Tage ohne Balken und ohne Nullwert: „Noch nicht“. Heute „bisher“. Datenlücke schraffiert und textlich erläutert, keine Ruhebehauptung. Vergangene Woche zeigt sieben tatsächliche Demo-Tage. Titel in der gemeinsamen Navigationszeile bezeichnet die ausgewählte Woche; keine zusätzliche grosse Heute-Zeile. Lokales Appstart-Datum bleibt die Datengrundlage.
 
 ## W2 – Wochenvergleich
 
@@ -35,3 +35,12 @@ Tipp auf Wochenbalken, Datum oder Pulsbereich öffnet unmittelbar D1 für DIESE 
 Tagesverlauf enthält nach Bewegungsart unterscheidbare Abschnitte, Schritte, Pulszeitreihe ohne Linien über Datenlücken sowie Strecken-/Hauttemperaturdetails. „← Zur Woche“ erhält die ausgewählte Woche. Geräte-/Lade-/Übertragungssimulation bleibt erhalten. Interviewsteuerung stellt Szenarien und Reset bereit; bisherige Varianten A/B entfallen.
 
 Bei schmalen Ansichten dieselben Informationen in gut lesbaren Tages-/Wochenkarten statt zu kleiner sieben-/sechsspaltiger Grafiken zeigen. Kein horizontaler Seitenüberlauf. Tabellendetails bieten zusätzlich alle verfügbaren Werte in Textform.
+
+## Kompakte Detailseiten v0.4 – FESTGELEGT
+
+- Eine gemeinsame Werkzeug-/Titelzeile: roter Startseite-Button, kontextbezogener neutraler Rückweg, kleiner Titel des ausgewählten Zeitraums, Armband-Akku und Info. D1 enthält kompakte beschriftete Pfeile für vorige/nächste Woche (Grenzen deaktiviert). Keine zusätzliche SMARTwearable-Zeile, grosse Heute-Zeile oder zweite Titel-/Navigationsgruppe. Auf schmalen Ansichten darf die Zeile lesbar umbrechen.
+- W2: sechs Wochen in Spalten, Aktivität/Schritte/Puls gleichzeitig in drei kompakten Reihen mit gemeinsamen Skalen je Messgrösse. Nur Aktivität mit Zielband und Bestwochenmarkierung. Tippen öffnet weiterhin genau die gewählte Woche.
+- D1: sieben Tage in Spalten, kompakte Reihen für Aktivität, Schritte, Min/Max/Mean und die beiden Kategorie-Pulsmittel. Heute bisher, Zukunft ohne Messwerte. Datenlücken mit Schraffur und kurzem erklärendem Hinweis. Tag öffnet Verlauf.
+- Tag: zwei zeitlich ausgerichtete Bewegungsspuren für Schrittbewegung und sonstige Bewegung; darunter grosser Pulsverlauf mit Min/Max/Mean und beiden Kategorie-Mitteln. Bei heutigem Tag endet die gemeinsame Zeitskala am verfügbaren Datenstand, historische Tage am Beobachtungsende. Keine Linie über Datenlücken. Hauttemperatur, Strecke, Abschnitte und Rohwerte in einer zunächst geschlossenen Gruppe „Weitere Angaben“.
+- Kleine Metadaten-/Fusszeile statt langer Einleitungen. Fiktiv-Hinweis, unvollständige Woche und Datenlücken bleiben lesbar. Ausführliche Erklärung über Info und Weitere Angaben.
+- Die Startseite v0.3 bleibt unverändert. Die Zahlen/Datumsbeispiele der Designbilder sind Illustrationen; der vorhandene gemeinsame Demodatensatz bleibt massgeblich. Kein Import eines abweichenden Bild-Datensatzes.

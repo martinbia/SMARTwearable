@@ -1,6 +1,6 @@
 # SMARTwearable – Projektauftrag
 
-Version 0.3 · 08.11.2026
+Version 0.4 · 08.11.2026
 
 ## Ziel (F)
 
@@ -10,7 +10,7 @@ Eine installierbare Tablet-PWA demonstriert fiktive Aktivitätsdaten eines Armba
 
 Die interviewte Person legt ein Armband an und erhält nach kurzer Einführung das Lenovo Tab TB311FU mit SMARTwearable. Danach bedient sie die PWA selbstständig. Das angelegte Armband ist im Mock-up nicht technisch verbunden; dies wird vorab erklärt. Internet wird als vorhanden angenommen. Offline-Funktion nach Vorbereitung ist VORSCHLAG.
 
-## Bestätigter Umfang v0.3 (F)
+## Bestätigter Umfang v0.4 (F)
 
 Startseite Variante 2: nur Aktivität mit aktuellem Wochenstand, Ziel mit Toleranzband und persönlicher Bestwoche; kompakt für die zwischen den Android-Systemleisten verfügbare Fläche. Schritte/Puls ausschliesslich in Details. D1: ausgewählte Kalenderwoche nach Tagen mit Aktivität, Schritten und erweitertem Puls. W2: mehrere Wochen, alle drei Messgrössen gleichzeitig (Annahme: sechs Wochen). Woche/Tag unmittelbar antippbar. Roter Startseite-Button auf Unterseiten, kompakter Armband-Akkustatus, aktuelles lokales Datum vom Appstart. Ursprünglicher Heute-A/B-Vergleich ersetzt. Alle Daten bleiben erfunden.
 
@@ -35,3 +35,5 @@ Chatbot, Sprache, medizinische Dokumentenansicht, echte Sensorerkennung, Therapi
 Puls, Hauttemperatur und Bewegungssensorik sind hypothetische Datenquellen. „IMC“ wurde noch nicht als IMU bestätigt. Es ist kein konkretes Wearable ausgewählt. Fitbit und Polar-H10-Apps dienen nur als Inspiration für Informationsarten; daraus werden keine Gerätefähigkeiten oder proprietären Scores übernommen.
 
 Nach der ersten Iteration diskutierbar: Schlafdauer, Herzfrequenzvariabilität bei geeigneten Schlagintervalldaten, Aktivitätsverteilung, Unterbrechungen bewegungsarmer Phasen, Tragedauer und freiwillige Selbstberichte. Gangqualität, Symmetrie, Körperhaltung und Übungserkennung erfordern gesonderte technische und fachliche Klärung. Keine dieser Optionen ist beauftragt.
+
+Ab v0.4: W2/D1/Tag mit gemeinsamem kompaktem Detailrahmen und Diagrammfokus gemäss UX_SPEC. Startseite v0.3 und Demodaten bleiben erhalten.

@@ -1,6 +1,6 @@
 # SMARTwearable
 
-Tablet-PWA-Mock-up für qualitative Interviews nach Hüftoperation. Version 0.3.0 verwendet die ausgewählten Konzepte C2, D1 und W2. Ausschliesslich fiktive Daten, keine technische Verbindung zum angelegten Armband.
+Tablet-PWA-Mock-up für qualitative Interviews nach Hüftoperation. Version 0.4.0 verwendet die ausgewählten Konzepte C2, D1 und W2. Ausschliesslich fiktive Daten, keine technische Verbindung zum angelegten Armband.
 
 ## Ansichten
 
@@ -50,3 +50,7 @@ PWA online vollständig öffnen, Installation über Browsermenü testen. Hoch-/Q
 ## Kompakte Startseite v0.3
 
 Ausgewählte Variante 2: kompakte gemeinsame Kopfzeile, nur Aktivität im Wochenvergleich, drei direkt sichtbare Hauptaktionen. Die verfügbare App-Höhe wird über dynamische Viewport-Einheiten genutzt; Android-Status-/App-Leisten bleiben Systemflächen. Kein erzwungenes Vollbild und keine künstlich nachgezeichneten Systemleisten. Bei starker Vergrösserung oder kleinen Fenstern vertikales Scrollen zulassen. Vorläufige Testflächen und noch nötige Lenovo-Messung siehe N17 und IMPLEMENTATION_STATUS.md.
+
+## Kompakte Messdetails v0.4
+
+W2/D1/Tag ohne zusätzliche App-Marken-/Heute-Zeile: rote Startseite, kontextbezogener Rückweg, Titel und Armbandstatus in gemeinsamer Werkzeugzeile. Kompakte Messreihen mit gemeinsamen Skalen. Im Tagesverlauf zeitlich ausgerichtete Bewegungsspuren und Puls; Weitere Angaben öffnet Hauttemperatur, Strecke, Abschnitte und Rohwerte. Startseite v0.3 und gemeinsame Demodaten unverändert. Neue Anforderungen F23–F25/N18 und Entscheidungen D32–D36; reale Tablet-Abnahme weiterhin nötig.

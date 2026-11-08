@@ -48,6 +48,8 @@ def run():
         assert page.locator('[data-action=update]').count() == 0
 
         def click(action):
+            if action == 'controls' and page.locator('[data-action=controls]:visible').count() == 0:
+                click('home')
             if action == 'today':
                 click('currentWeek')
                 day_click('2026-11-12')
@@ -103,7 +105,7 @@ def run():
         assert page.locator('.daily-matrix .column-head:disabled').count() == 3
         assert 'Heute' in page.locator('main').inner_text()
         assert 'Datenlücke' in page.locator('main').inner_text()
-        assert 'Puls während Bewegung' in page.locator('main').inner_text()
+        assert 'Puls bei Bewegung' in page.locator('main').inner_text()
         aligned_bars()
         page.screenshot(path='test-results/d1-current-week.png', full_page=True)
         click('controls'); choose('device', 'G05'); click('home')
@@ -149,6 +151,35 @@ def run():
             assert 'Schritte' in page.locator('main').inner_text()
             assert 'Puls' in page.locator('main').inner_text()
             click('home')
+
+        # N18: compact measurement pages after space taken by the Android bars.
+        for size in [{'width':1280,'height':640}, {'width':1180,'height':620}, {'width':1024,'height':640}, {'width':820,'height':1020}]:
+            page.set_viewport_size(size)
+            for action in ['weeks','currentWeek','today']:
+                click('home'); click(action)
+                red_home(); no_overflow(); aligned_bars()
+                assert page.locator('.detail-toolbar h1').count() == 1
+                assert page.locator('.site-header, .brand-name, .date-status').count() == 0
+                page.screenshot(path=f"test-results/detail-{action}-{size['width']}x{size['height']}.png",full_page=True)
+                assert page.evaluate('document.documentElement.scrollHeight <= innerHeight + 1'), f"vertical detail overflow {action} {size}"
+                for control in page.locator('.detail-toolbar button').all():
+                    box=control.bounding_box()
+                    assert box and box['y'] >= 0 and box['y']+box['height'] <= size['height']+1
+                    assert box['height'] >= 48 and box['width'] >= 48, box
+                if action == 'today':
+                    assert not page.locator('.more-details').evaluate('(el) => el.open')
+                    plots=page.locator('[data-time-start]').evaluate_all('els => els.map(e => [e.dataset.timeStart,e.dataset.timeEnd])')
+                    assert len(plots)==2 and plots[0]==plots[1]==['480','870'],plots
+                    bounds=page.locator('.time-lanes, .pulse-plot').evaluate_all('els => els.map(e => [e.getBoundingClientRect().left,e.getBoundingClientRect().right])')
+                    assert abs(bounds[0][0]-bounds[1][0])<2 and abs(bounds[0][1]-bounds[1][1])<2,bounds
+                    page.locator('.more-details > summary').click()
+                    assert page.get_by_role('heading',name='Hauttemperatur',exact=True).is_visible()
+                    assert page.locator('.sample-table tbody tr').count()>0
+                    page.locator('.more-details > summary').click()
+                if action == 'currentWeek':
+                    page.locator('.gap-notes > summary').click()
+                    assert '13:00–14:00' in page.locator('.gap-notes').inner_text()
+                    page.locator('.gap-notes > summary').click()
 
         page.set_viewport_size({'width':1280,'height':900})
         # Actual browser layout at doubled CSS zoom, not Android system text sizing.

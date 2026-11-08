@@ -1,4 +1,29 @@
-# Implementierungs- und Prüfstand v0.3
+# Implementierungs- und Prüfstand v0.4
+
+08.11.2026 · Anwendung 0.4.0 · Branch feat/compact-detail-pages · neuer Pull Request ohne automatisches Merge.
+
+## Änderung v0.4
+
+F23–F25 / D32–D36: kompakte W2/D1/Tagesdetails ohne zusätzliche Marken-/Heute-Zeile. Eine gemeinsame Navigations-/Titelzeile mit roter Startseite, neutralem Rückweg, Armband-Akku und Info. Messgrafiken im Vordergrund; Tagesbewegung und Puls auf gemeinsamer verfügbarer Zeitachse. Weitere Angaben zeigt Hauttemperatur, Strecke, Abschnitte und Rohwerte. Startseite und Datenselektoren erhalten.
+
+## Prüfstand v0.4
+
+Implementierung und gezielte Prüfungen laufen. Tatsächliche lokale/CI-Ergebnisse vor Abschluss ergänzen. N18-Prüfflächen sind Annahmen und ersetzen keine reale Lenovo-Abnahme.
+
+## Noch am Lenovo prüfen
+
+- W2/D1/Tag im Chrome-PWA-Modus mit Status-/App-Leisten: Graphiken und Werkzeugzeile sichtbar, Beschriftungen und Touch-Flächen lesbar.
+- Hoch-/Querformat, echte Android-Schriftvergrösserung; bei Platzmangel vertikal scrollen können, keine Überlagerungen.
+- W2 → gewählte vergangene Woche → Tag → dieselbe Woche, Wochenpfeile und roter Startseite-Button.
+- Unvollständige Woche, zukünftige Tage, Datenlücken, Min/Max und Kategorie-Puls verständlich; allgemeine Bewegung nicht auf Gehen reduzieren.
+- Weitere Angaben öffnen/schliessen, Hauttemperatur/Strecke/Rohwerte vollständig erreichbar.
+- Update von 0.3.0 auf 0.4.0, Offline-Kaltstart, reale Performance und Installation/Standalone.
+
+---
+
+## Historischer Prüfstand v0.3 (PR #3 inzwischen übernommen)
+
+### Umsetzung v0.3
 
 08.11.2026 · Anwendung 0.3.0 · Branch feat/compact-activity-home. [Pull Request #3](https://github.com/martinbia/SMARTwearable/pull/3), ohne automatisches Merge.
 

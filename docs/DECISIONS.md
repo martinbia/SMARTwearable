@@ -67,3 +67,15 @@ Weiter offen: echtes Wearable/Klassifikationsverfahren, reale Lenovo-Prüfungen 
 | D31 | A | Browser-Prüfflächen N17 als vorläufige Abnahmekriterien; reale Lenovo-App-Höhe noch unbekannt. Vergrösserung/kleine Fenster dürfen vertikal scrollen, damit Inhalte zugänglich bleiben. |
 
 Änderungen als neuer Pull Request auf dem inzwischen gemergten Stand von PR #2; kein automatisches Merge.
+
+## Beschlüsse GUI v0.4 (08.11.2026)
+
+| ID | Status | Beschluss |
+| --- | --- | --- |
+| D32 | F | Drei gezeigte kompakte Detailentwürfe zur Umsetzung freigegeben: W2, D1 und einzelner Tagesverlauf. |
+| D33 | F | Separate SMARTwearable-/Heute-Zeile auf diesen drei Seiten entfällt; gemeinsame Navigation/Titelzeile und mehr Fläche für Messgrafiken. |
+| D34 | F | Tageszusatzangaben aufklappbar; Min/Max und Puls während beider Bewegungsarten unmittelbar sichtbar. |
+| D35 | F | Zufriedenstellende Startseite v0.3 unverändert erhalten; fiktive Daten und deren Berechnungen ebenfalls erhalten. |
+| D36 | A | N18-Prüfflächen und konkrete Layoutmasse vorläufig; reales Tablet mit Systemleisten und Schriftvergrösserung noch prüfen. |
+
+Neuer Pull Request auf dem inzwischen gemergten Stand von PR #3. Kein automatisches Merge.
