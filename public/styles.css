@@ -1084,3 +1084,9 @@ dd{
 .lane-labels span { flex-direction:column; justify-content:center; align-items:flex-start; }
 .lane-labels small { font-size:.9rem; }
 .time-lanes { min-height:88px; }
+/* Two readable label lines fit beside the daily plots without growing the grid. */
+.detail-day { --time-gutter:200px; }
+@media(max-width:700px) {
+  .detail-day { --time-gutter:110px; }
+  .detail-day .time-lanes { min-height:140px; }
+}

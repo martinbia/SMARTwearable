@@ -172,6 +172,9 @@ def run():
                     assert len(plots)==2 and plots[0]==plots[1]==['480','870'],plots
                     bounds=page.locator('.time-lanes, .pulse-plot').evaluate_all('els => els.map(e => [e.getBoundingClientRect().left,e.getBoundingClientRect().right])')
                     assert abs(bounds[0][0]-bounds[1][0])<2 and abs(bounds[0][1]-bounds[1][1])<2,bounds
+                    for axis in page.locator('.time-axis').all():
+                        ticks=axis.locator('span:visible').evaluate_all('els => els.map(e => [e.getBoundingClientRect().left,e.getBoundingClientRect().right])')
+                        assert all(ticks[i][1]+4 <= ticks[i+1][0] for i in range(len(ticks)-1)), ticks
                     page.locator('.more-details > summary').click()
                     assert page.get_by_role('heading',name='Hauttemperatur',exact=True).is_visible()
                     assert page.locator('.sample-table tbody tr').count()>0
