@@ -48,6 +48,8 @@ def run():
         assert page.locator('[data-action=update]').count() == 0
 
         def click(action):
+            if action == 'home' and page.locator('.home-button').count() == 0:
+                return
             page.locator(f'[data-action="{action}"]:visible').first.click()
 
         def choose(action, value):
@@ -55,6 +57,11 @@ def run():
 
         def no_overflow():
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'horizontal page overflow'
+
+        def aligned_bars():
+            for row in page.locator(".matrix-row").all():
+                bottoms = row.locator(".bar-plot").evaluate_all("els => els.map(e => e.getBoundingClientRect().bottom)")
+                if bottoms: assert max(bottoms) - min(bottoms) < 2, bottoms
 
         def red_home():
             home = page.locator('.home-button')
@@ -70,7 +77,7 @@ def run():
 
         no_overflow()
         page.screenshot(path='test-results/c2-home-landscape.png', full_page=True)
-        click('weeks'); red_home(); no_overflow()
+        click('weeks'); red_home(); no_overflow(); aligned_bars()
         assert page.get_by_role('tab').count() == 0
         assert page.locator('.weeks-matrix .column-head').count() == 6
         page.screenshot(path='test-results/w2-weeks-landscape.png', full_page=True)
@@ -90,6 +97,7 @@ def run():
         assert 'Heute' in page.locator('main').inner_text()
         assert 'Datenlücke' in page.locator('main').inner_text()
         assert 'Puls während Bewegung' in page.locator('main').inner_text()
+        aligned_bars()
         page.screenshot(path='test-results/d1-current-week.png', full_page=True)
         click('controls'); choose('device', 'G05'); click('home')
         stale = page.locator('[data-testid=week-minutes]').inner_text()
@@ -99,7 +107,7 @@ def run():
         click('controls'); click('transfer')
         page.wait_for_function("document.querySelector('[data-action=transfer]')?.disabled === false")
         click('home'); assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
-        click('controls'); choose('scenario','S03'); click('today')
+        click('controls'); choose('scenario','S03'); click('home'); click('today')
         assert page.locator('[data-testid=day-minutes]').inner_text() == '7'
         click('controls'); choose('device','G07'); click('transfer')
         page.wait_for_function("document.querySelector('[data-action=transfer]')?.disabled === false")
@@ -110,7 +118,7 @@ def run():
         for size in [{'width':820,'height':1180},{'width':1180,'height':820},{'width':400,'height':800}]:
             page.set_viewport_size(size)
             for action in ['home','weeks','currentWeek','today','device','info','controls']:
-                click(action); no_overflow()
+                click('home'); click(action); no_overflow()
                 if action != 'home': red_home()
             click('home')
             if size['width']==820: page.screenshot(path='test-results/c2-home-portrait.png',full_page=True)
@@ -119,7 +127,7 @@ def run():
         # Actual browser layout at doubled CSS zoom, not Android system text sizing.
         page.evaluate("document.documentElement.style.zoom='2'")
         for action in ['home','weeks','currentWeek','today','device','controls']:
-            click(action); no_overflow()
+            click('home'); click(action); no_overflow()
         page.evaluate("document.documentElement.style.zoom='1'")
         click('home')
         for _ in range(10):

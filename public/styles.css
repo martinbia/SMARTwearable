@@ -837,3 +837,10 @@ dd{
 
 }
 
+
+.comparison-link { display:block; color:inherit; text-decoration:none; border-radius:12px; }
+.comparison-link:hover { background:#dce8ce55; }
+
+/* Reserve equal annotation space to keep chart baselines aligned. */
+.matrix-cell { border-bottom:5px solid transparent; }
+.matrix-cell .gap-tag { min-height:2.4em; }
