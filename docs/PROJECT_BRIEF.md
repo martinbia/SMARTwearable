@@ -1,6 +1,6 @@
 # SMARTwearable – Projektauftrag
 
-Version 0.1 · 06.11.2026
+Version 0.2 · 08.11.2026
 
 ## Ziel (F)
 
@@ -10,15 +10,9 @@ Eine installierbare Tablet-PWA demonstriert fiktive Aktivitätsdaten eines Armba
 
 Die interviewte Person legt ein Armband an und erhält nach kurzer Einführung das Lenovo Tab TB311FU mit SMARTwearable. Danach bedient sie die PWA selbstständig. Das angelegte Armband ist im Mock-up nicht technisch verbunden; dies wird vorab erklärt. Internet wird als vorhanden angenommen. Offline-Funktion nach Vorbereitung ist VORSCHLAG.
 
-## Bestätigter Umfang (F)
+## Bestätigter Umfang v0.2 (F)
 
-- Heute: Bewegungsminuten, Anzahl Bewegungsabschnitte, einfacher Tagesverlauf.
-- Details: Schritte, geschätzte Strecke, Puls, Hauttemperatur.
-- Letzte sieben Tage mit auswählbaren Tagen.
-- Armband: Akku, geschätzte Restlaufzeit, Datenstand und nächste Übertragung.
-- Getrennte Interviewsteuerung für Darstellungen, Szenarien und Zurücksetzen.
-- Zwei alternative Heute-Darstellungen: Kennzahlenkarten und grafischer Tagesverlauf, jeweils auf denselben Daten.
-- Klare Übersicht mit Möglichkeiten zur Vertiefung.
+C2-Startseite: aktueller Wochenstand, Ziel mit Toleranzband, persönliche Bestwoche sowie Schritte/Puls. D1: ausgewählte Kalenderwoche nach Tagen mit Aktivität, Schritten und erweitertem Puls. W2: sechs Wochen, alle drei Messgrössen gleichzeitig. Woche/Tag unmittelbar antippbar. Roter Startseite-Button auf Unterseiten, kompakter Armband-Akkustatus, aktuelles lokales Datum vom Appstart. Ursprünglicher Heute-A/B-Vergleich ersetzt. Alle Daten bleiben erfunden.
 
 ## Grundlagen und abgeleitete Bedürfnisse
 

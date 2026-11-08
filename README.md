@@ -1,21 +1,28 @@
 # SMARTwearable
 
-Installierbares Tablet-Mock-up für qualitative Interviews nach einer Hüftoperation. Ausschliesslich fiktive Daten; das angelegte Armband wird nicht ausgelesen.
+Tablet-PWA-Mock-up für qualitative Interviews nach Hüftoperation. Version 0.2.0 verwendet die ausgewählten Konzepte C2, D1 und W2. Ausschliesslich fiktive Daten, keine technische Verbindung zum angelegten Armband.
 
-## Erste Version 0.1.0
+## Ansichten
 
-- Heute mit zwei Darstellungen derselben Bewegungsdaten: Kennzahlenkarten und Tagesverlauf.
-- Details zu Schritten, geschätzter Strecke, Puls und Hauttemperatur.
-- Sieben Tage mit Tagesauswahl und erkennbaren Datenlücken.
-- Armbandstatus mit Akku, geschätzter Laufzeit, Datenstand, Verbindung und Übertragungsbedarf.
-- Interviewsteuerung mit drei Aktivitätsszenarien, neun Gerätezuständen, Lade-/Übertragungssimulation und Reset.
-- Vorbereiteter Offline-Cache und PWA-Manifest mit eigenen Icons; keine externen Laufzeitabhängigkeiten.
+- **C2 Startseite:** grafischer Wochenstand, Ziel100 mit schraffiertem Beispielbereich90–110 Bewegungsminuten, aktivste vollständige abgeschlossene Woche; kompakte Schritt-/Pulskarten.
+- **D1 Woche nach Tagen:** Aktivität, Schritte, Pulsminimum/-maximum, Tagesmittel sowie Puls-Mittelwerte bei Schritten und sonstiger Bewegung.
+- **W2 Wochenvergleich:** sechs Wochen, alle drei Messgrössen gleichzeitig. Jeder Balken, Wochenkopf und Pulsbereich öffnet direkt die betreffende Woche nach Tagen. Vorhandene Tage öffnen den Tagesverlauf.
+- **Tagesverlauf:** Bewegungsabschnitte nach Art, Schrittzahl/Strecke, lückenbewusster Pulsverlauf, Kategorie-Puls und Hauttemperatur.
+- **Armband/Interview/Info:** Gerätestatus, Szenarien, Lade-/Übertragungssimulation, Reset und jederzeit zugängliche Erklärung.
 
-Die Details sind vorläufig umgesetzt. Eine endgültige Designfreigabe erfolgt nach dem Tablet-Test. Einstieg in die gemeinsamen Dokumente: [README_START_HIER.md](README_START_HIER.md). Tatsächlicher Prüfstand: [docs/IMPLEMENTATION_STATUS.md](docs/IMPLEMENTATION_STATUS.md).
+Alle Unterseiten mit rotem Startseite-Button. Kopfzeile kompakt, Datum gut sichtbar, Status ausdrücklich **Armband-Akku**. Alte A/B-Auswahl und Messgrössenreiter im Wochenvergleich entfallen.
 
-## Lokal prüfen und bauen
+## Datum und Daten
 
-Node.js 24; keine npm-Installation erforderlich:
+Beim Appstart liest die PWA das lokale Datum und die Uhrzeit des Tablets. Dieser Zeitanker bleibt für die Sitzung erhalten. Reset verändert ihn nicht; ein neuer Appstart liest neu. Kein festes Demo-Datum. Zukünftige Tage sind „Noch nicht“, keine Nullmessungen. Vor08Uhr gibt es für heute noch keine Messdaten.
+
+Daten werden deterministisch relativ zum Sitzungsdatum erzeugt. Am beispielhaften Donnerstag nach14:30: bisher80 Bewegungsminuten und3500 Schritte. An anderen Tagen/Uhrzeiten andere konsistente Summen. Zielband und Sensor-Kategorien sind hypothetische Demonstration, keine medizinischen Vorgaben oder zugesicherten Hardwarefunktionen.
+
+Wochen-/Tages-/Kategorie-Puls aus derselben verfügbaren Minutenzeitreihe, keine Mittelwertsummen. Messlücken werden entfernt, nicht als Ruhe interpretiert. Ein Übertragungsrückstand begrenzt sämtliche aktuellen Werte. Persönliche Bestwoche berücksichtigt nur abgeschlossene vollständig erfasste Wochen.
+
+## Prüfen und bauen
+
+Node.js24; keine npm-Laufzeitabhängigkeiten:
 
 ```sh
 npm run check
@@ -24,24 +31,18 @@ npm run build
 python3 -m http.server 8000 --directory dist
 ```
 
-Optionaler echter Browser-Smoke-Test (zusätzliche reine Testabhängigkeit): `python3 -m pip install playwright==1.56.0`, `python3 -m playwright install chromium`, dann `python3 tests/browser_smoke.py`. GitHub Actions führt diesen Test automatisch aus.
+Danach http://localhost:8000/ öffnen; keine file://-Nutzung. Build nach dist/, einschliesslich inhaltsabhängig versioniertem Service Worker. Relative URLs funktionieren unter /SMARTwearable/.
 
-Danach `http://localhost:8000/` öffnen. Für Service Worker HTTPS oder localhost verwenden. Der Build erzeugt ausschliesslich in `dist/` die auszuliefernden Dateien, einschliesslich inhaltsabhängig versioniertem Offline-Cache. Nicht direkt `public/index.html` als Datei öffnen.
+Echter Browser-Test: `python3 -m pip install playwright==1.56.0`, `python3 -m playwright install chromium`, dann `python3 tests/browser_smoke.py`. GitHub Actions führt dies automatisch aus. Der Test setzt eine Testuhr; der Produktcode besitzt keine fest kodierte Demo-Uhr.
 
-## Veröffentlichung
+## Übergabe und Veröffentlichung
 
-1. Pull Request prüfen und nach `main` übernehmen.
-2. Repository → Settings → Pages → Build and deployment → Source: **GitHub Actions**.
-3. Actions für das Repository zulassen; falls erforderlich die Bereitstellung in der Umgebung `github-pages` freigeben.
-4. Workflow **Check and deploy PWA** erfolgreich abschliessen lassen, gegebenenfalls manuell auf `main` starten.
-5. Erwartete, noch nicht bestätigte Adresse: https://martinbia.github.io/SMARTwearable/
+Gemeinsame Dokumente: [README_START_HIER.md](README_START_HIER.md). Tatsächlicher Prüfstand und offene Tablet-Checks: [docs/IMPLEMENTATION_STATUS.md](docs/IMPLEMENTATION_STATUS.md).
 
-Pull Requests führen Prüfungen aus, veröffentlichen aber nicht. Der Hauptbranch und manuelle Starts auf `main` können nach bestandenen Prüfungen veröffentlichen. Es sind keine benutzerdefinierten Secrets vorgesehen. Die Initialisierung von `main` enthält nur dieses Projektgerüst; die Anwendung kommt über den Pull Request.
+Änderungen als Pull Request, kein automatisches Merge. Nach Übernahme in main veröffentlicht der vorhandene Workflow, sofern Settings → Pages → Source **GitHub Actions** aktiviert ist. Bei Bedarf Workflow manuell auf main starten. Keine zusätzlichen Secrets vorgesehen. PR-Prüfungen veröffentlichen nicht.
 
-## Tablet vorbereiten
+Erwartete Adresse: https://martinbia.github.io/SMARTwearable/. Veröffentlichung dieses Änderungsstandes erst nach Merge/erfolgreichem Deployment bestätigen.
 
-Veröffentlichte URL im Browser des Lenovo Tab TB311FU öffnen. Nach vollständiger Vorbereitung im Browsermenü „App installieren“ bzw. „Zum Startbildschirm hinzufügen“ verwenden; die konkrete Bezeichnung hängt vom Browser ab. In Interviewsteuerung Offline-Bereitschaft kontrollieren. Vor Interviews im Flugmodus einen Kaltstart durchführen und danach die gewünschte Netzverbindung wiederherstellen.
+## Lenovo-Test
 
-Ein Update wird bei erkannter neuer Service-Worker-Version angeboten und erst nach „Neue Version laden“ aktiviert; ein laufendes Interview kann bis dahin in der bisherigen Version bleiben. Nach einem Update startet die Demo wieder im Grundzustand. Es werden keine Interviewantworten gespeichert. Die Version steht im Interviewbereich.
-
-Die Aktivitätsszenarien sind deterministisch, Demo-Heute ist 09.11.2026 um 14:30 Uhr (Europe/Zurich). Eine fehlende Übertragung begrenzt alle angezeigten Messwerte. Schritt- und Streckensummen sind bei Teilübertragung „nicht verfügbar“, da keine erfundenen zeitaufgelösten Schrittwerte existieren.
+PWA online vollständig öffnen, Installation über Browsermenü testen. Hoch-/Querformat, Schriftvergrösserung, rote Rückwege, Woche→Tag→Woche und echte Touch-Ziele prüfen. Vor Interviews Offline-Bereitschaft abwarten, Flugmodus einschalten, App schliessen und neu starten. Ein Update wird erst durch „Neue Version laden“ aktiviert; dabei startet die Sitzung neu. Keine Interviewantworten gespeichert.

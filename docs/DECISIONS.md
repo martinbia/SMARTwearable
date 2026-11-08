@@ -36,3 +36,23 @@ Version 0.1 · 06.11.2026
 Neue Vereinbarungen mit Datum und stabiler ID ergänzen. Bestehende Beschlüsse nicht rückwirkend als bestätigt ausgeben. Umsetzungsvorschläge können ausdrücklich zur vorläufigen Umsetzung beauftragt werden; Status und endgültige Designfreigabe bleiben nachvollziehbar getrennt.
 
 Bei Änderung immer betroffene funktionale Anforderungen, UX, Demodaten, Prüfkriterien und Interviewaufgaben gemeinsam prüfen. Implementierungsstand erst mit Commit-/PR-Bezug und tatsächlichen Prüfergebnissen ergänzen.
+
+## Beschlüsse GUI v0.2 (08.11.2026)
+
+Diese neueren Beschlüsse ersetzen bei Widerspruch ältere Entscheidungen, ohne die Historie zu löschen.
+
+| ID | Status | Beschluss |
+| --- | --- | --- |
+| D17 | F | C2 als Startseite mit grafischem Wochenstand, Zielband und Bestwoche; ersetzt bisherigen Heute-Einstieg/A-B. |
+| D18 | F | D1 als Tagesaufschlüsselung einer ausgewählten Woche. |
+| D19 | F | W2 als Wochenvergleich mit drei gleichzeitig sichtbaren Messgrössen; Auswahlreiter entfallen. |
+| D20 | F | Jede Woche direkt antippbar; öffnet genau diese Woche nach Tagen. Jeder vorhandene Tag öffnet Tagesverlauf. |
+| D21 | F | Startseite-Button auf allen Unterseiten rot mit weisser Schrift. |
+| D22 | F | Puls: Min/Max und während Schritten bzw. sonstiger Bewegung; Mittelwerte je Kategorie vorläufig wie besprochen. |
+| D23 | F | Status ausdrücklich „Armband-Akku“. Kleiner Kopf statt grossem Banner. |
+| D24 | F | Aktuelles lokales Datum beim Appstart; ersetzt festen Datumsanker D11. |
+| D25 | F | Umsetzung beauftragt, Spezifikationen zuerst aktualisieren, neuer PR ohne automatisches Merge. |
+| D26 | A | Sechs Wochen; Ziel100/Band90–110 nur illustrative Demoparameter. |
+| D27 | A | Sitzung friert Datum/Uhrzeit ein; kein obligatorischer Info-Startdialog. |
+
+Weiter offen: echtes Wearable/Klassifikationsverfahren, reale Lenovo-Prüfungen und fachlich vereinbarte Ziele. Sensorgrenzen und Zielband sind keine bestätigten medizinischen Parameter. Umsetzung und Veröffentlichung separat in IMPLEMENTATION_STATUS.md nachweisen.

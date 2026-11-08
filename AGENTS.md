@@ -16,7 +16,7 @@ Klickbares PWA-Mock-up für qualitative Interviews mit Patienten nach Hüftopera
 ## Produktregeln
 
 - Nur fiktive Daten; keine echten Personen, Wearable-Anbindungen, Konten, Analytik oder Cloud-APIs.
-- Heute priorisieren, sieben Tage ergänzen. Einfache Übersicht, Details bei Bedarf.
+- C2-Wochenstart priorisieren, D1-Tagesaufschlüsselung und W2-Wochenvergleich ergänzen. Einfache Übersicht, Details bei Bedarf.
 - Selbstständigkeit respektieren. Keine Diagnose, Heilungsprozente, pauschalen Aktivitätsziele oder Belastungsfreigaben.
 - Messwerte, Ableitungen, Selbstberichte und Gerätestatus unterscheiden.
 - Datenlücken sind keine Ruhephasen. Hauttemperatur nicht als Körperkerntemperatur bezeichnen.
@@ -31,3 +31,7 @@ Klickbares PWA-Mock-up für qualitative Interviews mit Patienten nach Hüftopera
 - Gemessene Ergebnisse von noch ausstehenden Prüfungen unterscheiden. Tabletprüfung nicht durch einen Desktoptest als erledigt darstellen.
 - Keine automatische Synchronisation zwischen ChatGPT-Projekt und GitHub behaupten.
 - Keine echten Interviewantworten speichern oder übertragen.
+
+## Ab Version 0.2
+
+C2/D1/W2 ersetzen A/B. Aktuelles lokales Appstart-Datum statt fester Demotag. Alle Unterseiten mit rotem Startseite-Button. Die Beschlüsse D17–D27 und Spezifikationen v0.2 haben Vorrang gegenüber dem historischen CODEX_START.md v0.1. Keine echten Sensoren oder medizinischen Ziele.
