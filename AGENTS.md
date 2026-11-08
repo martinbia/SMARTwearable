@@ -35,3 +35,7 @@ Klickbares PWA-Mock-up für qualitative Interviews mit Patienten nach Hüftopera
 ## Ab Version 0.2
 
 C2/D1/W2 ersetzen A/B. Aktuelles lokales Appstart-Datum statt fester Demotag. Alle Unterseiten mit rotem Startseite-Button. Die Beschlüsse D17–D27 und Spezifikationen v0.2 haben Vorrang gegenüber dem historischen CODEX_START.md v0.1. Keine echten Sensoren oder medizinischen Ziele.
+
+## Ab Version 0.3
+
+Startseite Variante 2 zeigt nur Aktivität. Schritte und Puls bleiben in Details. D28–D31 und N17 regeln kompakte Darstellung mit sichtbaren Aktionen innerhalb der tatsächlich verfügbaren App-Fläche; bei Vergrösserung Inhalte nicht abschneiden.

@@ -48,6 +48,10 @@ def run():
         assert page.locator('[data-action=update]').count() == 0
 
         def click(action):
+            if action == 'today':
+                click('currentWeek')
+                day_click('2026-11-12')
+                return
             if action == 'home' and page.locator('.home-button').count() == 0:
                 return
             page.locator(f'[data-action="{action}"]:visible').first.click()
@@ -76,6 +80,9 @@ def run():
             page.locator(f'[data-action=date][data-date="{date}"]:visible').first.click()
 
         no_overflow()
+        assert 'Schritte' not in page.locator('main').inner_text()
+        assert 'Puls' not in page.locator('main').inner_text()
+        assert page.locator('.home-actions button').count() == 3
         page.screenshot(path='test-results/c2-home-landscape.png', full_page=True)
         click('weeks'); red_home(); no_overflow(); aligned_bars()
         assert page.get_by_role('tab').count() == 0
@@ -124,6 +131,25 @@ def run():
             click('home')
             if size['width']==820: page.screenshot(path='test-results/c2-home-portrait.png',full_page=True)
 
+        # N17: these are AVAILABLE app viewports, after OS bars have taken their space.
+        for size in [{'width':1280,'height':640}, {'width':1180,'height':620}, {'width':1024,'height':560}, {'width':820,'height':1020}]:
+            page.set_viewport_size(size)
+            click('home')
+            page.screenshot(path=f"test-results/compact-home-{size['width']}x{size['height']}.png", full_page=True)
+            no_overflow()
+            assert page.evaluate('document.documentElement.scrollHeight <= innerHeight + 1'), f"vertical home overflow {size}"
+            assert 'Schritte' not in page.locator('main').inner_text()
+            assert 'Puls' not in page.locator('main').inner_text()
+            for control in page.locator('.compact-shell button, .comparison-link').all():
+                box = control.bounding_box()
+                assert box and box['y'] >= 0 and box['y'] + box['height'] <= size['height'] + 1, (size, box)
+                assert box['height'] >= 48 and box['width'] >= 48, (size, box)
+            # Navigation remains usable from the same compact screen.
+            click('currentWeek')
+            assert 'Schritte' in page.locator('main').inner_text()
+            assert 'Puls' in page.locator('main').inner_text()
+            click('home')
+
         page.set_viewport_size({'width':1280,'height':900})
         # Actual browser layout at doubled CSS zoom, not Android system text sizing.
         page.evaluate("document.documentElement.style.zoom='2'")
@@ -141,7 +167,7 @@ def run():
         assert 'noch nicht abschätzbar' in page.locator('main').inner_text()
         assert not errors,errors
         browser.close()
-    print('Chromium passed: C2/D1/W2, direct week/day routes, red home buttons, pulse categories, date, responsive layouts, zoom, simulation and offline reload.')
+    print('Chromium passed: C2/D1/W2, direct week/day routes, red home buttons, pulse categories, date, responsive layouts, zoom, simulation, activity-only compact home without scrolling and offline reload.')
 
 
 if __name__ == '__main__':

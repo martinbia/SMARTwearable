@@ -56,3 +56,14 @@ Diese neueren Beschlüsse ersetzen bei Widerspruch ältere Entscheidungen, ohne 
 | D27 | A | Sitzung friert Datum/Uhrzeit ein; kein obligatorischer Info-Startdialog. |
 
 Weiter offen: echtes Wearable/Klassifikationsverfahren, reale Lenovo-Prüfungen und fachlich vereinbarte Ziele. Sensorgrenzen und Zielband sind keine bestätigten medizinischen Parameter. Umsetzung und Veröffentlichung separat in IMPLEMENTATION_STATUS.md nachweisen.
+
+## Beschlüsse GUI v0.3 (08.11.2026)
+
+| ID | Status | Beschluss |
+| --- | --- | --- |
+| D28 | F | Variante 2 mit Aktivität als einziger Messgrösse auf der Startseite ausgewählt und Umsetzung beauftragt. Ersetzt Schritte-/Pulskarten aus v0.2. |
+| D29 | F | Schritte und Puls bleiben über Tages-/Wochendetails zugänglich; Zielband, Bestwoche und aktuelles Datum bleiben erhalten. |
+| D30 | F | Kopfbereich weiter reduzieren; Hauptnavigation innerhalb der zwischen Android-Systemleisten verfügbaren Fläche sichtbar. Keine Systemleisten simulieren. |
+| D31 | A | Browser-Prüfflächen N17 als vorläufige Abnahmekriterien; reale Lenovo-App-Höhe noch unbekannt. Vergrösserung/kleine Fenster dürfen vertikal scrollen, damit Inhalte zugänglich bleiben. |
+
+Änderungen als neuer Pull Request auf dem inzwischen gemergten Stand von PR #2; kein automatisches Merge.

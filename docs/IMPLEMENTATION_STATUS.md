@@ -1,4 +1,29 @@
-# Implementierungs- und Prüfstand v0.2
+# Implementierungs- und Prüfstand v0.3
+
+08.11.2026 · Anwendung 0.3.0 · Branch feat/compact-activity-home. Neuer Pull Request ohne automatisches Merge.
+
+## Änderung v0.3
+
+F22 / D28–D31: ausgewählte Variante 2, nur Aktivität auf der Startseite. Schritte/Puls bleiben in D1/W2/Tagesdetails. Kompakter gemeinsamer Kopfbereich, Wochengrafik, drei Hauptaktionen und kleine Fusszeile. Dynamische Viewport-Höhe nutzt die verfügbare App-Fläche; keine Nachbildung oder doppelte Subtraktion der Android-Leisten. Zoom/kleine Fenster dürfen vertikal scrollen, Inhalte bleiben erreichbar.
+
+## Prüfstand v0.3
+
+Syntaxprüfung lokal erfolgreich. Erweiterte Modell-/UI-/Offline- und Browserprüfungen werden für diesen Änderungsstand ausgeführt; Resultate vor Abschluss ergänzen. Vorläufige Prüfflächen N17 sind keine bestätigten Lenovo-Abmessungen.
+
+## Am Lenovo vor Interview noch prüfen
+
+- Tatsächlich verfügbare CSS-Breite/-Höhe im Chrome-PWA-Modus mit oberer Statusleiste und unterer App-Leiste notieren; Normal-Schrift: Startseite inklusive aller drei Aktionen ohne Scrollen.
+- Hoch-/Querformat und sichtbare/automatisch ausblendende Systemleisten; keine überdeckten Buttons.
+- Android-Schriftvergrösserung und 200-%-Zoom: vertikales Scrollen erlaubt, alle Inhalte erreichbar.
+- Touch-Treffbarkeit, Lesbarkeit und Verstehen von allgemeiner Aktivität; Schritte/Puls in den Details auffinden.
+- Update von 0.2.0 auf 0.3.0, Installation/Standalone und vorbereiteter Offline-Kaltstart.
+- Laufzeit, Lade-/Übertragungssimulation und reale Reaktionszeiten prüfen. Nur fiktive Messwerte.
+
+---
+
+## Historischer Prüfstand v0.2 (bereits über PR #2 übernommen)
+
+### Umsetzung v0.2
 
 08.11.2026 · Anwendung 0.2.0 · Branch feat/gui-c2-d1-w2. [Pull Request #2](https://github.com/martinbia/SMARTwearable/pull/2), kein automatisches Merge und keine Veröffentlichung dieses Stands vor Merge.
 

@@ -1,6 +1,6 @@
 # Interviewleitfaden – Entwurf
 
-Version 0.2 · 08.11.2026 · VORSCHLAG, kein klinisch validiertes Instrument.
+Version 0.3 · 08.11.2026 · VORSCHLAG, kein klinisch validiertes Instrument.
 
 ## Vorbereitung
 
@@ -12,9 +12,9 @@ Einführung: „Diese Anwendung zeigt erfundene Beispieldaten. Das Armband über
 
 | Aufgabe | Neutrale Nachfrage | Beobachtung |
 | --- | --- | --- |
-| Schauen Sie sich an, was die Anwendung über heute zeigt. | Was bedeuten diese Angaben für Sie? | Verständnis von Minuten, Abschnitten, bisher |
+| Schauen Sie sich die Aktivität dieser Woche an. | Was bedeuten diese Angaben für Sie? | Verständnis von Minuten, Abschnitten, bisher |
 | Finden Sie Einzelheiten zu einem Bewegungsabschnitt. | Was würden Sie zusätzlich wissen wollen? | Auffindbarkeit, Zurückweg |
-| Sehen Sie sich die letzten sieben Tage an. | Welche Unterschiede fallen Ihnen auf? | Umgang mit unvollständigem Heute und Lückentag |
+| Öffnen Sie diese Woche nach Tagen. | Welche Unterschiede fallen Ihnen auf? | Umgang mit unvollständigem Heute und Lückentag |
 | Finden Sie die Puls- und Temperaturinformationen. | Wie würden Sie diese Informationen verwenden? | Nutzen und Fehlinterpretationen |
 | Finden Sie heraus, wann das Armband geladen werden müsste. | Woher haben Sie das erkannt? | Prozentwert versus geschätzte Laufzeit |
 | Prüfen Sie, bis wann die Daten aktuell sind. | Was bedeutet eine fehlende Verbindung Ihrer Ansicht nach? | Verbindung, Aufzeichnung, Übertragung unterscheiden |
@@ -26,3 +26,5 @@ Anschliessend S02, S03 und ausgewählte Gerätezustände zeigen. Fragen: „Wie 
 ## Dokumentation ausserhalb der PWA
 
 Demo-Version, Gerät/Browserversion, Variantenreihenfolge, Hilfestellungen, verständliche/unverständliche Begriffe, unbeabsichtigte Bewertungen und Informationswünsche notieren. Präferenz und Begründung getrennt festhalten. Kein pseudogenaues Bestehen/Nichtbestehen ohne vorher definierten Auswertungsplan.
+
+Aufgabe v0.3: Startseite im PWA-Modus mit Android-Status-/App-Leiste öffnen. Ohne Scrollen Woche nach Tagen, Wochenvergleich und Mein Armband finden. Prüfen, ob Aktivität als allgemeine Bewegung verstanden wird; Schritte und Puls erst in den Details suchen. Verfügbare App-Fläche und System-Schriftgrösse notieren.

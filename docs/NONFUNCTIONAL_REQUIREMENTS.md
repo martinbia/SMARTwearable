@@ -1,6 +1,6 @@
 # Nichtfunktionale Anforderungen
 
-Version 0.2 · 08.11.2026
+Version 0.3 · 08.11.2026
 
 Qualitätsziele stammen aus den Projektvorgaben. Alle hier vorgeschlagenen Zahlenwerte sind VORSCHLÄGE, keine bereits freigegebenen Norm- oder Gerätebehauptungen. P1 = für erste Interviewversion wichtig, P2 = ergänzend.
 
@@ -11,7 +11,7 @@ Qualitätsziele stammen aus den Projektvorgaben. Alle hier vorgeschlagenen Zahle
 | N03 | Deutliche Kontraste | Zugänglichkeit | P1 | Textkontrast mindestens 4,5:1; wesentliche grafische Elemente mindestens 3:1; Farbe immer mit Text/Symbol. | V |
 | N04 | Vergrösserbare Inhalte | Unterschiedlicher Sehbedarf | P1 | Bei 200 % Vergrösserung kein Informationsverlust und keine überlagerten Bedienelemente. | V |
 | N05 | Hoch- und Querformat | Bestätigter Tablet-Kontext | P1 | Drehung erhält Datum, Variante und Szenario; kein horizontales Scrollen der Seite. | F, Prüfkriterium V |
-| N06 | Einfache Informationshierarchie | Übersicht mit Vertiefung | P1 | C2 zeigt eine zentrale Wochengrafik plus zwei kompakte Messkarten; Details nach Antippen. | F, Prüfkriterium V |
+| N06 | Einfache Informationshierarchie | Übersicht mit Vertiefung | P1 | Startseite zeigt ausschliesslich Aktivität als zentrale Wochengrafik; Schritte und Puls erst in Details. | F, Prüfkriterium V |
 | N07 | Klare Orientierung | Selbstständigkeit | P1 | Jede Detailansicht mit Titel und beschriftetem Zurückweg; Armband, D1 und W2 höchstens zwei Aktionen ab C2; alle Unterseiten mit rotem Startseite-Button. | V |
 | N08 | Schnelle Reaktion | Flüssige Interviews | P1 | Lokale Navigation nach Vorbereitung in unter 300 ms sichtbar; erste Interaktion nach vorbereitetem Kaltstart unter 3 s am Tablet. | V |
 | N09 | Respektvolle Sprache | Autonomie, keine Bewertung | P1 | Textprüfung: keine Ranglisten, Strafsymbole, pauschalen Ziele, Heilungs- oder Leistungsurteile. | F, Prüfkriterium V |
@@ -25,3 +25,5 @@ Qualitätsziele stammen aus den Projektvorgaben. Alle hier vorgeschlagenen Zahle
 Prüfungen auf Desktop und simulierten Ansichtsgrössen ersetzen nicht die reale Prüfung auf Lenovo Tab TB311FU. Android-/Browserversion und tatsächliche CSS-Ansichtsgrösse beim Tablet-Test notieren; aus der Modellnummer nicht ableiten.
 
 N16 (F): gleiche Datenbasis und Einheiten in C2/D1/W2; Zeit-/Datenstandfilter auch für Kategorie-Puls anwenden. Prüfen: Tages-/Wochensummen, Min/Max und Mittelwerte aus gültigen Rohproben identisch. Keine Reiter ohne Funktion.
+
+N17 (F, konkrete Grössen ANNAHME): Kompakte Startseite Variante 2 ohne vertikales/horizontales Scrollen bei Standard-Schrift in verfügbaren App-Ansichten 1280×640, 1180×620, 1024×560 und 820×1020 CSS-Pixel. Alle drei Hauptaktionen und Footer vollständig innerhalb des Viewports; keine überdeckten Inhalte. Dies sind Browser-Testfenster nach Abzug der Systemflächen, keine zugesicherten Lenovo-Gerätemasse. Bei 200-%-Zoom und kleinen Fenstern vertikales Scrollen als barrierearmer Rückfall zulassen. Reale verfügbare Höhe am Lenovo noch messen.

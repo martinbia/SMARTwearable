@@ -1,10 +1,10 @@
 # SMARTwearable
 
-Tablet-PWA-Mock-up für qualitative Interviews nach Hüftoperation. Version 0.2.0 verwendet die ausgewählten Konzepte C2, D1 und W2. Ausschliesslich fiktive Daten, keine technische Verbindung zum angelegten Armband.
+Tablet-PWA-Mock-up für qualitative Interviews nach Hüftoperation. Version 0.3.0 verwendet die ausgewählten Konzepte C2, D1 und W2. Ausschliesslich fiktive Daten, keine technische Verbindung zum angelegten Armband.
 
 ## Ansichten
 
-- **C2 Startseite:** grafischer Wochenstand, Ziel100 mit schraffiertem Beispielbereich90–110 Bewegungsminuten, aktivste vollständige abgeschlossene Woche; kompakte Schritt-/Pulskarten.
+- **C2 Startseite:** grafischer Wochenstand, Ziel100 mit schraffiertem Beispielbereich90–110 Bewegungsminuten, aktivste vollständige abgeschlossene Woche; ausschliesslich Aktivität; Schritte/Puls in Details.
 - **D1 Woche nach Tagen:** Aktivität, Schritte, Pulsminimum/-maximum, Tagesmittel sowie Puls-Mittelwerte bei Schritten und sonstiger Bewegung.
 - **W2 Wochenvergleich:** sechs Wochen, alle drei Messgrössen gleichzeitig. Jeder Balken, Wochenkopf und Pulsbereich öffnet direkt die betreffende Woche nach Tagen. Vorhandene Tage öffnen den Tagesverlauf.
 - **Tagesverlauf:** Bewegungsabschnitte nach Art, Schrittzahl/Strecke, lückenbewusster Pulsverlauf, Kategorie-Puls und Hauttemperatur.
@@ -46,3 +46,7 @@ Erwartete Adresse: https://martinbia.github.io/SMARTwearable/. Veröffentlichung
 ## Lenovo-Test
 
 PWA online vollständig öffnen, Installation über Browsermenü testen. Hoch-/Querformat, Schriftvergrösserung, rote Rückwege, Woche→Tag→Woche und echte Touch-Ziele prüfen. Vor Interviews Offline-Bereitschaft abwarten, Flugmodus einschalten, App schliessen und neu starten. Ein Update wird erst durch „Neue Version laden“ aktiviert; dabei startet die Sitzung neu. Keine Interviewantworten gespeichert.
+
+## Kompakte Startseite v0.3
+
+Ausgewählte Variante 2: kompakte gemeinsame Kopfzeile, nur Aktivität im Wochenvergleich, drei direkt sichtbare Hauptaktionen. Die verfügbare App-Höhe wird über dynamische Viewport-Einheiten genutzt; Android-Status-/App-Leisten bleiben Systemflächen. Kein erzwungenes Vollbild und keine künstlich nachgezeichneten Systemleisten. Bei starker Vergrösserung oder kleinen Fenstern vertikales Scrollen zulassen. Vorläufige Testflächen und noch nötige Lenovo-Messung siehe N17 und IMPLEMENTATION_STATUS.md.

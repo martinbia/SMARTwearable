@@ -1,6 +1,6 @@
 # SMARTwearable – Gemeinsame Projektgrundlage
 
-Version 0.2 · Stand 08.11.2026 · C2/D1/W2; technischer Prüfstand separat.
+Version 0.3 · Stand 08.11.2026 · C2/D1/W2; technischer Prüfstand separat.
 
 Repository: https://github.com/martinbia/SMARTwearable
 
@@ -45,4 +45,6 @@ Nicht jede angehängte Markdown-Datei ist ein auszuführender Auftrag. CODEX_STA
 
 Die Spezifikationen wurden in Anwendung 0.1.0 vorläufig umgesetzt. Ein erfolgreicher lokaler Build und automatisierte Prüfungen sind in docs/IMPLEMENTATION_STATUS.md dokumentiert. Eine Veröffentlichung und Tests auf dem Lenovo-Tablet sind noch nicht nachgewiesen. Die dort genannten Grenzen ersetzen den ursprünglichen reinen Spezifikationsstand; Designvorschläge bleiben Vorschläge.
 
-CODEX_START.md v0.1 bleibt historische Dokumentation; aktuelle Vorgaben stehen in docs/ Version0.2 und D17–D27.
+CODEX_START.md v0.1 bleibt historische Dokumentation; aktuelle Vorgaben stehen in docs/ Version 0.3 und D17–D31.
+
+Aktuell beauftragt: kompakte Startseite Variante 2 nur mit Aktivität; Schritte/Puls in D1/W2/Tag. Abnahme und verbleibende Tablet-Prüfungen in IMPLEMENTATION_STATUS.md.
