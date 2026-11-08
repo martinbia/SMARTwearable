@@ -13,6 +13,10 @@ test('C2 → W2 → selected D1 → day; all subpages return home and reset work
   try {
     await import('../src/app.js');
     assert.match(app.innerHTML,/data-testid="week-minutes">80</);
+    assert.doesNotMatch(app.innerHTML,/Schritte|Puls|metric-link|home-cards/);
+    assert.match(app.innerHTML,/compact-shell/);
+    assert.match(app.innerHTML,/Woche nach Tagen →/);
+    assert.match(app.innerHTML,/Mein Armband/);
     assert.match(app.innerHTML,/Armband-Akku 62 %/);assert.ok(!app.innerHTML.includes('data-action="home"'));
     for(let i=0;i<10;i++) {
       await click('weeks');assert.match(app.innerHTML,/Meine Wochen im Vergleich/);assert.ok(!app.innerHTML.includes('role="tab"'));

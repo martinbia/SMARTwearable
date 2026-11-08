@@ -1,4 +1,38 @@
-# Implementierungs- und Prüfstand v0.2
+# Implementierungs- und Prüfstand v0.3
+
+08.11.2026 · Anwendung 0.3.0 · Branch feat/compact-activity-home. [Pull Request #3](https://github.com/martinbia/SMARTwearable/pull/3), ohne automatisches Merge.
+
+## Änderung v0.3
+
+F22 / D28–D31: ausgewählte Variante 2, nur Aktivität auf der Startseite. Schritte/Puls bleiben in D1/W2/Tagesdetails. Kompakter gemeinsamer Kopfbereich, Wochengrafik, drei Hauptaktionen und kleine Fusszeile. Dynamische Viewport-Höhe nutzt die verfügbare App-Fläche; keine Nachbildung oder doppelte Subtraktion der Android-Leisten. Zoom/kleine Fenster dürfen vertikal scrollen, Inhalte bleiben erreichbar.
+
+## Prüfstand v0.3
+
+Lokal erfolgreich: Syntaxprüfung, elf automatisierte Node-Tests, statischer PWA-Build, Python-Syntax und git diff --check.
+
+[GitHub-Prüflauf #12](https://github.com/martinbia/SMARTwearable/actions/runs/42503352150) für Implementierungscommit b19115670872dceb1b29ab5e3398931baaf76af2 erfolgreich: Syntax, elf Tests, Build und echter Chromium-Browsertest. Deployment im PR übersprungen.
+
+- Startseite enthält keine Schritte-/Pulswerte und keine entsprechenden Karten; in Tages-/Wochendetails bleiben sie vorhanden.
+- Startseite ohne horizontalen UND vertikalen Überlauf bei 1280×640, 1180×620, 1024×560 und 820×1020 CSS-Pixeln. Grafiklink, Kopfbereich, alle drei Hauptaktionen und Footer innerhalb des Viewports; Touch-Ziele mindestens 48×48 Pixel. Screenshots visuell geprüft.
+- Vorhandene Navigation, rote Startseite-Buttons, Datenlücken, Puls-Kategorien, Kalender und zehn vollständige Aufgabenrunden erfolgreich; Übertragungs-/Fehlersimulation und Reset erhalten.
+- Weitere Ansichtsgrössen, 200-%-CSS-Zoom, Service Worker, vorbereiteter Offline-Neustart und Navigation unter /SMARTwearable/ erfolgreich.
+
+Vorläufige Prüfflächen N17 sind keine bestätigten Lenovo-Abmessungen. Browser-Zoom ist keine reale Android-Schriftvergrösserung. Ein eventuell angebotener Versionsupdate-Hinweis darf zusätzlich Platz benötigen und Scrollen auslösen. Kein Verbergen von Hinweisen zugunsten der Ein-Bildschirm-Darstellung.
+
+## Am Lenovo vor Interview noch prüfen
+
+- Tatsächlich verfügbare CSS-Breite/-Höhe im Chrome-PWA-Modus mit oberer Statusleiste und unterer App-Leiste notieren; Normal-Schrift: Startseite inklusive aller drei Aktionen ohne Scrollen.
+- Hoch-/Querformat und sichtbare/automatisch ausblendende Systemleisten; keine überdeckten Buttons.
+- Android-Schriftvergrösserung und 200-%-Zoom: vertikales Scrollen erlaubt, alle Inhalte erreichbar.
+- Touch-Treffbarkeit, Lesbarkeit und Verstehen von allgemeiner Aktivität; Schritte/Puls in den Details auffinden.
+- Update von 0.2.0 auf 0.3.0, Installation/Standalone und vorbereiteter Offline-Kaltstart.
+- Laufzeit, Lade-/Übertragungssimulation und reale Reaktionszeiten prüfen. Nur fiktive Messwerte.
+
+---
+
+## Historischer Prüfstand v0.2 (bereits über PR #2 übernommen)
+
+### Umsetzung v0.2
 
 08.11.2026 · Anwendung 0.2.0 · Branch feat/gui-c2-d1-w2. [Pull Request #2](https://github.com/martinbia/SMARTwearable/pull/2), kein automatisches Merge und keine Veröffentlichung dieses Stands vor Merge.
 

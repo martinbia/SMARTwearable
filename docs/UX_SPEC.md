@@ -1,10 +1,10 @@
 # Ansichten und Bedienkonzept
 
-Version 0.2 · 08.11.2026 · C2, D1 und W2 FESTGELEGT; Detailparameter als Annahmen gekennzeichnet.
+Version 0.3 · 08.11.2026 · C2, D1 und W2 FESTGELEGT; Detailparameter als Annahmen gekennzeichnet.
 
 ## Gemeinsamer Rahmen
 
-Sehr kompakte Kopfzeile mit SMARTwearable und Info/Beispieldaten. Darunter aktueller lokaler Wochentag und Datum vom Appstart sowie ausdrücklich „Armband-Akku … % · Daten bis …“. Kein grosser Titelbanner. Info bleibt jederzeit erreichbar; ein obligatorischer Startdialog wurde nicht beschlossen.
+Auf der Startseite gemeinsame kompakte Kopfzeile: kleiner App-Name mit Info/Beispieldaten und ausdrücklich „Armband-Akku … % · Daten bis …“. Darunter aktueller lokaler Wochentag und Datum vom Appstart. Auf Unterseiten bleibt der bisherige Rahmen erhalten. Kein grosser Titelbanner. Info bleibt jederzeit erreichbar; ein obligatorischer Startdialog wurde nicht beschlossen.
 
 Auf ALLEN Unterseiten ein roter Button mit weisser Schrift „← Startseite“, einschliesslich Geräte-, Info-, Tages- und Interviewansicht. Zusätzliche kontextbezogene Rückwege sind neutral/teal. Rot bezeichnet hier Navigation, keine Bewertung der Aktivität.
 
@@ -12,7 +12,11 @@ Auf ALLEN Unterseiten ein roter Button mit weisser Schrift „← Startseite“,
 
 Gemeinsame Grafik mit drei horizontalen Reihen und gemeinsamer Null-/Minutenskala: aktuelle Woche bisher, persönliches Wochenziel, aktivste abgeschlossene Woche. Beim Wochenziel schraffiertes Toleranzband. Vorläufige Demowerte: Ziel 100, Bereich 90–110 Bewegungsminuten; kein medizinisch definierter Grenzbereich. Bestwoche nur unter abgeschlossenen Wochen mit vollständiger Messabdeckung bestimmen; wenn keine vorliegt, nicht verfügbar.
 
-Allgemeine Aktivität umfasst Schrittbewegung UND sonstige Bewegung, nicht allein Gehen. Icons: Bewegungssymbol, Fussabdrücke und Herz/Pulslinie; immer zusätzlich beschriften. Kleine Karten für Schritte und Puls, letzterer als Tagesbereich mit Zugang zu Min/Max und Aktivität. Antippen der grossen Wochengrafik öffnet direkt die aktuelle D1-Woche. Zwei gleichwertige zusätzliche Aktionen: „Diese Woche nach Tagen“ und „Wochen vergleichen“.
+Variante 2 (Aktivität allein) ist FESTGELEGT und ersetzt die bisherigen Schritte-/Pulskarten. Allgemeine Aktivität umfasst Schrittbewegung UND sonstige Bewegung. Auf der Startseite nur Aktivität als Messgrösse zeigen, mit neutralem Bewegungssymbol statt Geh-/Herzsymbol. Schritte und Puls bleiben in D1, W2 und Tagesdetails erreichbar. Antippen der Wochengrafik öffnet die aktuelle D1-Woche.
+
+Kompakte Überschrift „Aktivität diese Woche“ und Wochenzeitraum in einer Zeile, darunter drei Vergleichsreihen. Unter der Grafik kurzer Hinweis auf Bewegungsminuten, fiktiven Zielbereich und laufende/unvollständige Woche; ausführliche Erklärung über Info. Drei gut sichtbare Aktionen: „Woche nach Tagen“, „Wochen vergleichen“ und „Mein Armband“. Kleine Fusszeile mit Fiktiv-Hinweis, Info und Interviewsteuerung.
+
+Die tatsächlich verfügbare App-Höhe zwischen Android-Statusleiste und Taskleiste verwenden. Keine Systemleisten nachzeichnen oder deren angenommene Höhe nochmals abziehen; diese gehören Android. Bei Standard-Schriftgrösse soll die Startseite ohne Scrollen in reduzierten Tablet-Ansichten passen. D1/W2 dürfen weiterhin scrollen. Bei starker Schriftvergrösserung oder sehr kleinem Fenster Inhalte durch Scrollen erreichbar halten, nicht abschneiden oder hinter fixen Buttons verbergen. Keine Vollbildberechtigung verlangen.
 
 ## D1 – ausgewählte Woche nach Tagen
 
