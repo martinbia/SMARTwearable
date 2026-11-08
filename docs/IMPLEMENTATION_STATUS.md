@@ -1,6 +1,6 @@
 # Implementierungs- und Prüfstand v0.4
 
-08.11.2026 · Anwendung 0.4.0 · Branch feat/compact-detail-pages · neuer Pull Request ohne automatisches Merge.
+08.11.2026 · Anwendung 0.4.0 · [Pull Request #4](https://github.com/martinbia/SMARTwearable/pull/4) wurde während der abschliessenden Prüfungen auf GitHub manuell gemergt. Der übernommene Implementierungsstand ist erfolgreich geprüft. Die nachträgliche Prüfdokumentation wird separat als Dokumentations-PR vorgelegt; kein automatisches Merge.
 
 ## Änderung v0.4
 
@@ -8,7 +8,18 @@ F23–F25 / D32–D36: kompakte W2/D1/Tagesdetails ohne zusätzliche Marken-/Heu
 
 ## Prüfstand v0.4
 
-Implementierung und gezielte Prüfungen laufen. Tatsächliche lokale/CI-Ergebnisse vor Abschluss ergänzen. N18-Prüfflächen sind Annahmen und ersetzen keine reale Lenovo-Abnahme.
+Lokal erfolgreich: Syntax, 13 automatisierte Tests, statischer Build, Python-Syntax und git diff --check. Quellvergleich bestätigt unveränderte Startseiten-Funktion und sämtliche Daten-/Modellberechnungen; nur Versionskennung in data.js geändert.
+
+[GitHub-Prüflauf #20](https://github.com/martinbia/SMARTwearable/actions/runs/42506949798) für Implementierungscommit 8f253168b7d4636679cb799f75b72d0ea2c3fbfa erfolgreich: Syntax, 13 Tests, Build und echter Chromium-Test. Deployment im PR übersprungen.
+
+- W2/D1/Tag ohne vertikalen/horizontalen Seitenüberlauf in 1280×640, 1180×620, 1024×640 und 820×1020 verfügbaren CSS-Pixeln. Werkzeugzeile und Messgrafiken sichtbar, Toolbar-Touch-Ziele mindestens 48×48 Pixel. Bei Umbruch/Zoom bleibt Scrollen zugelassen.
+- Eine Titel-/Navigationszeile ohne Marken-/Heute-Banner. Rote Startseite-Buttons und direkter Kontext-Rückweg erhalten; zehn vollständige Aufgabenrunden erfolgreich.
+- Aktivität/Puls verwenden identische Zeitgrenzen und geometrisch ausgerichtete Plotflächen; Zeitbeschriftungen mit Abstand. Intervalllängen und Pulsgruppen entsprechen gültigen Proben, Lücken werden nicht verbunden, frühe leere Tage erzeugen keine Kurven.
+- Weitere Angaben zunächst geschlossen; Hauttemperatur und Puls-Rohwerte nach Öffnen erreichbar. Datenlücken-Hinweis aufklappbar; hypothetischer Grund und Zeitraum erhalten.
+- Startseite bleibt nur Aktivität; bisherige N17-Prüfflächen ohne Scrollen weiter erfolgreich. Weitere Bildschirmgrössen, 200-%-CSS-Zoom, Gerätesimulation/Reset, vorbereiteter Offline-Neustart und Navigation unter /SMARTwearable/ erfolgreich.
+- Browser-Screenshots der drei Ansichten stichprobenartig visuell geprüft. N18-Prüfflächen sind Annahmen und ersetzen keine reale Lenovo-Abnahme. Android-Schriftvergrösserung und PWA-Update bleiben echte Gerätetests.
+
+Die Designbilder illustrierten andere einzelne Datums-/Tageswerte. Übernommen wurde ihre Anordnung, nicht ein widersprüchlicher zweiter Datensatz. Bewegungsminuten, Schritte und Puls weiterhin ausschliesslich aus denselben gemeinsamen Demoproben. Keine klinischen Grenzen oder Wearable-Fähigkeiten neu festgelegt.
 
 ## Noch am Lenovo prüfen
 
