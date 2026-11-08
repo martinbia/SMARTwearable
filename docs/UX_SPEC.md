@@ -12,7 +12,7 @@ Auf ALLEN Unterseiten ein roter Button mit weisser Schrift „← Startseite“,
 
 Gemeinsame Grafik mit drei horizontalen Reihen und gemeinsamer Null-/Minutenskala: aktuelle Woche bisher, persönliches Wochenziel, aktivste abgeschlossene Woche. Beim Wochenziel schraffiertes Toleranzband. Vorläufige Demowerte: Ziel 100, Bereich 90–110 Bewegungsminuten; kein medizinisch definierter Grenzbereich. Bestwoche nur unter abgeschlossenen Wochen mit vollständiger Messabdeckung bestimmen; wenn keine vorliegt, nicht verfügbar.
 
-Allgemeine Aktivität umfasst Schrittbewegung UND sonstige Bewegung, nicht allein Gehen. Icons: Bewegungssymbol, Fussabdrücke und Herz/Pulslinie; immer zusätzlich beschriften. Kleine Karten für Schritte und Puls, letzterer als Verlauf mit Zugang zu Min/Max und Aktivität. Antippen der grossen Wochengrafik öffnet direkt die aktuelle D1-Woche. Zwei gleichwertige zusätzliche Aktionen: „Diese Woche nach Tagen“ und „Wochen vergleichen“.
+Allgemeine Aktivität umfasst Schrittbewegung UND sonstige Bewegung, nicht allein Gehen. Icons: Bewegungssymbol, Fussabdrücke und Herz/Pulslinie; immer zusätzlich beschriften. Kleine Karten für Schritte und Puls, letzterer als Tagesbereich mit Zugang zu Min/Max und Aktivität. Antippen der grossen Wochengrafik öffnet direkt die aktuelle D1-Woche. Zwei gleichwertige zusätzliche Aktionen: „Diese Woche nach Tagen“ und „Wochen vergleichen“.
 
 ## D1 – ausgewählte Woche nach Tagen
 

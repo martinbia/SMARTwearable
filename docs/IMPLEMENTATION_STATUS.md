@@ -1,6 +1,6 @@
 # Implementierungs- und Prüfstand v0.2
 
-08.11.2026 · Anwendung0.2.0 · Branch feat/gui-c2-d1-w2. Neuer Pull Request, kein automatisches Merge und keine Veröffentlichung dieses Stands vor Merge.
+08.11.2026 · Anwendung 0.2.0 · Branch feat/gui-c2-d1-w2. [Pull Request #2](https://github.com/martinbia/SMARTwearable/pull/2), kein automatisches Merge und keine Veröffentlichung dieses Stands vor Merge.
 
 ## Implementierung
 
@@ -11,7 +11,18 @@ F01/F02 durch C2/D1/W2 ersetzt, F03–F15 erhalten/angepasst. F16–F21 implemen
 - Syntaxprüfung erfolgreich, statischer Build erfolgreich (12 lokale Assets plus Service Worker).
 - Elf automatisierte Tests erfolgreich: Kalender-/Jahres-/Monats-/Sommerzeitgrenzen, lokale Gerätezeitzonen gegen UTC, alle Wochentage, zukünftige Tage ohne falsche Nullmessungen, exakte Tages-/Wochensummen, Bestwochenfilter, Puls-Min/Max/Mittel und Kategorie-Puls, Datenlücken und Übertragungsgrenzen, direkte Navigationszustände, zehn UI-Aufgabenrunden, Lade-/Fehlersimulation und Reset.
 - Cache-Harness prüft neue Kalender-/Grafikmodule, Unterpfad und Offline-Fallback.
-- Chromium lokal versucht; Laufzeit blockiert Prozessstart mit „socket() failed: Operation not permitted“. Echte Browserprüfung deshalb im PR-Workflow auf GitHub. Ergebnis nach erfolgreichem Lauf ergänzen; nicht durch lokale Modelltests ersetzen.
+- Chromium lokal versucht; Laufzeit blockiert Prozessstart mit „socket() failed: Operation not permitted“. Echte Browserprüfung deshalb im PR-Workflow auf GitHub. Erfolgreiches Ergebnis unten separat nachgewiesen.
+
+## Erfolgreiche GitHub-Browserprüfung
+
+[Workflow-Lauf #9](https://github.com/martinbia/SMARTwearable/actions/runs/42498755828) prüft Implementierungscommit `ecc8264d327b79d17760ec8651ae3d32109fc885`: Syntax, elf Node-Tests, Build und echter Chromium-Browsertest erfolgreich. Deployment im Pull Request bestimmungsgemäss übersprungen.
+
+- C2 → W2 → genau ausgewählte vergangene Woche → Tag → dieselbe Woche; zehn vollständige Wiederholungen ohne Browserfehler.
+- Aktuelles lokales Datum mit kontrollierter Testuhr, Armband-Akkubeschriftung, Min/Max und Kategorie-Puls, Zukunft ohne Nullmessungen, Datenlücken und rote Startseite-Buttons.
+- Übertragungsrückstand, erfolgreiche/fehlgeschlagene Übertragung, Lückenszenario und Reset.
+- 1280×900, 820×1180, 1180×820 und 400×800 CSS-Pixel; kein horizontaler Seitenüberlauf. Balkengrundlinien in D1 und W2 bei breiten und Tablet-Hochformatansichten gleich ausgerichtet. 200-%-CSS-Zoom in Chromium ohne horizontalen Seitenüberlauf.
+- Service-Worker-Bereitschaft, Offline-Neuladen und nachfolgende Navigation unter /SMARTwearable/. Kein unbeabsichtigter Update-Dialog bei Erstinstallation.
+- Browser-Screenshots von C2, W2, D1 aktuell und historisch visuell geprüft. Reale Android-Schriftvergrösserung, Installation, Update und Verständlichkeit müssen weiterhin am Tablet geprüft werden.
 
 ## Annahmen und verbleibende Grenzen
 

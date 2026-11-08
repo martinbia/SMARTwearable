@@ -12,11 +12,11 @@ Die interviewte Person legt ein Armband an und erhält nach kurzer Einführung d
 
 ## Bestätigter Umfang v0.2 (F)
 
-C2-Startseite: aktueller Wochenstand, Ziel mit Toleranzband, persönliche Bestwoche sowie Schritte/Puls. D1: ausgewählte Kalenderwoche nach Tagen mit Aktivität, Schritten und erweitertem Puls. W2: sechs Wochen, alle drei Messgrössen gleichzeitig. Woche/Tag unmittelbar antippbar. Roter Startseite-Button auf Unterseiten, kompakter Armband-Akkustatus, aktuelles lokales Datum vom Appstart. Ursprünglicher Heute-A/B-Vergleich ersetzt. Alle Daten bleiben erfunden.
+C2-Startseite: aktueller Wochenstand, Ziel mit Toleranzband, persönliche Bestwoche sowie Schritte/Puls. D1: ausgewählte Kalenderwoche nach Tagen mit Aktivität, Schritten und erweitertem Puls. W2: mehrere Wochen, alle drei Messgrössen gleichzeitig (Annahme: sechs Wochen). Woche/Tag unmittelbar antippbar. Roter Startseite-Button auf Unterseiten, kompakter Armband-Akkustatus, aktuelles lokales Datum vom Appstart. Ursprünglicher Heute-A/B-Vergleich ersetzt. Alle Daten bleiben erfunden.
 
 ## Grundlagen und abgeleitete Bedürfnisse
 
-Im Konzeptgespräch wurden Persona1_Hildegard.pdf, Persona2_Edgar.pdf und SMARTcoach_Patientenjourney_v0.2.md gelesen. Die Originale sind nicht Teil dieses öffentlichen Pakets.
+Die übernommene Konzeptdokumentation nennt Persona1_Hildegard.pdf, Persona2_Edgar.pdf und SMARTcoach_Patientenjourney_v0.2.md als Grundlagen. Die Originale sind nicht Teil dieses öffentlichen Pakets und wurden bei dieser GUI-Implementierung nicht erneut geprüft. Die folgenden Bedürfnisse wurden aus der vorhandenen Projektdokumentation übernommen.
 
 | Grundlage | Im Entwurf berücksichtigtes Bedürfnis |
 | --- | --- |

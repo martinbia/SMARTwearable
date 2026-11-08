@@ -848,3 +848,7 @@ dd{
 .matrix-label { min-width:0; overflow-wrap:anywhere; hyphens:auto; }
 .matrix-label > div { min-width:0; }
 .matrix-label > .icon { flex-shrink:0; }
+
+/* Full label width avoids breaking words beside large metric icons. */
+.matrix-label { display:block; }
+.matrix-label > .icon { margin-bottom:8px; }
