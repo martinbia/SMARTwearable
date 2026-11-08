@@ -1,11 +1,10 @@
-"""Real Chromium smoke test on CI; screenshots are CI artifacts, not patient data."""
+"""Real Chromium tests: C2 / D1 / W2; only fictional screenshots in CI artifacts."""
 from contextlib import contextmanager
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from threading import Thread
-
 from playwright.sync_api import sync_playwright
 
 
@@ -19,28 +18,39 @@ def site():
         try:
             yield f'http://127.0.0.1:{server.server_port}/SMARTwearable/'
         finally:
-            server.shutdown()
-            server.server_close()
-            thread.join()
+            server.shutdown(); server.server_close(); thread.join()
 
 
 def run():
     Path('test-results').mkdir(exist_ok=True)
     with site() as url, sync_playwright() as p:
         browser = p.chromium.launch()
-        context = browser.new_context(viewport={'width': 820, 'height': 1180}, has_touch=True)
+        context = browser.new_context(viewport={'width': 1280, 'height': 900}, has_touch=True, timezone_id='Europe/Zurich')
+        # Date is fixed ONLY in the test, timers run normally. Production reads the tablet clock.
+        context.add_init_script("""{
+          const OriginalDate = Date;
+          const fixed = OriginalDate.parse('2026-11-12T13:30:00Z');
+          window.Date = class extends OriginalDate {
+            constructor(...args) { super(...(args.length ? args : [fixed])); }
+            static now() { return fixed; }
+          };
+        }""")
         page = context.new_page()
         errors = []
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.goto(url)
-        page.locator('[data-testid=minutes]').wait_for()
-        assert page.locator('[data-testid=minutes]').inner_text() == '24'
+        page.locator('[data-testid=week-minutes]').wait_for()
+        assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
+        assert 'Donnerstag, 12. November 2026' in page.locator('.date-label').inner_text()
+        assert 'Armband-Akku' in page.locator('.status-button').inner_text()
         page.evaluate('navigator.serviceWorker.ready')
         page.wait_for_function('!!navigator.serviceWorker.controller')
-        assert page.locator('[data-action=update]').count() == 0, 'First install must not show an update banner'
+        assert page.locator('[data-action=update]').count() == 0
 
         def click(action):
-            page.locator(f'[data-action="{action}"]').first.click()
+            if action == 'home' and page.locator('.home-button').count() == 0:
+                return
+            page.locator(f'[data-action="{action}"]:visible').first.click()
 
         def choose(action, value):
             page.locator(f'[data-change="{action}"]').select_option(value)
@@ -48,63 +58,90 @@ def run():
         def no_overflow():
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'horizontal page overflow'
 
+        def aligned_bars():
+            for row in page.locator(".matrix-row").all():
+                bottoms = row.locator(".bar-plot").evaluate_all("els => els.map(e => e.getBoundingClientRect().bottom)")
+                if bottoms: assert max(bottoms) - min(bottoms) < 2, bottoms
+
+        def red_home():
+            home = page.locator('.home-button')
+            assert home.is_visible()
+            assert home.evaluate('(el) => getComputedStyle(el).backgroundColor') == 'rgb(165, 47, 56)'
+            assert home.evaluate('(el) => getComputedStyle(el).color') == 'rgb(255, 255, 255)'
+
+        def week_click(start):
+            page.locator(f'[data-action=selectWeek][data-week="{start}"]:visible').first.click()
+
+        def day_click(date):
+            page.locator(f'[data-action=date][data-date="{date}"]:visible').first.click()
+
         no_overflow()
-        page.screenshot(path='test-results/today-portrait.png', full_page=True)
-        click('controls')
-        choose('variant', 'B')
-        click('today')
-        assert page.locator('[data-testid=minutes]').inner_text() == '24'
-        page.set_viewport_size({'width': 1180, 'height': 820})
-        no_overflow()
-        assert page.locator('[data-variant=B]').count() == 1
-        page.screenshot(path='test-results/today-landscape.png', full_page=True)
-        click('details')
-        assert page.get_by_role('heading', name='Hauttemperatur', exact=True).count() == 1
+        page.screenshot(path='test-results/c2-home-landscape.png', full_page=True)
+        click('weeks'); red_home(); no_overflow(); aligned_bars()
+        assert page.get_by_role('tab').count() == 0
+        assert page.locator('.weeks-matrix .column-head').count() == 6
+        page.screenshot(path='test-results/w2-weeks-landscape.png', full_page=True)
+        week_click('2026-11-02')
+        assert '95 Bewegungsminuten' in page.locator('main').inner_text()
+        assert '2.11.' in page.locator('h1').inner_text()
+        red_home()
+        page.screenshot(path='test-results/d1-past-week.png', full_page=True)
+        day_click('2026-11-05')
+        assert page.locator('[data-testid=day-minutes]').inner_text() == '18'
+        assert 'Bei sonstiger Bewegung' in page.locator('main').inner_text()
+        assert 'Hauttemperatur' in page.locator('main').inner_text()
         click('back')
-        click('week')
-        assert page.locator('[data-action=date]').count() == 7
-        page.locator('[data-date="2026-11-07"]').click()
-        assert 'Messsignal fehlt' in page.locator('main').inner_text()
-
-        click('controls')
-        choose('scenario', 'S03')
+        assert '95 Bewegungsminuten' in page.locator('main').inner_text()
+        click('home'); click('currentWeek')
+        assert page.locator('.daily-matrix .column-head:disabled').count() == 3
+        assert 'Heute' in page.locator('main').inner_text()
+        assert 'Datenlücke' in page.locator('main').inner_text()
+        assert 'Puls während Bewegung' in page.locator('main').inner_text()
+        aligned_bars()
+        page.screenshot(path='test-results/d1-current-week.png', full_page=True)
+        click('controls'); choose('device', 'G05'); click('home')
+        stale = page.locator('[data-testid=week-minutes]').inner_text()
+        assert stale != '80'
         click('today')
-        assert page.locator('[data-testid=minutes]').inner_text() == '12'
-        assert '270 von 390' in page.locator('main').inner_text()
-        click('controls')
-        choose('scenario', 'S01')
-        choose('device', 'G05')
-        click('today')
-        assert page.locator('[data-testid=minutes]').inner_text() == '6'
-        click('controls')
-        click('transfer')
+        assert int(page.locator('[data-testid=day-minutes]').inner_text()) < 15
+        click('controls'); click('transfer')
         page.wait_for_function("document.querySelector('[data-action=transfer]')?.disabled === false")
-        click('today')
-        assert page.locator('[data-testid=minutes]').inner_text() == '24'
+        click('home'); assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
+        click('controls'); choose('scenario','S03'); click('home'); click('today')
+        assert page.locator('[data-testid=day-minutes]').inner_text() == '7'
+        click('controls'); choose('device','G07'); click('transfer')
+        page.wait_for_function("document.querySelector('[data-action=transfer]')?.disabled === false")
+        assert 'fehlgeschlagen' in page.locator('main').inner_text()
+        page.once('dialog', lambda d:d.accept()); click('reset')
+        assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
 
-        # Narrow reflow checks are not a claim of real Android/browser zoom coverage.
-        page.set_viewport_size({'width': 400, 'height': 800})
-        for action in ['day', 'week', 'device', 'controls']:
-            click(action)
-            no_overflow()
-        page.set_viewport_size({'width': 820, 'height': 1180})
-        page.once('dialog', lambda dialog: dialog.accept())
-        click('reset')
-        assert page.locator('[data-variant=A]').count() == 1
+        for size in [{'width':820,'height':1180},{'width':1180,'height':820},{'width':400,'height':800}]:
+            page.set_viewport_size(size)
+            for action in ['home','weeks','currentWeek','today','device','info','controls']:
+                click('home'); click(action); no_overflow()
+                if action != 'home': red_home()
+                if action in ['weeks','currentWeek'] and size['width'] > 700: aligned_bars()
+            click('home')
+            if size['width']==820: page.screenshot(path='test-results/c2-home-portrait.png',full_page=True)
 
+        page.set_viewport_size({'width':1280,'height':900})
+        # Actual browser layout at doubled CSS zoom, not Android system text sizing.
+        page.evaluate("document.documentElement.style.zoom='2'")
+        for action in ['home','weeks','currentWeek','today','device','controls']:
+            click('home'); click(action); no_overflow()
+        page.evaluate("document.documentElement.style.zoom='1'")
+        click('home')
+        for _ in range(10):
+            click('weeks'); week_click('2026-11-02'); day_click('2026-11-05');click('back');click('home')
         context.set_offline(True)
-        page.reload()
-        page.locator('[data-testid=minutes]').wait_for()
-        assert page.locator('[data-testid=minutes]').inner_text() == '24'
-        click('week')
-        assert page.locator('[data-action=date]').count() == 7
-        click('controls')
-        choose('device', 'G09')
-        click('device')
+        page.reload();page.locator('[data-testid=week-minutes]').wait_for()
+        assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
+        click('weeks'); week_click('2026-11-02'); day_click('2026-11-05');click('back');click('home')
+        click('controls');choose('device','G09');click('device')
         assert 'noch nicht abschätzbar' in page.locator('main').inner_text()
-        assert not errors, errors
+        assert not errors,errors
         browser.close()
-    print('Chromium smoke passed: subpath, navigation, variants, scenarios, responsive reflow and offline reload.')
+    print('Chromium passed: C2/D1/W2, direct week/day routes, red home buttons, pulse categories, date, responsive layouts, zoom, simulation and offline reload.')
 
 
 if __name__ == '__main__':

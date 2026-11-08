@@ -1,10 +1,10 @@
 # Interviewleitfaden – Entwurf
 
-Version 0.1 · 06.11.2026 · VORSCHLAG, kein klinisch validiertes Instrument.
+Version 0.2 · 08.11.2026 · VORSCHLAG, kein klinisch validiertes Instrument.
 
 ## Vorbereitung
 
-Tablet laden, PWA starten, Versionsstand notieren, S01/G01 zurücksetzen. Festes Demo-Heute 09.11.2026 erklären. Armband anlegen lassen, ohne echte Verbindung zu suggerieren. Keine personenbezogenen Angaben in die öffentliche Demo eingeben. Interviewantworten nach dem separat festzulegenden Studienverfahren ausserhalb der PWA dokumentieren.
+Tablet laden, PWA starten, Versionsstand notieren, S01/G01 zurücksetzen. Aktuelles lokales Appstart-Datum zeigen; Messwerte bleiben fiktiv. Armband anlegen lassen, ohne echte Verbindung zu suggerieren. Keine personenbezogenen Angaben in die öffentliche Demo eingeben. Interviewantworten nach dem separat festzulegenden Studienverfahren ausserhalb der PWA dokumentieren.
 
 Einführung: „Diese Anwendung zeigt erfundene Beispieldaten. Das Armband überträgt hier keine echten Messungen. Wir möchten herausfinden, welche Informationen und Darstellungen für Sie hilfreich wären. Sie können alles ausprobieren. Wir testen die Anwendung, nicht Sie.“
 
@@ -19,7 +19,7 @@ Einführung: „Diese Anwendung zeigt erfundene Beispieldaten. Das Armband über
 | Finden Sie heraus, wann das Armband geladen werden müsste. | Woher haben Sie das erkannt? | Prozentwert versus geschätzte Laufzeit |
 | Prüfen Sie, bis wann die Daten aktuell sind. | Was bedeutet eine fehlende Verbindung Ihrer Ansicht nach? | Verbindung, Aufzeichnung, Übertragung unterscheiden |
 
-Danach dieselben Heute-Aufgaben mit A und B bei identischem Szenario und Datenstand. Reihenfolge zwischen Interviews abwechseln und dokumentieren; vor Vergleich gleicher Startzustand. Nicht während eines Variantenvergleichs zugleich Datenmenge oder Szenario ändern.
+Zusätzliche Aufgaben v0.2: Wochenzielbereich erklären lassen, Wochenvergleich W2 öffnen, vergangene Woche direkt auswählen, einen Tag öffnen und zur richtigen Woche zurückkehren. Pulsminimum/-maximum sowie Puls während Schritten/sonstiger Bewegung unterscheiden lassen. Den roten Startseite-Button auf allen Unterseiten ausprobieren. Frühere A/B-Vergleiche entfallen.
 
 Anschliessend S02, S03 und ausgewählte Gerätezustände zeigen. Fragen: „Wie wirkt diese Darstellung auf Sie?“, „Was würden Sie als Nächstes tun?“, „Welche Information würden Sie mit der Physiotherapie besprechen?“ Keine Leistungsbewertung nahelegen.
 

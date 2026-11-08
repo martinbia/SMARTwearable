@@ -1,60 +1,46 @@
-# Implementierungs- und Prüfstand
+# Implementierungs- und Prüfstand v0.2
 
-Stand 06.11.2026 · Anwendung 0.1.0 · Branch feat/tablet-pwa-v01
+08.11.2026 · Anwendung 0.2.0 · Branch feat/gui-c2-d1-w2. [Pull Request #2](https://github.com/martinbia/SMARTwearable/pull/2), kein automatisches Merge und keine Veröffentlichung dieses Stands vor Merge.
 
-Vorschläge sind aufgrund des ausdrücklichen Implementierungsauftrags vorläufig umgesetzt. Ihr Status als Designvorschlag bleibt erhalten. Kein klinischer Einsatz, keine echten Messdaten, keine bestätigte Veröffentlichung.
+## Implementierung
 
-## Zuordnung
+F01/F02 durch C2/D1/W2 ersetzt, F03–F15 erhalten/angepasst. F16–F21 implementiert: lokales Appstart-Datum, Zielband, sechs Wochen, direktes Öffnen einer Woche, Puls-Min/Max und Kategorien, roter Startseite-Button auf allen Unterseiten. Aktueller Stand aus gemeinsamen Datenselektoren, nicht aus unabhängigen Grafikzahlen.
 
-| Anforderungen | Umsetzung | Nachweis / Grenze |
-| --- | --- | --- |
-| F01, F02, F04 | Tagesansichten A/B und sieben Tage mit gemeinsamen Selektoren | Modelltests und UI-Ereignistest |
-| F03, F08, F15 | Schritt-/Streckenangaben, Puls-/Temperaturverlauf, Herkunft und fehlende Werte | UI-Ereignistest und Chromium-Navigation; Tablet-Sichtprüfung offen |
-| F05, F07, F09, F10 | Gerätestatus, Datenstandfilter, Lücken und neun Gerätezustände | Modelltests; keine echte Geräteverbindung |
-| F06, F11, F12 | Interviewsteuerung, deterministische Simulation, vollständiges Reset | UI-Ereignistest einschliesslich zehn Aufgabenrunden |
-| F13 | Manifest, lokale Icons, relativer Scope und Startpfad | Manifest-/Buildprüfung; reale Installation offen |
-| F14 | Vollständiger lokaler Asset-Cache mit Unterpfad und Update-Mechanismus | Cache-Harness und echter Chromium-Offline-Neustart erfolgreich; Tablet-Kaltstart offen |
-| N01–N07 | Flexible Layouts, grosse Bedienelemente, semantisches HTML und Textalternativen | Im Code vorgesehen; reale Lesbarkeit, Zoom, Kontraste und Layout noch prüfen |
-| N08 | Lokale statische Anwendung ohne externe Datenabfragen | Keine Reaktionszeitmessung am Tablet |
-| N09, N10, N12, N13, N15 | Neutrale Texte, getrennte Daten/Logik/Darstellung, Demo-Version, keine Personen/Tracker | Codeprüfung; Präferenz und Verständnis im Interview offen |
-| N11 | Zehn automatisierte UI-Aufgabenrunden | Ereignis-/HTML-Harness, kein echter Touch-Browser |
-| N14 | Offline-Vorbereitung | Cache-Harness und Chromium-Offline-Neustart; Tabletprüfung offen |
+## Lokal ausgeführte Prüfungen
 
-## Ausgeführte Prüfungen
+- Syntaxprüfung erfolgreich, statischer Build erfolgreich (12 lokale Assets plus Service Worker).
+- Elf automatisierte Tests erfolgreich: Kalender-/Jahres-/Monats-/Sommerzeitgrenzen, lokale Gerätezeitzonen gegen UTC, alle Wochentage, zukünftige Tage ohne falsche Nullmessungen, exakte Tages-/Wochensummen, Bestwochenfilter, Puls-Min/Max/Mittel und Kategorie-Puls, Datenlücken und Übertragungsgrenzen, direkte Navigationszustände, zehn UI-Aufgabenrunden, Lade-/Fehlersimulation und Reset.
+- Cache-Harness prüft neue Kalender-/Grafikmodule, Unterpfad und Offline-Fallback.
+- Chromium lokal versucht; Laufzeit blockiert Prozessstart mit „socket() failed: Operation not permitted“. Echte Browserprüfung deshalb im PR-Workflow auf GitHub. Erfolgreiches Ergebnis unten separat nachgewiesen.
 
-- `npm run check`: Syntaxprüfung erfolgreich.
-- `npm test`: 10 Tests erfolgreich. Sieben-Tage-Summen, Abschnittszahlen, Messabdeckung, Datenlücken, A/B-Identität, Datenstandbegrenzung, Lade-/Übertragungszustände, Navigation und Reset geprüft.
-- UI-Test führt die tatsächlichen App-Ereignishandler und HTML-Erzeugung mit einer minimalen DOM-Testumgebung aus. Zehn Aufgabenrunden plus erfolgreiche/fehlgeschlagene zeitverzögerte Übertragung durchlaufen.
-- Build-/Service-Worker-Test validiert alle Cache-Dateien, relativen Manifest-Scope, Offline-Navigationsfallback unter `/SMARTwearable/`, Cache-Treffer und Begrenzung des Service-Worker-Pfads.
-- `npm run build`: erfolgreich; zehn lokale Assets und generierter Service Worker.
-- Lokaler Chromium/Playwright-Start durch die Laufzeitumgebung blockiert: `socket() failed: Operation not permitted`. Deshalb echten Chromium-Smoke-Test zusätzlich in GitHub Actions eingerichtet.
-- GitHub-Lauf [42271218564](https://github.com/martinbia/SMARTwearable/actions/runs/42271218564) erfolgreich: echter Chromium-Test unter `/SMARTwearable/`, Navigation/Details/Tagesauswahl, A/B, S03, Übertragung von 6 auf 24 Minuten, Reset und Offline-Neuladen mit anschliessender Navigation. Keine JavaScript-Laufzeitfehler.
-- Browser-Layoutprüfungen bei 820 × 1180, 1180 × 820 und 400 × 800 CSS-Pixeln ohne horizontalen Seitenüberlauf; dies sind simulierte Ansichtsgrössen, keine bestätigten Lenovo-Abmessungen. Screenshots für A/Hochformat und B/Querformat in CI erzeugt und visuell geprüft.
-- Ein beim ersten Cache-Aufbau fälschlich sichtbarer Update-Hinweis wurde anschliessend korrigiert; der Browser-Smoke-Test enthält dafür eine zusätzliche Assertion. Installierbarkeit im realen Android-Browser und echtes Geräteverhalten bleiben offen.
+## Erfolgreiche GitHub-Browserprüfung
 
-## Dokumentierte technische Detailentscheidungen
+[Workflow-Lauf #9](https://github.com/martinbia/SMARTwearable/actions/runs/42498755828) prüft Implementierungscommit `ecc8264d327b79d17760ec8651ae3d32109fc885`: Syntax, elf Node-Tests, Build und echter Chromium-Browsertest erfolgreich. Deployment im Pull Request bestimmungsgemäss übersprungen.
 
-- Vanilla JavaScript, CSS und statischer Build ohne npm-Abhängigkeiten. Gleiche Selektoren für A/B und Woche.
-- Einstellungsspeicher nur im Arbeitsspeicher der geöffneten Sitzung. Neuladen startet wie Reset; keine Interviewantworten.
-- Bei Teilübertragung keine anteilige Schätzung aus aggregierten Schritt-/Streckenwerten. Solange keine Zeitreihe vorliegt, „nicht verfügbar“ zeigen. Puls und Temperatur auf Datenstand begrenzt.
-- Nach Ende einer Ladesimulation: fiktiv 100 % / 77 Stunden, ohne Speicherkapazität oder Datenübertragung zu verändern. Reiner zusätzlicher Demo-Endzustand, kein Akkumodell.
-- Bei erfolgreicher Übertragung setzt die Demo Speicherzeit auf 72 Stunden, Datenstand und Übertragung auf 14:30. Fehlerszenario G07 bleibt fehlgeschlagen.
-- Kein direkter Variantenwechsel auf Patientenansichten; A/B wird im Interviewbereich gewählt.
+- C2 → W2 → genau ausgewählte vergangene Woche → Tag → dieselbe Woche; zehn vollständige Wiederholungen ohne Browserfehler.
+- Aktuelles lokales Datum mit kontrollierter Testuhr, Armband-Akkubeschriftung, Min/Max und Kategorie-Puls, Zukunft ohne Nullmessungen, Datenlücken und rote Startseite-Buttons.
+- Übertragungsrückstand, erfolgreiche/fehlgeschlagene Übertragung, Lückenszenario und Reset.
+- 1280×900, 820×1180, 1180×820 und 400×800 CSS-Pixel; kein horizontaler Seitenüberlauf. Balkengrundlinien in D1 und W2 bei breiten und Tablet-Hochformatansichten gleich ausgerichtet. 200-%-CSS-Zoom in Chromium ohne horizontalen Seitenüberlauf.
+- Service-Worker-Bereitschaft, Offline-Neuladen und nachfolgende Navigation unter /SMARTwearable/. Kein unbeabsichtigter Update-Dialog bei Erstinstallation.
+- Browser-Screenshots von C2, W2, D1 aktuell und historisch visuell geprüft. Reale Android-Schriftvergrösserung, Installation, Update und Verständlichkeit müssen weiterhin am Tablet geprüft werden.
 
-## Vor dem ersten Interview auf Lenovo Tab TB311FU prüfen
+## Annahmen und verbleibende Grenzen
 
-1. Android-/Browserversion, reale CSS-Ansichtsgrösse und PWA-Version notieren.
-2. HTTPS-Veröffentlichung und Start unter `/SMARTwearable/` prüfen; alle Ressourcen ohne Fehler.
-3. Installation, eigener App-Name/Icon und Standalone-Start testen.
-4. Hoch-/Querformat und 200-%-Vergrösserung: Inhalte erreichbar, kein horizontaler Seitenüberlauf, Auswahl bleibt erhalten.
-5. Schrift, Kontraste, Touch-Flächen und Zurückwege mit tatsächlicher Bedienung prüfen.
-6. A/B, sieben Tage, historischen Tag, alle drei Aktivitätsszenarien und alle Gerätezustände durchspielen.
-7. G05: vor Übertragung 6 Bewegungsminuten, danach 24; keine Werte aus dem noch nicht übertragenen Zeitraum. G07 bleibt Fehler; Reset bricht ausstehende Simulation ab.
-8. S03: 12 Minuten, zwei Abschnitte, Messabdeckung 270/390 Minuten; Lücke nicht als Ruhe zeigen.
-9. Offline-Bereitschaft abwarten, Flugmodus einschalten, App vollständig schliessen und neu öffnen; Navigation und Szenarien prüfen.
-10. Update-Hinweis bei einer späteren Version und anschliessendes Zurücksetzen prüfen.
-11. Reaktionszeiten messen und zehn reale Aufgabenrunden durchführen. UI-Harness ersetzt das nicht.
+- Ziel100/Band90–110, sechs Wochen und Beispieldaten sind Demoparameter. Keine klinischen Grenzwerte.
+- „Allgemeine Aktivität“ ist die Vereinigung disjunkter Schritt-/sonstiger Bewegungsintervalle; Kategorien sind hypothetische Erkennung.
+- Puls während Bewegung zunächst als Mittelwert je Kategorie. Min/Max des Tages bleiben zusätzlich sichtbar. Alle Mittelwerte aus gleichabständigen verfügbaren Proben, Wochenmittel nicht aus Tagesmittelwerten mitteln.
+- Datum/Uhrzeit der Sitzung eingefroren, auch über Mitternacht; Neustart erforderlich für neues Heute. Uhrzeit begrenzt Messwerte. Geräteaktionen simulieren bis zu diesem Sitzungsstand.
+- Keine obligatorische Startbestätigung, stattdessen permanenter Infozugang; keine Interviewdaten, keine Logins, keine echte Hardware.
+- Bei schmalen Bildschirmen Karten statt unlesbarer Matrix. Grafiken und Text zeigen dieselben Daten.
+- Sensor, Android-/Browserversion, Messgenauigkeit und individuelles Ziel bleiben fachlich/technisch offen.
 
-## Veröffentlichung bleibt getrennt
+## Vor Interview am Lenovo Tab TB311FU
 
-Workflow ist vorbereitet. Pull Request nicht automatisch mergen. Pages-Quelle nach Übernahme auf GitHub Actions stellen, erfolgreichen Deployment-Lauf abwarten und URL tatsächlich prüfen. Eine erwartete URL gilt nicht als veröffentlichte oder getestete Anwendung.
+1. Installation/Standalone-Start, reales Datum und lokale Uhrzeit prüfen; vor08Uhr und an anderem Wochentag erneut starten.
+2. C2→W2→vergangene Woche→Tag→Woche und roter Startseite-Button prüfen. Ausgewählte Woche darf beim Zurückgehen nicht wechseln.
+3. Hoch-/Querformat, Schriftgrösse/200-%-Zoom, Touch-Flächen und Kontraste prüfen. Reaktionszeiten messen.
+4. Aktuelle Woche als unvollständig, Zukunft ohne Nullbalken, Lückentag und S03 durchspielen.
+5. Tages-/Wochenpulse und Kategorie-Mittelwerte erklären lassen; kein hoher Puls als Erfolg.
+6. G05-Übertragung aktualisiert sämtliche Ansichten, G07 bleibt Fehler, Reset beendet laufende Simulation.
+7. Offline-Bereitschaft abwarten, Flugmodus, echter Kaltstart und alle Navigationswege prüfen.
+8. Update von0.1.0 zu0.2.0 und korrekte Neuladung prüfen. Reale Performance und Verständlichkeit wurden durch CI nicht nachgewiesen.

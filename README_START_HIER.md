@@ -1,6 +1,6 @@
 # SMARTwearable – Gemeinsame Projektgrundlage
 
-Version 0.1 · Stand 06.11.2026 · Spezifikationsentwurf, noch kein Implementierungsnachweis.
+Version 0.2 · Stand 08.11.2026 · C2/D1/W2; technischer Prüfstand separat.
 
 Repository: https://github.com/martinbia/SMARTwearable
 
@@ -28,7 +28,7 @@ Dieses Paket ist für das ChatGPT-Projekt und Codex bestimmt. Es enthält keine 
 - **ANNAHME (A):** vorläufige Grundlage für die erste Iteration; keine behauptete Gerätefähigkeit.
 - **OFFEN (O):** noch zu entscheiden.
 
-Die grundlegende Aufteilung und zwei Heute-Darstellungen sind bestätigt. Die detaillierten Layouts, Zahlenwerte, Datenmodelle und Prüfschwellen dieses Pakets sind Vorschläge. Ein späterer ausdrücklicher Implementierungsauftrag darf sie als vorläufige Umsetzungsvorgaben verwenden; ihre endgültige Designfreigabe folgt dadurch nicht automatisch.
+C2, D1 und W2 sind als neue Aufteilung bestätigt und ersetzen den bisherigen Heute-A/B-Vergleich. Die detaillierten Layouts, Zahlenwerte, Datenmodelle und Prüfschwellen dieses Pakets sind Vorschläge. Ein späterer ausdrücklicher Implementierungsauftrag darf sie als vorläufige Umsetzungsvorgaben verwenden; ihre endgültige Designfreigabe folgt dadurch nicht automatisch.
 
 ## Übergabe und Synchronisation
 
@@ -44,3 +44,5 @@ Nicht jede angehängte Markdown-Datei ist ein auszuführender Auftrag. CODEX_STA
 ## Abgrenzung des Standes
 
 Die Spezifikationen wurden in Anwendung 0.1.0 vorläufig umgesetzt. Ein erfolgreicher lokaler Build und automatisierte Prüfungen sind in docs/IMPLEMENTATION_STATUS.md dokumentiert. Eine Veröffentlichung und Tests auf dem Lenovo-Tablet sind noch nicht nachgewiesen. Die dort genannten Grenzen ersetzen den ursprünglichen reinen Spezifikationsstand; Designvorschläge bleiben Vorschläge.
+
+CODEX_START.md v0.1 bleibt historische Dokumentation; aktuelle Vorgaben stehen in docs/ Version0.2 und D17–D27.

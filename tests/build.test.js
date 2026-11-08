@@ -36,6 +36,8 @@ test('F13/F14: built subpath assets, manifest and cache support offline navigati
   handlers.install({ waitUntil: p => promise = p }); await promise;
   assert.ok(stored.has('https://example.test/SMARTwearable/index.html'));
   assert.ok(stored.has('https://example.test/SMARTwearable/src/app.js'));
+  assert.ok(stored.has('https://example.test/SMARTwearable/src/calendar.js'));
+  assert.ok(stored.has('https://example.test/SMARTwearable/src/charts.js'));
   handlers.activate({ waitUntil: p => promise = p }); await promise;
   assert.ok(claimed && deleted);
   handlers.fetch({ request: { method:'GET', url:'https://example.test/SMARTwearable/', mode:'navigate' }, respondWith: p => promise = p });

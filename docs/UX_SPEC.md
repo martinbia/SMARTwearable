@@ -1,44 +1,33 @@
 # Ansichten und Bedienkonzept
 
-Version 0.1 · 06.11.2026 · Aufteilung F, konkrete Anordnung und Texte V.
+Version 0.2 · 08.11.2026 · C2, D1 und W2 FESTGELEGT; Detailparameter als Annahmen gekennzeichnet.
 
 ## Gemeinsamer Rahmen
 
-Name SMARTwearable. Sichtbarer Hinweis „Demo – Beispieldaten“. Hauptnavigation: Heute, 7 Tage, Mein Armband; Interviewsteuerung als gesonderter beschrifteter Link. Keine versteckten Gesten. Patientenseitige Texte enthalten keine Anforderungs-IDs oder Entwicklungsbegriffe.
+Sehr kompakte Kopfzeile mit SMARTwearable und Info/Beispieldaten. Darunter aktueller lokaler Wochentag und Datum vom Appstart sowie ausdrücklich „Armband-Akku … % · Daten bis …“. Kein grosser Titelbanner. Info bleibt jederzeit erreichbar; ein obligatorischer Startdialog wurde nicht beschlossen.
 
-Erstmaliger Einstieg nach mündlicher Einführung direkt in Heute; kein Registrierungsschritt und keine fingierte Kopplungsaufforderung. Keine Behauptung einer echten Messung durch das angelegte Armband.
+Auf ALLEN Unterseiten ein roter Button mit weisser Schrift „← Startseite“, einschliesslich Geräte-, Info-, Tages- und Interviewansicht. Zusätzliche kontextbezogene Rückwege sind neutral/teal. Rot bezeichnet hier Navigation, keine Bewertung der Aktivität.
 
-## Heute
+## C2 – Startseite
 
-Datum und „Bisher heute“, kompakter Status „Armband: 62 % · Daten bis 14:30 Uhr“ und drei Bereiche: Bewegungsminuten, Bewegungsabschnitte, Tagesverlauf. „Details ansehen“ erschliesst Zusatzwerte. Hinweise zu Datenlücken nahe der betroffenen Darstellung.
+Gemeinsame Grafik mit drei horizontalen Reihen und gemeinsamer Null-/Minutenskala: aktuelle Woche bisher, persönliches Wochenziel, aktivste abgeschlossene Woche. Beim Wochenziel schraffiertes Toleranzband. Vorläufige Demowerte: Ziel 100, Bereich 90–110 Bewegungsminuten; kein medizinisch definierter Grenzbereich. Bestwoche nur unter abgeschlossenen Wochen mit vollständiger Messabdeckung bestimmen; wenn keine vorliegt, nicht verfügbar.
 
-| Variante | Gestaltung | Gleicher Informationsumfang |
-| --- | --- | --- |
-| A | Kennzahlenkarten im Vordergrund; darunter ein kompakter Tagesverlauf | Bewegungsminuten, Abschnittsanzahl, identische Aktivitätsintervalle |
-| B | Grosser Tagesverlauf im Vordergrund; dieselben Summen darunter | Dieselben Werte, Zeitgrenzen und Erklärungen wie A |
+Allgemeine Aktivität umfasst Schrittbewegung UND sonstige Bewegung, nicht allein Gehen. Icons: Bewegungssymbol, Fussabdrücke und Herz/Pulslinie; immer zusätzlich beschriften. Kleine Karten für Schritte und Puls, letzterer als Tagesbereich mit Zugang zu Min/Max und Aktivität. Antippen der grossen Wochengrafik öffnet direkt die aktuelle D1-Woche. Zwei gleichwertige zusätzliche Aktionen: „Diese Woche nach Tagen“ und „Wochen vergleichen“.
 
-Die Varianten unterscheiden die visuelle Gewichtung, nicht die Datenmenge. Bezeichnung neutral „Ansicht A/B“. Im Interviewbereich wählen; optionaler sichtbarer Wechsel auf Heute ist V und erst nach Bedarf einzuführen. Keine Variante „einfach“, „besser“ oder „modern“ nennen.
+## D1 – ausgewählte Woche nach Tagen
 
-Zeitachse ohne erfundene Werte bis Tagesende: nach 14:30 Uhr ist „noch keine Daten“; Vergangenheit mit Signalausfall als „Datenlücke“. Gemessene bewegungsarme Zeit separat darstellen. Ein Antippen eines Bewegungsabschnitts zeigt Beginn, Ende und Dauer. Bedeutung „Bewegung geschätzt“ erklären, keine Aussage „sicher gegangen“.
+Montag bis Sonntag mit datumsrichtigen Beschriftungen. Aktivität und Schritte als Grafik, Tagespuls mit Minimum/Maximum und optionalem Mittelwert. Separate Darstellung des mittleren Pulses während Schrittbewegung sowie während sonstiger Bewegung. Unabhängige Einheiten und Skalen; keine addierten Pulszahlen. Erläutern: Pulsgruppen enthalten nur Messungen während der jeweiligen Bewegungsart.
 
-## Details
+Tipp auf beliebigen vorhandenen Tag öffnet dessen Tagesverlauf. Zukünftige Tage ohne Balken und ohne Nullwert: „Noch nicht“. Heute „bisher“. Datenlücke schraffiert und textlich erläutert, keine Ruhebehauptung. Vergangene Woche zeigt sieben tatsächliche Demo-Tage. Datum in Kopfzeile bleibt das aktuelle Appstart-Datum; Überschrift bezeichnet die ausgewählte Woche.
 
-Schritte, Strecke, Puls, Hauttemperatur jeweils mit Zeitraum, Einheit und Herkunft. Pulsverlauf als Linie ohne Interpolation durch Datenlücken; zusätzlich lesbare Zusammenfassung. Hauttemperatur ohne Fieberampel und ohne Normalwertbehauptung. Datenpunkte auf dieselben Zeitachsen und Szenarien beziehen. Zurück erhält Datum und Variante.
+## W2 – Wochenvergleich
 
-## Sieben Tage
+Sechs Wochen gleichzeitig; drei untereinander angeordnete Diagramme für Aktivitätsminuten, Schritte und Pulsminimum/-maximum. Keine Auswahlreiter Aktivität/Schritte/Puls, da alles gleichzeitig dargestellt wird. Aktivität/Schritte beginnen bei null. Nur Aktivität enthält Wochenziel mit Toleranzband und Bestwochenmarkierung; Puls ohne Ziel und Leistungswertung.
 
-Sieben beschriftete Tagesbalken mit Bewegungsminuten und Markierung unvollständiger Daten. Balken starten bei null. Heute mit „bisher“; keine Rangfolge und keine Erfolgsfarbe. Antippen öffnet ausgewählten Tagesverlauf in A oder B. „Heute“ führt stets zum Demo-Heute zurück. Messabdeckung sichtbar machen, damit Lückentage nicht als besonders inaktiv gelten.
+Tipp auf Wochenbalken, Datum oder Pulsbereich öffnet unmittelbar D1 für DIESE Woche, ohne zusätzlichen Bestätigungsbutton. Aktuelle Woche als unvollständig kenntlich; fehlende zukünftige Tage nicht als Null behandeln. Wochen mit Datenlücken kennzeichnen. Detail-Rückweg behält den gewählten Wochenkontext.
 
-## Mein Armband
+## Tagesverlauf, Geräte und Interviews
 
-Abschnitte „Batterie“, „Daten“ und „Verbindung“. Restlaufzeit neben Prozentwert; geplante nächste Übertragung, letzte erfolgreiche Übertragung und Datenstand unterscheiden. Speicherbedarf erst nach Vertiefung. Text „Geschätzte Restlaufzeit“; bei unbekannter Grundlage „noch nicht abschätzbar“. Ein unterbrochener Kontakt zeigt bei entsprechendem Szenario „Zeichnet auf dem Armband weiter auf (Demo)“.
+Tagesverlauf enthält nach Bewegungsart unterscheidbare Abschnitte, Schritte, Pulszeitreihe ohne Linien über Datenlücken sowie Strecken-/Hauttemperaturdetails. „← Zur Woche“ erhält die ausgewählte Woche. Geräte-/Lade-/Übertragungssimulation bleibt erhalten. Interviewsteuerung stellt Szenarien und Reset bereit; bisherige Varianten A/B entfallen.
 
-Technische Zustände und Handlung verständlich verbinden, beispielsweise „Datenübertragung fehlgeschlagen – bitte erneut versuchen“. Simulationsaktionen nur im Interviewbereich; Patientenansicht enthält keine scheinbar echte Kopplung oder Fernübertragung.
-
-## Szenarien und Formatwechsel
-
-Aktivitätsszenario und Gerätezustand werden getrennt gewählt. Standard A / S01 / G01. Ausgewählte Einstellungen im Interviewbereich anzeigen. Hoch-/Querformat verwendet dieselbe Navigation und dieselben Inhalte; Anordnung darf sich ändern. Keine Vollbildgrafik ausserhalb der Bildschirmbreite. Diagramme zusätzlich in Textform erschliessbar.
-
-## Vorläufige Umsetzung 0.1.0
-
-Gemeinsames HTML/CSS-Layout, neutrale A/B-Auswahl in Interviewsteuerung und Textalternativen umgesetzt. Browserprüfungen und Grenzen stehen in IMPLEMENTATION_STATUS.md; die Gestaltung bleibt vorläufig.
+Bei schmalen Ansichten dieselben Informationen in gut lesbaren Tages-/Wochenkarten statt zu kleiner sieben-/sechsspaltiger Grafiken zeigen. Kein horizontaler Seitenüberlauf. Tabellendetails bieten zusätzlich alle verfügbaren Werte in Textform.
