@@ -843,4 +843,8 @@ dd{
 
 /* Reserve equal annotation space to keep chart baselines aligned. */
 .matrix-cell { border-bottom:5px solid transparent; }
-.matrix-cell .gap-tag { min-height:2.4em; }
+.matrix-cell .gap-tag { height:3.6em; flex-shrink:0; }
+
+.matrix-label { min-width:0; overflow-wrap:anywhere; hyphens:auto; }
+.matrix-label > div { min-width:0; }
+.matrix-label > .icon { flex-shrink:0; }

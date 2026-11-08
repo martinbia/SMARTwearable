@@ -120,6 +120,7 @@ def run():
             for action in ['home','weeks','currentWeek','today','device','info','controls']:
                 click('home'); click(action); no_overflow()
                 if action != 'home': red_home()
+                if action in ['weeks','currentWeek'] and size['width'] > 700: aligned_bars()
             click('home')
             if size['width']==820: page.screenshot(path='test-results/c2-home-portrait.png',full_page=True)
 
