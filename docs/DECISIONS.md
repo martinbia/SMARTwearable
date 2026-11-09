@@ -92,3 +92,11 @@ Offen (O): medizinisch begründete Pulsgrenzen, fachlich begründete Zeit-/Aktiv
 | D36 | A | N18-Prüfflächen und konkrete Layoutmasse vorläufig; reales Tablet mit Systemleisten und Schriftvergrösserung noch prüfen. |
 
 Neuer Pull Request auf dem inzwischen gemergten Stand von PR #3. Kein automatisches Merge.
+
+## Layout Präferenzseite v0.6 (09.11.2026)
+
+| ID | Status | Beschluss |
+| --- | --- | --- |
+| D43 | zur Umsetzung beauftragter Vorschlag | Die bestehende Präferenzseite wird innerhalb ihres eigenen Layoutbereichs kompakter und im Querformat zweispaltig dargestellt: Pulshinweise und Aktivitätserinnerung nebeneinander, Datenfreigabe über beide Spalten. Kopfzeile, Hinweistext, Seitenränder und Bestätigungsbereich werden verdichtet. Erstmalige Einrichtung bleibt nicht überspringbar; der Startseite-Button erscheint nur beim Bearbeiten gespeicherter Einstellungen. Funktionen, Daten und übrige Ansichten sind Bestandsschutz. |
+
+Die konkrete Umsetzung ist bis zur Sichtprüfung am Lenovo ein Vorschlag und wird durch den Auftrag nicht als endgültige Designentscheidung bestätigt.

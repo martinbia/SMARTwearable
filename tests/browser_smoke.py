@@ -42,7 +42,28 @@ def run():
         assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
         assert page.locator('#preferences-submit').is_disabled()
         assert page.locator('.preference-option input:checked').count() == 0
-        page.screenshot(path='test-results/settings-setup.png', full_page=True)
+        assert page.locator('.settings-top .home-button').count() == 0, 'setup must not offer a route around required preferences'
+        assert page.locator('.settings-top h1').is_visible()
+        settings_sizes = [
+            {'width':1280,'height':640}, {'width':1180,'height':620},
+            {'width':1024,'height':560}, {'width':820,'height':1020}
+        ]
+        setup_layout = {}
+        for size in settings_sizes:
+            page.set_viewport_size(size)
+            page.screenshot(path=f"test-results/settings-setup-{size['width']}x{size['height']}.png", full_page=True)
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), f"settings horizontal overflow at {size}"
+            setup_layout[(size['width'], size['height'])] = page.evaluate('({scroll:document.documentElement.scrollHeight, height:innerHeight})')
+            for control in page.locator('.preference-option, #preferences-submit').all():
+                box = control.bounding_box()
+                assert box and box['width'] >= 48 and box['height'] >= 48, (size, box)
+        assert setup_layout[(1280, 640)]['scroll'] <= 641, f"setup should fit 1280x640: {setup_layout[(1280,640)]}"
+        assert setup_layout[(1180, 620)]['scroll'] <= 621, f"setup should fit 1180x620: {setup_layout[(1180,620)]}"
+        page.set_viewport_size({'width':1280,'height':640})
+        page.evaluate("document.documentElement.style.zoom='200%'")
+        assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'settings horizontal overflow at 200% zoom'
+        page.evaluate("document.documentElement.style.zoom='100%'")
+        page.set_viewport_size({'width':1280,'height':900})
         page.evaluate("localStorage.setItem('smartwearable-preferences-v1', JSON.stringify({schema:1,pulseAlerts:true}))")
         page.reload()
         assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
@@ -65,6 +86,12 @@ def run():
         page.screenshot(path='test-results/settings-home.png', full_page=True)
         page.locator('[data-preference-key="pulseAlerts"]').click()
         assert page.locator('[data-setting-group="pulseAlerts"]').evaluate('(el) => el === document.activeElement')
+        assert page.locator('.settings-top .home-button').is_visible(), 'saved settings must retain Startseite button'
+        for size in [{'width':1280,'height':640}, {'width':820,'height':1020}]:
+            page.set_viewport_size(size)
+            page.screenshot(path=f"test-results/settings-edit-{size['width']}x{size['height']}.png", full_page=True)
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), f"edit settings horizontal overflow at {size}"
+        page.set_viewport_size({'width':1280,'height':900})
         assert page.locator('input[name="pulseAlerts"][value="true"]').is_checked()
         page.locator('input[name="pulseAlerts"][value="false"]').check()
         page.locator('[data-action="cancelSettings"]').click()

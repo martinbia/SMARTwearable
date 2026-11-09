@@ -1,5 +1,9 @@
 # Implementierungs- und Prüfstand v0.5
 
+## Beauftragte GUI-Änderung v0.6 – in Arbeit
+
+09.11.2026 · D43/N21: Kompaktierung ausschliesslich der Ersteinrichtungs-/Einstellungsansicht. Code und Browserprüfungen werden im separaten Branch `feat/compact-settings-onboarding` vorbereitet. Prüfflächen 1280×640, 1180×620, 1024×560 und 820×1020; dazu 200-%-Zoom und Screenshots für Einrichtung und Bearbeitung. Ergebnisse, Screenshot-Artefakt und Lenovo-Prüfpunkte folgen nach Abschluss. Es wurden noch keine Prüfungen als erfolgreich gewertet.
+
 09.11.2026 · Anwendung 0.5.0 · Neue Ersteinrichtung vor C2 (F26–F30 / D37–D42). Der Codepfad zeigt ohne vollständige lokale Präferenzen die verpflichtende Auswahl; C2 bleibt nach Abschluss in seiner Grafik und Hauptnavigation erhalten. Einstellungen sind lokal änderbar und getrennt vom Demo-Reset. Alle Warnungen, Vibrationen und Datenfreigaben bleiben inaktiv und simuliert. Demodaten und Berechnungen nicht geändert.
 
 ## Lokale Prüfungen v0.5
