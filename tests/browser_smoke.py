@@ -59,10 +59,17 @@ def run():
                 assert box and box['width'] >= 48 and box['height'] >= 48, (size, box)
         assert setup_layout[(1280, 640)]['scroll'] <= 641, f"setup should fit 1280x640: {setup_layout[(1280,640)]}"
         assert setup_layout[(1180, 620)]['scroll'] <= 621, f"setup should fit 1180x620: {setup_layout[(1180,620)]}"
+        assert setup_layout[(1024, 560)]['scroll'] <= 561, f"setup should fit 1024x560: {setup_layout[(1024,560)]}"
         page.set_viewport_size({'width':1280,'height':640})
         page.evaluate("document.documentElement.style.zoom='200%'")
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'settings horizontal overflow at 200% zoom'
         page.evaluate("document.documentElement.style.zoom='100%'")
+        page.set_viewport_size({'width':640,'height':320})  # CSS viewport corresponding to a constrained 200%-zoom landscape view.
+        assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'settings horizontal overflow in narrow zoom-equivalent viewport'
+        assert len(page.locator('#preferences-form').evaluate('(el) => getComputedStyle(el).gridTemplateColumns.trim().split(/\\s+/)')) == 1, 'narrow settings layout should use one column'
+        page.locator('#preferences-submit').scroll_into_view_if_needed()
+        submit_box = page.locator('#preferences-submit').bounding_box()
+        assert submit_box and submit_box['y'] >= 0 and submit_box['y'] + submit_box['height'] <= 321, 'confirmation must remain reachable in narrow viewport'
         page.set_viewport_size({'width':1280,'height':900})
         page.evaluate("localStorage.setItem('smartwearable-preferences-v1', JSON.stringify({schema:1,pulseAlerts:true}))")
         page.reload()
@@ -87,6 +94,7 @@ def run():
         page.locator('[data-preference-key="pulseAlerts"]').click()
         assert page.locator('[data-setting-group="pulseAlerts"]').evaluate('(el) => el === document.activeElement')
         assert page.locator('.settings-top .home-button').is_visible(), 'saved settings must retain Startseite button'
+        page.evaluate('document.activeElement.blur()')
         for size in [{'width':1280,'height':640}, {'width':820,'height':1020}]:
             page.set_viewport_size(size)
             page.screenshot(path=f"test-results/settings-edit-{size['width']}x{size['height']}.png", full_page=True)
