@@ -2,7 +2,7 @@
 
 ## Stop-Motion und Appstart v0.8 – Umsetzung im neuen PR
 
-09.11.2026 · F32/D47/N22. Sechs bereitgestellte PNG-Bildfelder ersetzen die vereinfachte SVG-Animation. Alle Bilder sind lokal, ohne Crop und offline vorgesehen; der einmalige 4,2-Sekunden-Ablauf hebt sie nacheinander hervor. Einstellungsauswahl, Startlogik, Formulardaten und andere Ansichten bleiben erhalten. App-Version 0.7.0. Syntaxcheck, 16 Node-Tests, Build (19 lokale Assets), Python-Syntax und `git diff --check` lokal erfolgreich. Browser-Smoke-Test mit Bildabfolge, Zoom, Viewports, Speicherung, Wiederholung, reduced-motion und Offline-Bildern steht im GitHub-Workflow noch aus. Bildschirmfotos und Video werden als Workflow-Artefakt vorbereitet. Lenovo Tab TB311FU bleibt praktisch zu prüfen.
+09.11.2026 · F32/D47/N22. Sechs bereitgestellte PNG-Bildfelder ersetzen die vereinfachte SVG-Animation. Alle Bilder sind lokal, ohne Crop und offline vorgesehen; der einmalige 4,2-Sekunden-Ablauf hebt sie nacheinander hervor. Einstellungsauswahl, Startlogik, Formulardaten, sichtbare Versionskennung und andere Ansichten bleiben erhalten. Anwendungsversion 0.6.0. Syntaxcheck, 16 Node-Tests, Build (19 lokale Assets), Python-Syntax und `git diff --check` lokal erfolgreich. Browser-Smoke-Test mit Bildabfolge, Zoom, Viewports, Speicherung, Wiederholung, reduced-motion und Offline-Bildern steht im GitHub-Workflow noch aus. Bildschirmfotos und Video werden als Workflow-Artefakt vorbereitet. Lenovo Tab TB311FU bleibt praktisch zu prüfen.
 
 ## Animation und Neustart v0.7 – umgesetzt, PR #9 gemergt
 

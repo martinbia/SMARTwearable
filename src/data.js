@@ -1,5 +1,5 @@
 import { addDays, weekDates } from './calendar.js';
-export const VERSION = '0.7.0';
+export const VERSION = '0.6.0';
 export const GOAL = { target: 100, lower: 90, upper: 110 };
 export const time = n => `${String(Math.floor(n / 60)).padStart(2, '0')}:${String(n % 60).padStart(2, '0')}`;
 export const activityScenarios = { S01: 'Beispieltag', S02: 'Ruhigerer Tag', S03: 'Tag mit Datenlücke' };
