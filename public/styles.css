@@ -1000,7 +1000,7 @@ dd{
 .entry-wordmark { display:flex; align-items:center; gap:8px; font-size:1.15rem; }
 .entry-wordmark .icon { width:34px; height:34px; color:var(--teal); }
 .entry-demo-tag { color:var(--muted); font-size:.82rem; }
-.entry-main { width:100%; max-width:1440px; margin:auto; display:flex; flex-direction:column; gap:clamp(6px,1.2vh,14px); }
+.entry-main { width:100%; max-width:1440px; margin:clamp(8px,3vh,28px) auto 0; display:flex; flex-direction:column; gap:clamp(6px,1.2vh,14px); }
 .entry-main h1 { margin:0; text-align:center; font-size:clamp(1.7rem,3.2vw,2.55rem); line-height:1.12; color:var(--ink); }
 .entry-main .stop-motion-strip { gap:12px; }
 .entry-main .stop-motion-frame { aspect-ratio:1.35; }
@@ -1092,7 +1092,7 @@ dd{
   .settings-top { min-height:48px; flex-direction:row; align-items:center; gap:8px; }
   .settings-heading { gap:8px; min-height:48px; }
   .settings-heading h1 { font-size:1.15rem; }
-  .stop-motion-strip { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 12px; }
+  .stop-motion-strip, .bracelet-gallery .stop-motion-strip { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 12px; }
   .stop-motion-frame:not(:last-child)::after { display:none; }
   .entry-main .stop-motion-frame { aspect-ratio:auto; height:clamp(96px,15vh,142px); }
   .entry-features { gap:8px; }
