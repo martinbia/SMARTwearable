@@ -1,4 +1,24 @@
-# Implementierungs- und Prüfstand v0.5
+# Implementierungs- und Prüfstand v0.6 (PR offen)
+
+09.11.2026 · Anwendung 0.5.0 · D43/N21: Präferenz-Ersteinrichtung/-bearbeitung kompakter gesetzt. Im Querformat Pulshinweise/Aktivitätserinnerung nebeneinander, Datenfreigabe volle Breite; Kopfzeile, Einführung und Demo-Hinweis verkleinert, Seitenränder reduziert. Ersteinrichtung bleibt nicht überspringbar; im Editiermodus bleibt der rote Startseite-Button erhalten. Keine Änderungen an Speicherung, Präferenzregeln, übrigen Ansichten oder Demo-Daten/Berechnungen.
+
+## Prüfungen v0.6
+
+- Lokal erfolgreich: `npm run check`, 16 Node-Tests, `npm run build` (13 lokale Assets), Python-Syntaxprüfung und `git diff --check`.
+- [GitHub Actions Lauf #32](https://github.com/martinbia/SMARTwearable/actions/runs/42669169131) erfolgreich: Check, Tests, Build und echter Chromium-Smoke-Test. Deployment im PR bestimmungsgemäss übersprungen.
+- Browser prüft die drei Einrichtungsentscheidungen ohne Vorauswahl, deaktivierte Bestätigung davor und fehlenden Startseite-Button im Setup; im gespeicherten Bearbeitungszustand ist Startseite vorhanden. Alle acht Antwortkombinationen und bestehende Änderungs-/Abbruchwege weiterhin geprüft.
+- Einrichtung ohne horizontalen oder vertikalen Überlauf in 1280×640, 1180×620 und 1024×560; 820×1020 bleibt gut lesbar. Touch-Flächen mindestens 48×48 CSS-Pixel. 200-%-Zoom ohne horizontalen Überlauf; bei schmaler 640×320 CSS-Fläche einspaltig mit per Scroll erreichbarer Bestätigung. Weitere bestehende Ansichten wurden im selben Browser-Smoke-Test durchlaufen.
+- Screenshots von Einrichtung und Bearbeitung in Quer- und Hochformat sowie der drei Querformat-Prüfflächen wurden visuell kontrolliert: Gruppen, Texte und Bestätigung sind erkennbar; keine abgeschnittenen Texte oder Überlagerung. [Screenshots als Workflow-Artefakt](https://github.com/martinbia/SMARTwearable/actions/runs/42669169131/artifacts/13697673335).
+- Chromium konnte lokal nicht starten (Laufzeitbeschränkung `socket() failed: Operation not permitted`); der erfolgreiche echte Browserlauf erfolgte auf GitHub Actions.
+
+Pull Request [#8](https://github.com/martinbia/SMARTwearable/pull/8) ist offen, ohne automatisches Merge.
+
+## Noch am Lenovo prüfen
+
+- Einrichtungs- und Bearbeitungsmodus im Chrome-PWA-Modus mit Systemleisten; reale verfügbare CSS-Breite/-Höhe dokumentieren.
+- Quer-/Hochformat, Touchziele, Lesbarkeit bei Android-Schriftvergrösserung und tatsächlichem 200-%-Zoom; bei Platzmangel muss die Bestätigung durch Scrollen erreichbar bleiben.
+- Prüfen, dass Einrichtung nicht übersprungen werden kann und der Bearbeitungsmodus über Startseite zurückkehrt.
+- Bestehende Auswahlmöglichkeiten, Speichern/Abbrechen, Zurücksetzen und Abgrenzung vom Demo-Reset auf dem Tablet stichprobenartig bestätigen.
 
 09.11.2026 · Anwendung 0.5.0 · Neue Ersteinrichtung vor C2 (F26–F30 / D37–D42). Der Codepfad zeigt ohne vollständige lokale Präferenzen die verpflichtende Auswahl; C2 bleibt nach Abschluss in seiner Grafik und Hauptnavigation erhalten. Einstellungen sind lokal änderbar und getrennt vom Demo-Reset. Alle Warnungen, Vibrationen und Datenfreigaben bleiben inaktiv und simuliert. Demodaten und Berechnungen nicht geändert.
 

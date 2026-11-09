@@ -62,3 +62,14 @@ Bei schmalen Ansichten dieselben Informationen in gut lesbaren Tages-/Wochenkart
 - Tag: zwei zeitlich ausgerichtete Bewegungsspuren für Schrittbewegung und sonstige Bewegung; darunter grosser Pulsverlauf mit Min/Max/Mean und beiden Kategorie-Mitteln. Bei heutigem Tag endet die gemeinsame Zeitskala am verfügbaren Datenstand, historische Tage am Beobachtungsende. Keine Linie über Datenlücken. Hauttemperatur, Strecke, Abschnitte und Rohwerte in einer zunächst geschlossenen Gruppe „Weitere Angaben“.
 - Kleine Metadaten-/Fusszeile statt langer Einleitungen. Fiktiv-Hinweis, unvollständige Woche und Datenlücken bleiben lesbar. Ausführliche Erklärung über Info und Weitere Angaben.
 - Die Startseite v0.3 bleibt unverändert. Die Zahlen/Datumsbeispiele der Designbilder sind Illustrationen; der vorhandene gemeinsame Demodatensatz bleibt massgeblich. Kein Import eines abweichenden Bild-Datensatzes.
+
+## Präferenzseite – kompakter Layoutvorschlag v0.6
+
+Status: **zur Umsetzung beauftragter Vorschlag (D43)**. Nur die bestehende Ersteinrichtungs-/Einstellungsseite wird visuell angepasst; Inhalte und Verhalten der Präferenzen bleiben nach F26–F30 unverändert.
+
+- In breiten Ansichten liegen „Pulshinweise“ und „Aktivitätserinnerung“ in der ersten Rasterzeile nebeneinander; „Datenfreigabe“ nutzt darunter die volle Breite. Die beiden Antworten jeder Gruppe stehen nebeneinander, soweit sie lesbar bleiben.
+- Kopfzeile: Im Bearbeitungsmodus stehen der rote „Startseite“-Button und die Überschrift in einer Zeile. Bei der verpflichtenden Ersteinrichtung erscheint kein Startseite-Button. Der kurze Einführungstext umfasst höchstens zwei Zeilen.
+- Der grosse grüne Demonstrationskasten entfällt. Ein kompakter neutraler Hinweis lautet: „Demo mit Beispieldaten – keine echten Warnungen, Vibrationen oder Datenübertragungen.“
+- Seitenränder werden auf ungefähr 16–24 CSS-Pixel reduziert. Auswahl- und Bestätigungsflächen bleiben mindestens 48×48 CSS-Pixel.
+- In schmalen Ansichten darf das Raster einspaltig werden und scrollen. Zoom darf Inhalte umbrechen lassen; nichts wird abgeschnitten oder überlagert.
+- Alle anderen Ansichten, Einstellungen, Speicherung, Demo-Daten und Berechnungen bleiben unverändert.
