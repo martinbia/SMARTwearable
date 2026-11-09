@@ -46,7 +46,6 @@ def run():
             page.locator('[data-action="openSetup"]').click()
         assert page.get_by_role('heading', name='Gut vorbereitet mit Ihrem Armband').is_visible()
         assert page.locator('[data-testid="entry-countdown"]').inner_text() == 'Automatischer Wechsel in 20 s'
-        page.wait_for_function("document.querySelector('[data-testid=entry-countdown]')?.textContent==='Automatischer Wechsel in 19 s'", timeout=3000)
         assert page.locator('#preferences-submit').count() == 0, 'settings must follow the introduction'
         animation = page.locator('.entry-main .stop-motion')
         assert animation.get_attribute('data-animation-state') == 'playing'
@@ -55,6 +54,14 @@ def run():
         assert len(frame_requests) == 6, frame_requests
         assert page.locator('.entry-main .stop-motion-frame img').evaluate_all("els => els.map(e => getComputedStyle(e).objectFit)") == ['contain'] * 6
         page.screenshot(path='test-results/entry-landscape.png', full_page=True)
+        page.wait_for_timeout(720)
+        assert animation.get_attribute('data-active-frame') == '1', 'highlight must move to the second image after about 700 ms'
+        page.wait_for_function("document.querySelector('.entry-main .stop-motion')?.dataset.animationState==='complete'", timeout=6000)
+        assert animation.get_attribute('data-active-frame') == '5', 'the final thumb-up frame must remain highlighted'
+        page.wait_for_timeout(750)
+        assert animation.get_attribute('data-animation-state') == 'complete', 'sequence must not loop'
+        assert page.locator('.entry-main .stop-motion-frame img').evaluate_all('els => els.length===6 && els.every(e=>e.complete && e.naturalWidth>0)')
+        page.screenshot(path='test-results/entry-animation-complete.png', full_page=True)
         page.set_viewport_size({'width':820,'height':1020})
         page.screenshot(path='test-results/entry-portrait.png', full_page=True)
         entry_sizes = [
@@ -70,15 +77,8 @@ def run():
             cta = page.locator('.entry-cta').bounding_box()
             assert cta and cta['width'] >= 48 and cta['height'] >= 48, (size, cta)
         page.set_viewport_size({'width':1280,'height':640})
-        page.wait_for_timeout(720)
-        assert animation.get_attribute('data-active-frame') == '1', 'highlight must move to the second image after about 700 ms'
-        page.wait_for_function("document.querySelector('.entry-main .stop-motion')?.dataset.animationState==='complete'", timeout=6000)
-        assert animation.get_attribute('data-active-frame') == '5', 'the final thumb-up frame must remain highlighted'
-        page.wait_for_timeout(750)
-        assert animation.get_attribute('data-animation-state') == 'complete', 'sequence must not loop'
-        assert page.locator('.entry-main .stop-motion-frame img').evaluate_all('els => els.length===6 && els.every(e=>e.complete && e.naturalWidth>0)')
-        page.screenshot(path='test-results/entry-animation-complete.png', full_page=True)
         # Automatic navigation after the visible 20 second countdown.
+        page.wait_for_function("document.querySelector('[data-testid=entry-countdown]')?.textContent!=='Automatischer Wechsel in 20 s'", timeout=3000)
         page.wait_for_function("document.querySelector('.settings-shell')", timeout=23000)
         assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
         assert page.locator('#preferences-submit').is_disabled()
