@@ -1049,14 +1049,16 @@ dd{
   .wearable-animation { height:66px; }
   .settings-intro { margin:2px 0 5px; }
 }
-@media (max-width:700px) {
-  .settings-shell { padding:8px 16px 16px; }
+@media (max-width:900px) {
   .settings-top { min-height:0; flex-direction:column; align-items:stretch; gap:2px; }
   .settings-heading { gap:8px; min-height:48px; }
   .settings-heading h1 { font-size:1.15rem; }
   .setup-visual { align-self:flex-end; flex-basis:auto; width:min(100%,320px); height:68px; }
   .wearable-animation { height:64px; }
   .animation-replay { flex-basis:100px; }
+}
+@media (max-width:700px) {
+  .settings-shell { padding:8px 16px 16px; }
   .settings-form { grid-template-columns:1fr; }
   .preference-group[data-setting-group="shareWithCareTeam"],
   .settings-submit { grid-column:1; }

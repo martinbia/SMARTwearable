@@ -80,6 +80,10 @@ def run():
             page.set_viewport_size(size)
             page.screenshot(path=f"test-results/settings-setup-{size['width']}x{size['height']}.png", full_page=True)
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), f"settings horizontal overflow at {size}"
+            if size['width'] <= 900:
+                step = page.locator('.setup-step').bounding_box()
+                visual = page.locator('.setup-visual').bounding_box()
+                assert step and visual and step['y'] + step['height'] <= visual['y'], f"setup heading and illustration must not overlap at {size}: {step}, {visual}"
             setup_layout[(size['width'], size['height'])] = page.evaluate('({scroll:document.documentElement.scrollHeight, height:innerHeight})')
             for control in page.locator('.preference-option, #preferences-submit').all():
                 box = control.bounding_box()
