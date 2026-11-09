@@ -1,8 +1,12 @@
 # Implementierungs- und Prüfstand
 
-## Animation und Neustart v0.7 – umgesetzt, PR offen
+## Stop-Motion und Appstart v0.8 – Umsetzung im neuen PR
 
-09.11.2026 · F31/F32, N22, D44–D46. Jeder neue Dokumentstart zeigt die Einstellungsseite mit erhaltenen/vorausgewählten Optionen; interner Routenwechsel bleibt unberührt. Inline SVG/CSS-Animation, Einmalstart, statisches Endbild, Wiederholung und reduzierte Bewegung sind umgesetzt. PR #9 ist offen und nicht gemergt. Der erste Browserlauf scheiterte, weil die Seite bei 1024×560 um 15 CSS-Pixel überlief; eine nur für niedrige Querformat-Höhen geltende Kompaktregel behebt dies. Bei der visuellen Kontrolle wurde danach eine Überlagerung im 820-Pixel-Hochformat entdeckt und behoben. GitHub Actions Lauf #37 erfolgreich: Syntax, 16 Node-Tests, Build und Chromium-Smoke-Test inklusive Höhen, Zoom, Einspaltenansicht, Auswahl/Speicherung, interner Navigation, Animationszuständen und explizitem Überlappungstest. [Screenshots und Animationsvideo als Workflow-Artefakt](https://github.com/martinbia/SMARTwearable/actions/runs/42675872702/artifacts/13699803017). Screenshots für Quer- und Hochformat wurden visuell kontrolliert; keine Überlagerung oder abgeschnittenen Bedienelemente.
+09.11.2026 · F32/D47/N22. Sechs bereitgestellte lokale PNG-Bilder ersetzen die vereinfachte SVG-Animation. Die einmalige Stop-Motion hebt alle sechs Frames im Abstand von 700 ms hervor (4,2 s); danach bleibt die Reihe ruhig sichtbar. Auswahl, Startlogik, Formulardaten, sichtbare Anwendungsversion 0.6.0 und übrige Ansichten bleiben erhalten. Lokal erfolgreich: Syntaxcheck, 16 Node-Tests, Build (19 lokale Assets), Python-Syntax und `git diff --check`. [GitHub Actions Lauf #41](https://github.com/martinbia/SMARTwearable/actions/runs/42683033868) erfolgreich: Syntax, Tests, Build und Chromium-Browserprüfung einschliesslich sechs Frames, Ablauf ohne Schleife, Wiederholung, reduzierter Bewegung, 200-%-Zoom, gespeicherter Einstellungen und Offline-Bilder. Prüfansichten 1280×640, 1180×620, 1024×560 und 820×1020 wurden erzeugt und visuell kontrolliert; in den drei Querformaten waren Einstellungen und Bestätigung sichtbar. [Screenshots und Animationsvorschau](https://github.com/martinbia/SMARTwearable/actions/runs/42683033868/artifacts/13703766449). Lenovo Tab TB311FU bleibt praktisch zu prüfen.
+
+## Animation und Neustart v0.7 – umgesetzt, PR #9 gemergt
+
+09.11.2026 · F31/F32, N22, D44–D46. Jeder neue Dokumentstart zeigt die Einstellungsseite mit erhaltenen/vorausgewählten Optionen; interner Routenwechsel bleibt unberührt. Die zuerst umgesetzte Inline SVG/CSS-Animation, Einmalstart, statisches Endbild, Wiederholung und reduzierte Bewegung wurden geprüft. Nach Behebung der Höhenüberschreitung bei 1024×560 und einer Überlagerung im Hochformat war GitHub Actions Lauf #38 erfolgreich. [Screenshots und Animationsvideo des früheren SVG-Stands](https://github.com/martinbia/SMARTwearable/actions/runs/42676300510/artifacts/13700890755). PR #9 ist inzwischen gemergt; dessen Animation wird durch v0.8 ersetzt.
 
 09.11.2026 · Anwendung 0.5.0 · D43/N21: Präferenz-Ersteinrichtung/-bearbeitung kompakter gesetzt. Im Querformat Pulshinweise/Aktivitätserinnerung nebeneinander, Datenfreigabe volle Breite; Kopfzeile, Einführung und Demo-Hinweis verkleinert, Seitenränder reduziert. Ersteinrichtung bleibt nicht überspringbar; im Editiermodus bleibt der rote Startseite-Button erhalten. Keine Änderungen an Speicherung, Präferenzregeln, übrigen Ansichten oder Demo-Daten/Berechnungen. [PR #8](https://github.com/martinbia/SMARTwearable/pull/8) wurde inzwischen gemergt.
 
@@ -15,7 +19,7 @@
 - Screenshots von Einrichtung und Bearbeitung in Quer- und Hochformat sowie der drei Querformat-Prüfflächen wurden visuell kontrolliert: Gruppen, Texte und Bestätigung sind erkennbar; keine abgeschnittenen Texte oder Überlagerung. [Screenshots als Workflow-Artefakt](https://github.com/martinbia/SMARTwearable/actions/runs/42669169131/artifacts/13697673335).
 - Chromium konnte lokal nicht starten (Laufzeitbeschränkung `socket() failed: Operation not permitted`); der erfolgreiche echte Browserlauf erfolgte auf GitHub Actions.
 
-PR #8 ist gemergt. Die neue, noch laufende Änderung v0.7 wird separat angeboten.
+PR #8 und PR #9 sind gemergt. Die Foto-Sequenz v0.8 wird separat angeboten.
 
 ## Noch am Lenovo prüfen
 

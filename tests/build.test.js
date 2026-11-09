@@ -39,6 +39,10 @@ test('F13/F14: built subpath assets, manifest and cache support offline navigati
   assert.ok(stored.has('https://example.test/SMARTwearable/src/calendar.js'));
   assert.ok(stored.has('https://example.test/SMARTwearable/src/charts.js'));
   assert.ok(stored.has('https://example.test/SMARTwearable/src/settings.js'));
+  for (let index = 1; index <= 6; index++) {
+    const frame = `frame-${String(index).padStart(2,'0')}.png`;
+    assert.ok(stored.has(`https://example.test/SMARTwearable/images/initial-setup/${frame}`), `${frame} must be precached for offline display`);
+  }
   handlers.activate({ waitUntil: p => promise = p }); await promise;
   assert.ok(claimed && deleted);
   handlers.fetch({ request: { method:'GET', url:'https://example.test/SMARTwearable/', mode:'navigate' }, respondWith: p => promise = p });
