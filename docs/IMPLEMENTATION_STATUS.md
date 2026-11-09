@@ -6,7 +6,14 @@
 
 Erfolgreich: Syntaxprüfung, 16 Node-Tests, statischer PWA-Build mit 13 lokalen Assets und content-versioniertem Offline-Cache, Python-Syntaxprüfung und `git diff --check`. Der neue Modul-Cache sowie Lesen/Schreiben/Löschen, ungültige Daten und blockierter Speicher werden durch Tests abgedeckt.
 
-GitHub-Browserprüfung für den PR steht beim Verfassen dieser Dokumentation noch aus. Die CI erzeugt Screenshots von Ersteinrichtung und C2 als Workflow-Artefakt; die endgültige CI-Nummer wird nach Abschluss ergänzt.
+[GitHub-Prüflauf #29](https://github.com/martinbia/SMARTwearable/actions/runs/42602214131) für Commit `8362d5850115bc5863ffc6d0d53bc459fa4324b3` erfolgreich: Syntax, 16 Tests, Build, Chromium-Installation und vollständiger Browser-Smoke-Test. Die Deployment-Stufe wurde im PR erwartungsgemäss übersprungen. [Screenshots der Ersteinrichtung und Ansichten als Workflow-Artefakt](https://github.com/martinbia/SMARTwearable/actions/runs/42602214131/artifacts/13666276843).
+
+- Alle acht Kombinationen der drei Antworten wurden gespeichert. Fehlende und ungültige Konfigurationen starten erneut ohne Vorauswahl; Weiter bleibt bis zu drei Antworten deaktiviert.
+- Ändern, Speichern und Abbrechen geprüft. Ein Abbruch überschreibt die bisherige Präferenz nicht. Nach Neuladen bleiben Einstellungen im selben Browserprofil erhalten.
+- Ersteinrichtungs-Reset löscht nur Präferenzen; der vorhandene Demo-Reset setzt weiterhin Szenario/Daten zurück und erhält Präferenzen.
+- C2-Prüfflächen N17 (1280×640, 1180×620, 1024×560, 820×1020) ohne horizontalen oder vertikalen Überlauf; drei bisherige Hauptaktionen bleiben sichtbar und bedienbar. Einstellungszugänge mindestens 48×48 CSS-Pixel.
+- Einstellungsansicht bei 200-%-CSS-Zoom und schmaler Ansicht 400×800 ohne horizontalen Überlauf; die Bestätigung bleibt durch Scrollen erreichbar. Offline-Neuladen mit vorhandener Konfiguration erfolgreich.
+- Bestehende D1/W2/Tages-/Geräte-/Demo-Routen im selben Browserlauf weiterhin durchlaufen. Ein pixelgenauer Vergleich gegen freigegebene Referenz-Screenshots wurde nicht ausgeführt; Screenshots liegen im CI-Artefakt.
 
 ## Noch am Lenovo prüfen
 
