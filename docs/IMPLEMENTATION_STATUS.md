@@ -1,8 +1,8 @@
 # Implementierungs- und Prüfstand
 
-## Einstiegsseite und Einstellungen v0.9 – Umsetzung im neuen PR
+## Einstiegsseite und Einstellungen v0.9 – umgesetzt, Browserprüfung im Folge-PR
 
-09.11.2026 · F31–F33/D48/N22–N23. Geplant ist eine Einstiegsseite mit den sechs vorhandenen lokalen Bildern, zwei klar als fiktiv gekennzeichneten Beispielangaben, einem Countdown von 20 Sekunden und der sofortigen Navigation zu den verpflichtenden Einstellungen. Das grüne SMARTwearable-Farbschema bleibt massgeblich. Die volle Bildfolge soll in den Einstellungen kompakt aufklappbar bleiben. Speicherung, Pflichtauswahl, C2/D1/W2, Daten und weitere Navigation sind Bestandsschutz. Lokal erfolgreich: Syntaxcheck, 16 Node-Tests, Build (19 lokale Assets), Python-Syntax und `git diff --check`. Der angepasste Chromium-Smoke-Test und CI-Screenshots stehen nach Einreichung des PR noch aus. Lenovo Tab TB311FU bleibt praktisch zu prüfen.
+09.11.2026 · F31–F33/D48/N22–N23. Die neue Einstiegsseite mit sechs lokalen Bildern, fiktiven Demo-Informationsfeldern, 20-Sekunden-Countdown und sofortigem Wechsel zu den verpflichtenden Einstellungen ist in PR #11 umgesetzt und gemergt. Das grüne SMARTwearable-Farbschema wird verwendet. Auf der Einstellungsseite bleibt die volle Bildfolge über ein kleines Armbandbild und eine aufklappbare statische Galerie erreichbar. Speicherung, Pflichtauswahl, C2/D1/W2, Daten und weitere Navigation bleiben erhalten. Lokal bestanden: Syntaxcheck, 16 Node-Tests, Build (19 lokale Assets), Python-Syntax und `git diff --check`. GitHub-Chromiumlauf #45 erreichte die Browserprüfung, scheiterte aber an einer Prüfannahme zur Spaltenmessung der eingeklappten Galerie; ein früherer Lauf #44 hatte eine Timingannahme im Test offengelegt. Die Anpassung des Testablaufs und eine kleine Abstandsoptimierung werden im Folge-PR #12 erneut geprüft. CI-Screenshots stehen noch aus. Lenovo Tab TB311FU bleibt praktisch zu prüfen.
 
 ## Stop-Motion und Appstart v0.8 – umgesetzt, PR #10 gemergt
 

@@ -106,8 +106,10 @@ def run():
             page.evaluate('window.scrollTo(0,0)')
             page.screenshot(path=f"test-results/settings-setup-{size['width']}x{size['height']}.png", full_page=True)
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), f"settings horizontal overflow at {size}"
+            page.locator('.bracelet-gallery summary').click()
             columns = page.locator('.stop-motion-strip').evaluate('(el) => getComputedStyle(el).gridTemplateColumns.trim().split(/\\s+/).length')
             assert columns == (3 if size['width'] <= 900 else 6), (size, columns)
+            page.locator('.bracelet-gallery summary').click()
             for control in page.locator('.preference-option, #preferences-submit, .bracelet-gallery summary').all():
                 box = control.bounding_box()
                 assert box and box['width'] >= 48 and box['height'] >= 48, (size, box)
