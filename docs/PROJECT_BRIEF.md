@@ -1,6 +1,6 @@
 # SMARTwearable – Projektauftrag
 
-Version 0.5 · 09.11.2026
+Version 0.7 · 09.11.2026
 
 ## Ziel (F)
 
@@ -39,3 +39,5 @@ Nach der ersten Iteration diskutierbar: Schlafdauer, Herzfrequenzvariabilität b
 Ab v0.4: W2/D1/Tag mit gemeinsamem kompaktem Detailrahmen und Diagrammfokus gemäss UX_SPEC. Startseite v0.3 und Demodaten bleiben erhalten.
 
 Ab v0.5: verpflichtende Präferenz-Ersteinrichtung vor C2, drei rein simulierte Einstellungen zu Pulshinweisen, Aktivitätserinnerung und Sichtbarkeit für Gesundheitsfachpersonen. Einstellungen sind über C2 erneut änderbar und lokal persistent. Es gibt keine tatsächlichen Warnungen, Vibrationen, Datenfreigaben oder neuen Messwertfunktionen. Aktivitäts-, Schritt-, Puls- und Temperaturdaten bleiben unverändert.
+
+Ab v0.7: Bei jedem vollständigen App-Neustart erscheint zuerst die Einstellungsseite; gültige gespeicherte Präferenzen bleiben erhalten und sind vorausgewählt. Die Person kann sie unverändert bestätigen oder ändern. Eine kurze, illustrative Animation zeigt das Anlegen eines Armbands und anschliessend einen Daumen hoch. Das Bildzeichen bestätigt weder Verbindung noch Messung oder Gesundheitszustand. Interne Seitenwechsel innerhalb der laufenden App öffnen die Einstellungsseite nicht erneut.

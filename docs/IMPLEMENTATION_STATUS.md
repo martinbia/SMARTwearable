@@ -1,6 +1,10 @@
-# Implementierungs- und Prüfstand v0.6 (PR offen)
+# Implementierungs- und Prüfstand
 
-09.11.2026 · Anwendung 0.5.0 · D43/N21: Präferenz-Ersteinrichtung/-bearbeitung kompakter gesetzt. Im Querformat Pulshinweise/Aktivitätserinnerung nebeneinander, Datenfreigabe volle Breite; Kopfzeile, Einführung und Demo-Hinweis verkleinert, Seitenränder reduziert. Ersteinrichtung bleibt nicht überspringbar; im Editiermodus bleibt der rote Startseite-Button erhalten. Keine Änderungen an Speicherung, Präferenzregeln, übrigen Ansichten oder Demo-Daten/Berechnungen.
+## Animation und Neustart v0.7 – umgesetzt, PR offen
+
+09.11.2026 · F31/F32, N22, D44–D46. Jeder neue Dokumentstart zeigt die Einstellungsseite mit erhaltenen/vorausgewählten Optionen; interner Routenwechsel bleibt unberührt. Inline SVG/CSS-Animation, Einmalstart, statisches Endbild, Wiederholung und reduzierte Bewegung sind umgesetzt. PR #9 ist offen und nicht gemergt. Der erste Browserlauf scheiterte, weil die Seite bei 1024×560 um 15 CSS-Pixel überlief; eine nur für niedrige Querformat-Höhen geltende Kompaktregel behebt dies. Bei der visuellen Kontrolle wurde danach eine Überlagerung im 820-Pixel-Hochformat entdeckt und behoben. GitHub Actions Lauf #37 erfolgreich: Syntax, 16 Node-Tests, Build und Chromium-Smoke-Test inklusive Höhen, Zoom, Einspaltenansicht, Auswahl/Speicherung, interner Navigation, Animationszuständen und explizitem Überlappungstest. [Screenshots und Animationsvideo als Workflow-Artefakt](https://github.com/martinbia/SMARTwearable/actions/runs/42675872702/artifacts/13699803017). Screenshots für Quer- und Hochformat wurden visuell kontrolliert; keine Überlagerung oder abgeschnittenen Bedienelemente.
+
+09.11.2026 · Anwendung 0.5.0 · D43/N21: Präferenz-Ersteinrichtung/-bearbeitung kompakter gesetzt. Im Querformat Pulshinweise/Aktivitätserinnerung nebeneinander, Datenfreigabe volle Breite; Kopfzeile, Einführung und Demo-Hinweis verkleinert, Seitenränder reduziert. Ersteinrichtung bleibt nicht überspringbar; im Editiermodus bleibt der rote Startseite-Button erhalten. Keine Änderungen an Speicherung, Präferenzregeln, übrigen Ansichten oder Demo-Daten/Berechnungen. [PR #8](https://github.com/martinbia/SMARTwearable/pull/8) wurde inzwischen gemergt.
 
 ## Prüfungen v0.6
 
@@ -11,13 +15,14 @@
 - Screenshots von Einrichtung und Bearbeitung in Quer- und Hochformat sowie der drei Querformat-Prüfflächen wurden visuell kontrolliert: Gruppen, Texte und Bestätigung sind erkennbar; keine abgeschnittenen Texte oder Überlagerung. [Screenshots als Workflow-Artefakt](https://github.com/martinbia/SMARTwearable/actions/runs/42669169131/artifacts/13697673335).
 - Chromium konnte lokal nicht starten (Laufzeitbeschränkung `socket() failed: Operation not permitted`); der erfolgreiche echte Browserlauf erfolgte auf GitHub Actions.
 
-Pull Request [#8](https://github.com/martinbia/SMARTwearable/pull/8) ist offen, ohne automatisches Merge.
+PR #8 ist gemergt. Die neue, noch laufende Änderung v0.7 wird separat angeboten.
 
 ## Noch am Lenovo prüfen
 
 - Einrichtungs- und Bearbeitungsmodus im Chrome-PWA-Modus mit Systemleisten; reale verfügbare CSS-Breite/-Höhe dokumentieren.
 - Quer-/Hochformat, Touchziele, Lesbarkeit bei Android-Schriftvergrösserung und tatsächlichem 200-%-Zoom; bei Platzmangel muss die Bestätigung durch Scrollen erreichbar bleiben.
 - Prüfen, dass Einrichtung nicht übersprungen werden kann und der Bearbeitungsmodus über Startseite zurückkehrt.
+- Animation einmal im Chrome-PWA-Modus ansehen, Wiederholung antippen, App neu starten und mit Android „Animationen entfernen“/reduzierter Bewegung prüfen.
 - Bestehende Auswahlmöglichkeiten, Speichern/Abbrechen, Zurücksetzen und Abgrenzung vom Demo-Reset auf dem Tablet stichprobenartig bestätigen.
 
 09.11.2026 · Anwendung 0.5.0 · Neue Ersteinrichtung vor C2 (F26–F30 / D37–D42). Der Codepfad zeigt ohne vollständige lokale Präferenzen die verpflichtende Auswahl; C2 bleibt nach Abschluss in seiner Grafik und Hauptnavigation erhalten. Einstellungen sind lokal änderbar und getrennt vom Demo-Reset. Alle Warnungen, Vibrationen und Datenfreigaben bleiben inaktiv und simuliert. Demodaten und Berechnungen nicht geändert.

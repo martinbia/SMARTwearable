@@ -8,9 +8,11 @@ import { emptyPreferences, completePreferences, readPreferences, writePreference
 let state = initialState(createSession());
 const settingsStorage = (() => { try { return window.localStorage; } catch { return null; } })();
 let preferences = readPreferences(settingsStorage);
-let settingsMode = preferences ? null : 'setup';
+// Every fresh document load begins at the preference entry. Saved answers remain the draft.
+let settingsMode = 'setup';
 let settingsDraft = preferences ? { ...preferences } : emptyPreferences();
 let settingsFocus = null;
+let settingsAnimation = 'play';
 let transferTimer;
 let pendingUpdate;
 let installPrompt;
@@ -50,12 +52,38 @@ function preferenceGroup(key) {
   const option = (value, label) => `<label class="preference-option"><input type="radio" name="${key}" value="${value}" data-preference="${key}" ${selected === value ? 'checked' : ''}><span>${label}</span></label>`;
   return `<fieldset class="preference-group" data-setting-group="${key}" tabindex="-1"><legend>${item.title}</legend><p>${item.question}</p><div class="preference-options">${option(true, item.yes)}${option(false, item.no)}</div></fieldset>`;
 }
+function wearableIntro() {
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const playing = settingsAnimation === 'play' && !reducedMotion;
+  return `<div class="setup-visual"><svg class="wearable-animation ${playing ? 'is-playing' : 'is-static'}" data-animation-state="${playing ? 'playing' : 'complete'}" viewBox="0 0 440 150" role="img" aria-labelledby="wearable-animation-title wearable-animation-description">
+    <title id="wearable-animation-title">Armband anlegen</title><desc id="wearable-animation-description">Eine Hand legt ein dunkles smartes Armband um das Handgelenk. Danach erscheint ein Daumen hoch. Dies bestätigt nur das Anlegen im Mock-up.</desc>
+    <path class="wrist" d="M10 53c40 2 75-8 115-4 15 2 24 8 39 8l20-4c9-2 14 2 13 8 8-3 15 1 15 7 8-3 15 2 14 8 8-2 14 3 12 9-2 8-9 12-21 13l-28 3c-14 12-31 17-50 14l-31-7c-39-7-76 2-118 9z" fill="#e9c2a7" stroke="#725548" stroke-width="2.5" stroke-linejoin="round"/>
+    <path class="wrist-highlight" d="M22 61c34 0 64-7 94-5m-89 47c31-5 62-7 91-2" fill="none" stroke="#f5ddce" stroke-width="4" stroke-linecap="round"/>
+    <path class="band-lower" d="M116 58c7-5 22-5 30 0l2 53c-10 6-23 5-31-1z" fill="#33383a" stroke="#252a2c" stroke-width="2"/>
+    <path class="band-open" d="M116 61c-6-6-7-19-2-27 6-10 19-13 30-7l5 29" fill="none" stroke="#33383a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="band-closed" d="M116 59c-4-17 2-31 14-34 10-2 18 7 19 25l1 59c-10 6-23 5-31-1z" fill="#33383a" stroke="#252a2c" stroke-width="2"/>
+    <rect class="sensor-case" x="112" y="49" width="39" height="17" rx="7" fill="#252a2c" stroke="#15191a" stroke-width="2"/>
+    <rect x="121" y="53" width="21" height="8" rx="3" fill="#485154"/>
+    <circle cx="132" cy="57" r="2.2" fill="#9ebbb3"/>
+    <g class="closing-hand" fill="#d9aa8c" stroke="#725548" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M151 7c7 0 12 5 12 12v17l-7 14-12-5 5-15V18c0-7 1-11 2-11z"/>
+      <path d="M163 27c7-5 13-3 17 3l11 18-9 8-15-13-9 2-5-11z"/>
+      <path d="M142 39l12-5 8 15-14 6z" fill="#e9c2a7"/>
+    </g>
+    <g class="thumb-hand" stroke="#725548" stroke-width="2.5" stroke-linejoin="round">
+      <path d="M330 136v-24c0-7 4-11 9-11s8 4 8 10V90c0-7 4-11 9-11s8 4 8 11v14c2-6 6-9 11-8s7 5 7 11v10c3-5 7-7 11-5s5 5 5 10v10c0 14-9 23-23 23h-30c-10 0-15-4-15-10z" fill="#e9c2a7"/>
+      <path d="M348 94c-1-7 2-14 8-21 5-6 7-13 7-21 0-7 4-11 9-11s8 4 8 10c0 8-2 16-5 23h19c8 0 12 5 11 12l-5 31c-1 7-6 11-14 11h-20" fill="#e9c2a7"/>
+      <path d="M338 119v9m18-35v30m17-27v27m16-19v16" fill="none" stroke="#bd8e73" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <g class="done-check"><circle cx="405" cy="35" r="15" fill="#e7efe7" stroke="#719077" stroke-width="2"/><path d="m398 35 5 5 10-11" fill="none" stroke="#52785c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>
+  </svg><button type="button" class="animation-replay" data-action="replayAnimation" aria-label="Animation nochmals ansehen">↻ <span>Animation nochmals ansehen</span></button></div>`;
+}
 function preferencesView() {
   const setup = settingsMode === 'setup';
   const selectedCount = Object.values(settingsDraft).filter(value => typeof value === 'boolean').length;
   const status = selectedCount === 3 ? 'Alle drei Einstellungen ausgewählt.' : `Bitte wählen Sie noch ${3 - selectedCount} ${3 - selectedCount === 1 ? 'Einstellung' : 'Einstellungen'} aus.`;
   const back = setup ? '<span class="setup-step">Ersteinrichtung</span>' : button('← Startseite', 'cancelSettings', 'home-button');
-  return `<div class="settings-shell"><main id="main" class="settings-main"><header class="settings-top">${back}<h1 tabindex="-1">Ihr Armband – Ihre Einstellungen</h1></header><p class="settings-intro">Wählen Sie Ihre Hinweise und wer die Informationen sehen darf. Sie können die Auswahl später ändern.</p><form id="preferences-form" class="settings-form" novalidate>${preferenceGroup('pulseAlerts')}${preferenceGroup('activityReminder')}${preferenceGroup('shareWithCareTeam')}<div class="settings-submit"><p class="settings-demo">Demo mit Beispieldaten – keine echten Warnungen, Vibrationen oder Datenübertragungen.</p><p id="settings-status" role="status">${status}</p>${button(setup ? 'Einstellungen übernehmen und weiter' : 'Änderungen übernehmen', 'savePreferences', 'primary', `id="preferences-submit" ${selectedCount < 3 ? 'disabled' : ''}`)}</div></form></main></div>`;
+  return `<div class="settings-shell"><main id="main" class="settings-main"><header class="settings-top"><div class="settings-heading">${back}<h1 tabindex="-1">Ihr Armband – Ihre Einstellungen</h1></div>${wearableIntro()}</header><p class="settings-intro">Wählen Sie Ihre Hinweise und wer die Informationen sehen darf. Sie können die Auswahl später ändern.</p><form id="preferences-form" class="settings-form" novalidate>${preferenceGroup('pulseAlerts')}${preferenceGroup('activityReminder')}${preferenceGroup('shareWithCareTeam')}<div class="settings-submit"><p class="settings-demo">Demo mit Beispieldaten – keine echten Warnungen, Vibrationen oder Datenübertragungen.</p><p id="settings-status" role="status">${status}</p>${button(setup ? 'Einstellungen übernehmen und weiter' : 'Änderungen übernehmen', 'savePreferences', 'primary', `id="preferences-submit" ${selectedCount < 3 ? 'disabled' : ''}`)}</div></form></main></div>`;
 }
 function metricCell(day, kind, max) {
   let inner;
@@ -122,6 +150,14 @@ function infoView() {
 function render() {
   if (settingsMode) {
     root.innerHTML = preferencesView();
+    const animation = root.querySelector('.wearable-animation');
+    if (animation?.classList?.contains?.('is-playing')) {
+      // Consume autoplay now so incidental re-renders (for example, a waiting SW update) cannot replay it.
+      settingsAnimation = 'static';
+      animation.querySelector('.thumb-hand')?.addEventListener('animationend', () => {
+        animation.dataset.animationState = 'complete';
+      }, { once: true });
+    }
     const focusTarget = settingsFocus ? root.querySelector(`[data-setting-group="${settingsFocus}"]`) : root.querySelector('h1');
     settingsFocus = null;
     focusTarget?.focus({ preventScroll: false });
@@ -147,8 +183,21 @@ root.addEventListener('click', async event => {
   if (!target || target.disabled) return;
   const action = target.dataset.action;
   if (target.tagName === 'A') event.preventDefault();
+  if (action === 'replayAnimation') {
+    const animation = root.querySelector('.wearable-animation');
+    if (!animation || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    animation.classList.remove('is-playing', 'is-static');
+    animation.getAnimations().forEach(item => item.cancel());
+    void animation.getBoundingClientRect().width;
+    animation.dataset.animationState = 'playing';
+    animation.classList.add('is-playing');
+    animation.querySelector('.thumb-hand')?.addEventListener('animationend', () => {
+      animation.dataset.animationState = 'complete';
+    }, { once: true });
+    return;
+  }
   if (action === 'openPreference') {
-    settingsMode = 'edit'; settingsDraft = { ...preferences }; settingsFocus = target.dataset.preferenceKey; render(); return;
+    settingsMode = 'edit'; settingsAnimation = 'static'; settingsDraft = { ...preferences }; settingsFocus = target.dataset.preferenceKey; render(); return;
   }
   if (action === 'cancelSettings') {
     settingsMode = null; settingsDraft = { ...preferences }; dispatch({ type: 'navigate', view: 'home' }, true); return;
@@ -161,7 +210,7 @@ root.addEventListener('click', async event => {
   if (action === 'resetPreferences') {
     if (window.confirm('Gespeicherte Präferenzen löschen und die Ersteinrichtung erneut starten?')) {
       if (!clearPreferences(settingsStorage)) { announce('Einstellungen konnten nicht zurückgesetzt werden.'); return; }
-      preferences = null; settingsDraft = emptyPreferences(); settingsMode = 'setup'; render(); announce('Ersteinrichtung zurückgesetzt.');
+      preferences = null; settingsDraft = emptyPreferences(); settingsMode = 'setup'; settingsAnimation = 'static'; render(); announce('Ersteinrichtung zurückgesetzt.');
     }
     return;
   }

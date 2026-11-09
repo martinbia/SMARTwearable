@@ -44,6 +44,33 @@ def run():
         assert page.locator('.preference-option input:checked').count() == 0
         assert page.locator('.settings-top .home-button').count() == 0, 'setup must not offer a route around required preferences'
         assert page.locator('.settings-top h1').is_visible()
+        animation = page.locator('.wearable-animation')
+        assert animation.get_attribute('data-animation-state') == 'playing'
+        assert page.locator('.animation-replay').is_visible()
+        page.evaluate("window.__wearableIterations=0;document.querySelector('.wearable-animation').addEventListener('animationiteration',()=>window.__wearableIterations++)")
+        page.screenshot(path='test-results/settings-animation-phase1.png', full_page=True)
+        # The input remains operable while the animation is in progress.
+        page.locator('input[name="pulseAlerts"][value="true"]').check()
+        assert page.locator('input[name="pulseAlerts"][value="true"]').is_checked()
+        def seek_animation(milliseconds):
+            page.evaluate("ms=>document.querySelector('.wearable-animation').getAnimations().forEach(animation=>animation.currentTime=ms)", milliseconds)
+        seek_animation(1900)
+        page.screenshot(path='test-results/settings-animation-phase2.png', full_page=True)
+        seek_animation(3601)
+        page.wait_for_function("document.querySelector('.wearable-animation')?.dataset.animationState==='complete'")
+        assert page.evaluate('window.__wearableIterations') == 0, 'animation must not loop'
+        assert page.locator('.band-closed').evaluate('(el)=>getComputedStyle(el).opacity') == '1'
+        assert page.locator('.thumb-hand').evaluate('(el)=>getComputedStyle(el).opacity') == '1'
+        page.screenshot(path='test-results/settings-animation-phase3.png', full_page=True)
+        page.locator('.animation-replay').click()
+        assert animation.get_attribute('data-animation-state') == 'playing'
+        seek_animation(3601)
+        page.wait_for_function("document.querySelector('.wearable-animation')?.dataset.animationState==='complete'")
+        page.evaluate("localStorage.removeItem('smartwearable-preferences-v1')")
+        page.reload()
+        assert page.locator('.preference-option input:checked').count() == 0
+        seek_animation(3601)
+        page.wait_for_function("document.querySelector('.wearable-animation')?.dataset.animationState==='complete'")
         settings_sizes = [
             {'width':1280,'height':640}, {'width':1180,'height':620},
             {'width':1024,'height':560}, {'width':820,'height':1020}
@@ -53,6 +80,10 @@ def run():
             page.set_viewport_size(size)
             page.screenshot(path=f"test-results/settings-setup-{size['width']}x{size['height']}.png", full_page=True)
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), f"settings horizontal overflow at {size}"
+            if size['width'] <= 900:
+                step = page.locator('.setup-step').bounding_box()
+                visual = page.locator('.setup-visual').bounding_box()
+                assert step and visual and step['y'] + step['height'] <= visual['y'], f"setup heading and illustration must not overlap at {size}: {step}, {visual}"
             setup_layout[(size['width'], size['height'])] = page.evaluate('({scroll:document.documentElement.scrollHeight, height:innerHeight})')
             for control in page.locator('.preference-option, #preferences-submit').all():
                 box = control.bounding_box()
@@ -90,10 +121,29 @@ def run():
                 page.reload()
                 assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
 
+        # A complete app restart always returns to settings, retaining valid choices for confirmation.
+        saved_before_restart = page.evaluate("localStorage.getItem('smartwearable-preferences-v1')")
+        page.reload()
+        assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
+        assert page.locator('#preferences-submit').is_enabled()
+        for field in preference_fields:
+            assert page.locator(f'input[name="{field}"]:checked').count() == 1
+        assert page.locator('.wearable-animation').get_attribute('data-animation-state') == 'playing'
+        seek_animation(3601)
+        page.wait_for_function("document.querySelector('.wearable-animation')?.dataset.animationState==='complete'")
+        page.screenshot(path='test-results/settings-restart-saved.png', full_page=True)
+        page.locator('#preferences-submit').click()
+        assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
+        assert page.evaluate("localStorage.getItem('smartwearable-preferences-v1')") == saved_before_restart
+        page.locator('[data-action="weeks"]').click()
+        assert page.locator('.settings-shell').count() == 0
+        page.locator('.home-button').click()
+        assert page.locator('.settings-shell').count() == 0, 'internal route changes must not show setup again'
         page.screenshot(path='test-results/settings-home.png', full_page=True)
         page.locator('[data-preference-key="pulseAlerts"]').click()
         assert page.locator('[data-setting-group="pulseAlerts"]').evaluate('(el) => el === document.activeElement')
         assert page.locator('.settings-top .home-button').is_visible(), 'saved settings must retain Startseite button'
+        assert page.locator('.wearable-animation').get_attribute('data-animation-state') == 'complete', 'settings opened from C2 should show the final illustration'
         page.evaluate('document.activeElement.blur()')
         for size in [{'width':1280,'height':640}, {'width':820,'height':1020}]:
             page.set_viewport_size(size)
@@ -285,15 +335,40 @@ def run():
         click('home')
         for _ in range(10):
             click('weeks'); week_click('2026-11-02'); day_click('2026-11-05');click('back');click('home')
+        page.emulate_media(reduced_motion='reduce')
+        page.reload()
+        assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
+        assert page.locator('.wearable-animation').get_attribute('data-animation-state') == 'complete'
+        assert page.locator('.animation-replay').is_hidden()
+        assert page.locator('.band-closed').evaluate('(el)=>getComputedStyle(el).opacity') == '1'
+        assert page.locator('.thumb-hand').evaluate('(el)=>getComputedStyle(el).opacity') == '1'
+        page.locator('#preferences-submit').click()
         context.set_offline(True)
-        page.reload();page.locator('[data-testid=week-minutes]').wait_for()
+        page.reload()
+        assert page.locator('.settings-shell').count() == 1
+        assert page.locator('.wearable-animation').count() == 1, 'inline illustration must be available offline'
+        page.locator('#preferences-submit').click()
+        page.locator('[data-testid=week-minutes]').wait_for()
         assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
         click('weeks'); week_click('2026-11-02'); day_click('2026-11-05');click('back');click('home')
         click('controls');choose('device','G09');click('device')
         assert 'noch nicht abschätzbar' in page.locator('main').inner_text()
         assert not errors,errors
+        # Best-effort short preview for design review; the PNG phase captures remain the required evidence.
+        try:
+            preview_context = browser.new_context(viewport={'width':1280,'height':640}, record_video_dir='test-results', record_video_size={'width':1280,'height':640})
+            preview_page = preview_context.new_page()
+            preview_page.goto(url)
+            preview_page.wait_for_function("document.querySelector('.wearable-animation')?.dataset.animationState==='complete'")
+            preview_video = preview_page.video
+            preview_page.close()
+            preview_context.close()
+            if preview_video:
+                preview_video.save_as('test-results/settings-animation-preview.webm')
+        except Exception as error:
+            print(f'Optional animation video skipped: {error}')
         browser.close()
-        print('Chromium passed: preference setup and all eight combinations, local persistence/edit/cancel, separate settings reset, C2/D1/W2 routes, responsive layouts, zoom, simulation and offline reload.')
+        print('Chromium passed: one-shot animation, replay, reduced motion, saved-preference restart, all eight combinations, internal navigation, responsive settings, unchanged C2/D1/W2 routes and offline reload.')
 
 
 if __name__ == '__main__':

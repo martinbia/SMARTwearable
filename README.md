@@ -1,6 +1,6 @@
 # SMARTwearable
 
-Tablet-PWA-Mock-up für qualitative Interviews nach Hüftoperation. Version 0.5.0 verwendet die ausgewählten Konzepte C2, D1 und W2 und eine verpflichtende Präferenz-Ersteinrichtung. Ausschliesslich fiktive Daten, keine technische Verbindung zum angelegten Armband.
+Tablet-PWA-Mock-up für qualitative Interviews nach Hüftoperation. Version 0.6.0 verwendet die ausgewählten Konzepte C2, D1 und W2, eine verpflichtende Präferenzseite bei jedem vollständigen App-Neustart sowie eine kurze Animation zum Anlegen des Armbands. Ausschliesslich fiktive Daten, keine technische Verbindung zum angelegten Armband.
 
 ## Ansichten
 
