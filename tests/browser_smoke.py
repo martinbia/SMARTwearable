@@ -39,6 +39,42 @@ def run():
         errors = []
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.goto(url)
+        assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
+        assert page.locator('#preferences-submit').is_disabled()
+        assert page.locator('.preference-option input:checked').count() == 0
+        page.screenshot(path='test-results/settings-setup.png', full_page=True)
+        page.evaluate("localStorage.setItem('smartwearable-preferences-v1', JSON.stringify({schema:1,pulseAlerts:true}))")
+        page.reload()
+        assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
+        assert page.locator('#preferences-submit').is_disabled()
+        preference_fields = ['pulseAlerts', 'activityReminder', 'shareWithCareTeam']
+        for combination in range(8):
+            values = {field: bool(combination & (1 << index)) for index, field in enumerate(preference_fields)}
+            for field, value in values.items():
+                page.locator(f'input[name="{field}"][value="{str(value).lower()}"]').check()
+            assert page.locator('#preferences-submit').is_enabled()
+            page.locator('#preferences-submit').click()
+            assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
+            stored = page.evaluate("JSON.parse(localStorage.getItem('smartwearable-preferences-v1'))")
+            assert {field: stored[field] for field in preference_fields} == values
+            if combination < 7:
+                page.evaluate("localStorage.removeItem('smartwearable-preferences-v1')")
+                page.reload()
+                assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
+
+        page.screenshot(path='test-results/settings-home.png', full_page=True)
+        page.locator('[data-preference-key="pulseAlerts"]').click()
+        assert page.locator('[data-setting-group="pulseAlerts"]').evaluate('(el) => el === document.activeElement')
+        assert page.locator('input[name="pulseAlerts"][value="true"]').is_checked()
+        page.locator('input[name="pulseAlerts"][value="false"]').check()
+        page.locator('[data-action="cancelSettings"]').click()
+        assert 'Pulshinweise' in page.locator('[data-preference-key="pulseAlerts"]').inner_text()
+        assert page.locator('[data-preference-key="pulseAlerts"]').inner_text().endswith('Ein')
+        page.locator('[data-preference-key="shareWithCareTeam"]').click()
+        page.locator('input[name="shareWithCareTeam"][value="false"]').check()
+        page.locator('#preferences-submit').click()
+        assert page.locator('[data-preference-key="shareWithCareTeam"]').inner_text().endswith('Nur ich')
+
         page.locator('[data-testid=week-minutes]').wait_for()
         assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
         assert 'Donnerstag, 12. November 2026' in page.locator('.date-label').inner_text()
@@ -81,10 +117,23 @@ def run():
         def day_click(date):
             page.locator(f'[data-action=date][data-date="{date}"]:visible').first.click()
 
+        click('controls'); choose('scenario', 'S02')
+        page.once('dialog', lambda d: d.accept())
+        click('resetPreferences')
+        assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
+        for field, value in [('pulseAlerts', True), ('activityReminder', False), ('shareWithCareTeam', False)]:
+            page.locator(f'input[name="{field}"][value="{str(value).lower()}"]').check()
+        page.locator('#preferences-submit').click()
+        assert page.locator('[data-testid=week-minutes]').inner_text() != '80'
+        click('controls'); page.once('dialog', lambda d: d.accept()); click('reset')
+        assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
+        assert page.evaluate("JSON.parse(localStorage.getItem('smartwearable-preferences-v1')).activityReminder") is False
+
         no_overflow()
         assert 'Schritte' not in page.locator('main').inner_text()
         assert 'Puls' not in page.locator('main').inner_text()
         assert page.locator('.home-actions button').count() == 3
+        assert page.locator('.preference-shortcuts button').count() == 3
         page.screenshot(path='test-results/c2-home-landscape.png', full_page=True)
         click('weeks'); red_home(); no_overflow(); aligned_bars()
         assert page.get_by_role('tab').count() == 0
@@ -123,6 +172,7 @@ def run():
         assert 'fehlgeschlagen' in page.locator('main').inner_text()
         page.once('dialog', lambda d:d.accept()); click('reset')
         assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
+        assert page.evaluate("JSON.parse(localStorage.getItem('smartwearable-preferences-v1')).activityReminder") is False
 
         for size in [{'width':820,'height':1180},{'width':1180,'height':820},{'width':400,'height':800}]:
             page.set_viewport_size(size)
@@ -189,7 +239,14 @@ def run():
         page.evaluate("document.documentElement.style.zoom='2'")
         for action in ['home','weeks','currentWeek','today','device','controls']:
             click('home'); click(action); no_overflow()
+        click('home');page.locator('[data-preference-key="activityReminder"]').click();no_overflow()
+        click('cancelSettings')
         page.evaluate("document.documentElement.style.zoom='1'")
+        page.set_viewport_size({'width':400,'height':800})
+        page.locator('[data-preference-key="activityReminder"]').click();no_overflow()
+        page.locator('#preferences-submit').scroll_into_view_if_needed()
+        assert page.locator('#preferences-submit').is_visible()
+        click('cancelSettings')
         click('home')
         for _ in range(10):
             click('weeks'); week_click('2026-11-02'); day_click('2026-11-05');click('back');click('home')
@@ -201,7 +258,7 @@ def run():
         assert 'noch nicht abschätzbar' in page.locator('main').inner_text()
         assert not errors,errors
         browser.close()
-    print('Chromium passed: C2/D1/W2, direct week/day routes, red home buttons, pulse categories, date, responsive layouts, zoom, simulation, activity-only compact home without scrolling and offline reload.')
+        print('Chromium passed: preference setup and all eight combinations, local persistence/edit/cancel, separate settings reset, C2/D1/W2 routes, responsive layouts, zoom, simulation and offline reload.')
 
 
 if __name__ == '__main__':

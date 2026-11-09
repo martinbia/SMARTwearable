@@ -2,10 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 test('C2 → W2 → selected D1 → day; all subpages return home and reset works', async () => {
-  const events={};const app={innerHTML:'',addEventListener:(type,fn)=>{(events[type]??=[]).push(fn);}};
+  const events={};const app={innerHTML:'',addEventListener:(type,fn)=>{(events[type]??=[]).push(fn);},querySelector:()=>({focus(){},scrollIntoView(){}})};
   const status={textContent:''};
+  const saved = new Map([['smartwearable-preferences-v1',JSON.stringify({schema:1,pulseAlerts:true,activityReminder:false,shareWithCareTeam:false})]]);
+  globalThis.localStorage={getItem:key=>saved.get(key)??null,setItem:(key,value)=>saved.set(key,value),removeItem:key=>saved.delete(key)};
   globalThis.document={querySelector:s=>s==='#app'?app:s==='#announcement'?status:{focus(){}}};
-  globalThis.window={addEventListener(){},confirm:()=>true,scrollTo(){}};
+  globalThis.window={addEventListener(){},confirm:()=>true,scrollTo(){},localStorage:globalThis.localStorage};
   const RealDate=Date;const fixed=new RealDate(2026,10,12,14,30).getTime();
   globalThis.Date=class extends RealDate {constructor(...args){super(...(args.length?args:[fixed]));}static now(){return fixed;}};
   const click=async(action,data={})=>{for(const fn of events.click)await fn({target:{closest:()=>({dataset:{action,...data}})}});};
@@ -13,7 +15,7 @@ test('C2 → W2 → selected D1 → day; all subpages return home and reset work
   try {
     await import('../src/app.js');
     assert.match(app.innerHTML,/data-testid="week-minutes">80</);
-    assert.doesNotMatch(app.innerHTML,/Schritte|Puls|metric-link|home-cards/);
+    assert.doesNotMatch(app.innerHTML.slice(app.innerHTML.indexOf('<main'),app.innerHTML.indexOf('</main>')),/Schritte|Puls|metric-link|home-cards/);
     assert.match(app.innerHTML,/compact-shell/);
     assert.match(app.innerHTML,/Woche nach Tagen →/);
     assert.match(app.innerHTML,/Mein Armband/);
@@ -38,11 +40,26 @@ test('C2 → W2 → selected D1 → day; all subpages return home and reset work
     for(const action of ['info','device','controls','weeks','currentWeek','today']) {
       await click(action);assert.match(app.innerHTML,/class="home-button"/);await click('home');
     }
+    await click('home');assert.match(app.innerHTML,/aria-label="Meine Einstellungen"/);
+    assert.match(app.innerHTML,/Pulshinweise.*Ein/);assert.match(app.innerHTML,/Aktivitätserinnerung.*Aus/);assert.match(app.innerHTML,/Datenfreigabe.*Nur ich/);
+    await click('openPreference',{preferenceKey:'pulseAlerts'});assert.match(app.innerHTML,/Ihr Armband – Ihre Einstellungen/);
+    assert.match(app.innerHTML,/name="pulseAlerts" value="true"[^>]*checked/);
+    events.change.forEach(fn=>fn({target:{dataset:{preference:'pulseAlerts'},value:'false'}}));
+    await click('cancelSettings');assert.match(app.innerHTML,/Pulshinweise.*Ein/);
+    await click('openPreference',{preferenceKey:'pulseAlerts'});
+    events.change.forEach(fn=>fn({target:{dataset:{preference:'pulseAlerts'},value:'false'}}));
+    await click('savePreferences');assert.match(app.innerHTML,/Pulshinweise.*Aus/);
+    const written=JSON.parse(saved.get('smartwearable-preferences-v1'));assert.equal(written.pulseAlerts,false);
+    await click('controls');await click('resetPreferences');assert.match(app.innerHTML,/Ihr Armband – Ihre Einstellungen/);
+    assert.equal(saved.has('smartwearable-preferences-v1'),false);
+    for(const [key,value] of [['pulseAlerts','true'],['activityReminder','false'],['shareWithCareTeam','false']])
+      events.change.forEach(fn=>fn({target:{dataset:{preference:key},value}}));
+    await click('savePreferences');assert.match(app.innerHTML,/data-testid="week-minutes">80</);
     await click('controls');change('device','G05');await click('transfer');
     await new Promise(r=>setTimeout(r,1250));await click('home');assert.match(app.innerHTML,/data-testid="week-minutes">80</);
     await click('controls');change('device','G07');await click('transfer');await new Promise(r=>setTimeout(r,1250));
     assert.match(app.innerHTML,/fehlgeschlagen/);
     await click('transfer');await click('reset');await click('controls');
     assert.ok(!app.innerHTML.includes('data-action="transfer" disabled'));
-  } finally {globalThis.Date=RealDate;delete globalThis.document;delete globalThis.window;}
+  } finally {globalThis.Date=RealDate;delete globalThis.document;delete globalThis.window;delete globalThis.localStorage;}
 });

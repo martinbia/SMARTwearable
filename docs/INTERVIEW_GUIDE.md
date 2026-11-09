@@ -1,6 +1,6 @@
 # Interviewleitfaden – Entwurf
 
-Version 0.4 · 08.11.2026 · VORSCHLAG, kein klinisch validiertes Instrument.
+Version 0.5 · 09.11.2026 · VORSCHLAG, kein klinisch validiertes Instrument.
 
 ## Vorbereitung
 
@@ -30,3 +30,16 @@ Demo-Version, Gerät/Browserversion, Variantenreihenfolge, Hilfestellungen, vers
 Aufgabe v0.3: Startseite im PWA-Modus mit Android-Status-/App-Leiste öffnen. Ohne Scrollen Woche nach Tagen, Wochenvergleich und Mein Armband finden. Prüfen, ob Aktivität als allgemeine Bewegung verstanden wird; Schritte und Puls erst in den Details suchen. Verfügbare App-Fläche und System-Schriftgrösse notieren.
 
 Aufgaben v0.4: In W2 eine vergangene Woche wählen, dort Tag öffnen und über „Zur Woche“ in dieselbe Woche zurückkehren. Puls-Min/Max/Kategorien und beide Bewegungsspuren erklären lassen. Weitere Angaben öffnen und Hauttemperatur/Strecke/Rohwerte finden. Sichtbarkeit der Grafiken mit Android-Systemleisten prüfen.
+
+## Aufgaben v0.5 – persönliche Einstellungen
+
+Vor der ersten Nutzung öffnet sich die Ersteinrichtung. Die Person wählt selbstständig für jede Gruppe eine Antwort. Die Interviewleitung erklärt keine Option vorab, sondern beobachtet Auffindbarkeit und Verständnis. Anschliessend:
+
+- „Was erwarten Sie, wenn Sie Pulshinweise einschalten? Welche Bedenken oder Wünsche haben Sie?“
+- „Wie wirkt die Idee einer Aktivitätserinnerung durch Vibration auf Sie? Was wäre für Sie hilfreich oder unangenehm?“
+- „Was verstehen Sie unter ‚Auch meine Gesundheitsfachpersonen‘? Welche Kontrolle wünschen Sie darüber?“
+- Einstellungen über die drei Home-Zugänge wiederfinden und jeweils ändern.
+- Änderung einmal übernehmen und einmal verwerfen; besprechen lassen, was gespeichert wurde.
+- „Ersteinrichtung zurücksetzen“ aus der Interviewsteuerung finden und erneut starten.
+
+Neutral klarstellen: Die Optionen sind fiktive Präferenzen. Es erfolgen weder echte Pulshinweise noch Vibration oder Datenübermittlung. Keine medizinischen Schwellenwerte oder Zeitintervalle vorschlagen. Verständlichkeit, wahrgenommene Selbstbestimmung und Erwartungen an Privatsphäre getrennt notieren.

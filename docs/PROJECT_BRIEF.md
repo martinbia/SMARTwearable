@@ -1,6 +1,6 @@
 # SMARTwearable – Projektauftrag
 
-Version 0.4 · 08.11.2026
+Version 0.5 · 09.11.2026
 
 ## Ziel (F)
 
@@ -37,3 +37,5 @@ Puls, Hauttemperatur und Bewegungssensorik sind hypothetische Datenquellen. „I
 Nach der ersten Iteration diskutierbar: Schlafdauer, Herzfrequenzvariabilität bei geeigneten Schlagintervalldaten, Aktivitätsverteilung, Unterbrechungen bewegungsarmer Phasen, Tragedauer und freiwillige Selbstberichte. Gangqualität, Symmetrie, Körperhaltung und Übungserkennung erfordern gesonderte technische und fachliche Klärung. Keine dieser Optionen ist beauftragt.
 
 Ab v0.4: W2/D1/Tag mit gemeinsamem kompaktem Detailrahmen und Diagrammfokus gemäss UX_SPEC. Startseite v0.3 und Demodaten bleiben erhalten.
+
+Ab v0.5: verpflichtende Präferenz-Ersteinrichtung vor C2, drei rein simulierte Einstellungen zu Pulshinweisen, Aktivitätserinnerung und Sichtbarkeit für Gesundheitsfachpersonen. Einstellungen sind über C2 erneut änderbar und lokal persistent. Es gibt keine tatsächlichen Warnungen, Vibrationen, Datenfreigaben oder neuen Messwertfunktionen. Aktivitäts-, Schritt-, Puls- und Temperaturdaten bleiben unverändert.

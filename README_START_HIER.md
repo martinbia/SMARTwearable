@@ -1,6 +1,6 @@
 # SMARTwearable – Gemeinsame Projektgrundlage
 
-Version 0.4 · Stand 08.11.2026 · C2/D1/W2; technischer Prüfstand separat.
+Version 0.5 · Stand 09.11.2026 · Präferenz-Ersteinrichtung vor C2; technischer Prüfstand separat.
 
 Repository: https://github.com/martinbia/SMARTwearable
 
@@ -50,3 +50,5 @@ CODEX_START.md v0.1 bleibt historische Dokumentation; aktuelle Vorgaben stehen i
 Seit v0.3 freigegeben: kompakte Startseite Variante 2 nur mit Aktivität; Schritte/Puls in D1/W2/Tag. Abnahme und verbleibende Tablet-Prüfungen in IMPLEMENTATION_STATUS.md.
 
 Aktueller Änderungsauftrag v0.4: kompakte W2/D1/Tagesdetails gemäss drei freigegebenen Entwürfen; Startseite v0.3 erhalten.
+
+Aktuelle Erweiterung v0.5: verpflichtende Präferenzauswahl vor C2, mit späterer Änderung über drei Zugänge auf C2. Nur simulierte Pulseinstellungen, Vibration und Datenfreigabe. Keine echte Überwachung oder Übertragung. D37–D42 und F26–F30 ergänzen den Umfang; Datenbasis und übrige Ansichten bleiben erhalten.

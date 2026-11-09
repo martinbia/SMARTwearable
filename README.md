@@ -1,6 +1,6 @@
 # SMARTwearable
 
-Tablet-PWA-Mock-up für qualitative Interviews nach Hüftoperation. Version 0.4.0 verwendet die ausgewählten Konzepte C2, D1 und W2. Ausschliesslich fiktive Daten, keine technische Verbindung zum angelegten Armband.
+Tablet-PWA-Mock-up für qualitative Interviews nach Hüftoperation. Version 0.5.0 verwendet die ausgewählten Konzepte C2, D1 und W2 und eine verpflichtende Präferenz-Ersteinrichtung. Ausschliesslich fiktive Daten, keine technische Verbindung zum angelegten Armband.
 
 ## Ansichten
 
@@ -54,3 +54,7 @@ Ausgewählte Variante 2: kompakte gemeinsame Kopfzeile, nur Aktivität im Wochen
 ## Kompakte Messdetails v0.4
 
 W2/D1/Tag ohne zusätzliche App-Marken-/Heute-Zeile: rote Startseite, kontextbezogener Rückweg, Titel und Armbandstatus in gemeinsamer Werkzeugzeile. Kompakte Messreihen mit gemeinsamen Skalen. Im Tagesverlauf zeitlich ausgerichtete Bewegungsspuren und Puls; Weitere Angaben öffnet Hauttemperatur, Strecke, Abschnitte und Rohwerte. Startseite v0.3 und gemeinsame Demodaten unverändert. Neue Anforderungen F23–F25/N18 und Entscheidungen D32–D36; reale Tablet-Abnahme weiterhin nötig.
+
+## Persönliche Einstellungen v0.5
+
+Beim ersten Start wählt die Person ohne vorausgewählte Antworten ihre Präferenzen für Pulshinweise, Aktivitätserinnerung per Vibration und Sichtbarkeit für Gesundheitsfachpersonen. Die Auswahl ist ausschliesslich eine lokale Mock-up-Einstellung. Sie löst keine realen Warnungen, Vibrationen oder Datenübertragungen aus. C2 bietet drei Zugänge zum Ändern; Interviewsteuerung kann die Ersteinrichtung getrennt vom Demo-Reset zurücksetzen. Details: F26–F30 und `docs/UX_SPEC.md`.

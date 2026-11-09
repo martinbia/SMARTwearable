@@ -1,4 +1,32 @@
-# Implementierungs- und Prüfstand v0.4
+# Implementierungs- und Prüfstand v0.5
+
+09.11.2026 · Anwendung 0.5.0 · Neue Ersteinrichtung vor C2 (F26–F30 / D37–D42). Der Codepfad zeigt ohne vollständige lokale Präferenzen die verpflichtende Auswahl; C2 bleibt nach Abschluss in seiner Grafik und Hauptnavigation erhalten. Einstellungen sind lokal änderbar und getrennt vom Demo-Reset. Alle Warnungen, Vibrationen und Datenfreigaben bleiben inaktiv und simuliert. Demodaten und Berechnungen nicht geändert.
+
+## Lokale Prüfungen v0.5
+
+Erfolgreich: Syntaxprüfung, 16 Node-Tests, statischer PWA-Build mit 13 lokalen Assets und content-versioniertem Offline-Cache, Python-Syntaxprüfung und `git diff --check`. Der neue Modul-Cache sowie Lesen/Schreiben/Löschen, ungültige Daten und blockierter Speicher werden durch Tests abgedeckt.
+
+[GitHub-Prüflauf #29](https://github.com/martinbia/SMARTwearable/actions/runs/42602214131) für Commit `8362d5850115bc5863ffc6d0d53bc459fa4324b3` erfolgreich: Syntax, 16 Tests, Build, Chromium-Installation und vollständiger Browser-Smoke-Test. Die Deployment-Stufe wurde im PR erwartungsgemäss übersprungen. [Screenshots der Ersteinrichtung und Ansichten als Workflow-Artefakt](https://github.com/martinbia/SMARTwearable/actions/runs/42602214131/artifacts/13666276843).
+
+- Alle acht Kombinationen der drei Antworten wurden gespeichert. Fehlende und ungültige Konfigurationen starten erneut ohne Vorauswahl; Weiter bleibt bis zu drei Antworten deaktiviert.
+- Ändern, Speichern und Abbrechen geprüft. Ein Abbruch überschreibt die bisherige Präferenz nicht. Nach Neuladen bleiben Einstellungen im selben Browserprofil erhalten.
+- Ersteinrichtungs-Reset löscht nur Präferenzen; der vorhandene Demo-Reset setzt weiterhin Szenario/Daten zurück und erhält Präferenzen.
+- C2-Prüfflächen N17 (1280×640, 1180×620, 1024×560, 820×1020) ohne horizontalen oder vertikalen Überlauf; drei bisherige Hauptaktionen bleiben sichtbar und bedienbar. Einstellungszugänge mindestens 48×48 CSS-Pixel.
+- Einstellungsansicht bei 200-%-CSS-Zoom und schmaler Ansicht 400×800 ohne horizontalen Überlauf; die Bestätigung bleibt durch Scrollen erreichbar. Offline-Neuladen mit vorhandener Konfiguration erfolgreich.
+- Bestehende D1/W2/Tages-/Geräte-/Demo-Routen im selben Browserlauf weiterhin durchlaufen. Ein pixelgenauer Vergleich gegen freigegebene Referenz-Screenshots wurde nicht ausgeführt; Screenshots liegen im CI-Artefakt.
+
+## Noch am Lenovo prüfen
+
+- Ersteinrichtung vor C2; keine Vorauswahl, Bestätigung erst nach drei Entscheidungen, späteren Appstart mit gespeichertem Zustand prüfen.
+- Die drei Einstellungen unabhängig ändern, übernehmen und abbrechen; prüfen, dass der Status auf C2 stimmt.
+- Ersteinrichtung getrennt vom Demo-Reset zurücksetzen; Demo-/Geräteszenario bleibt bei Präferenz-Reset erhalten und Präferenzen bei Demo-Reset.
+- Lesbarkeit, Hoch-/Querformat, Android-Schriftvergrösserung, Touchziele und Erreichbarkeit der drei Einstellungszugänge zwischen den Systemleisten prüfen.
+- Offline-Kaltstart und erneutes Laden mit bestehender Konfiguration prüfen.
+- Verstehen, dass dies keine echten Warnungen, Vibration oder Datenübertragung auslöst.
+
+---
+
+# Historischer Implementierungs- und Prüfstand v0.4
 
 08.11.2026 · Anwendung 0.4.0 · [Pull Request #4](https://github.com/martinbia/SMARTwearable/pull/4) wurde während der abschliessenden Prüfungen auf GitHub manuell gemergt. Der übernommene Implementierungsstand ist erfolgreich geprüft. Die nachträgliche Prüfdokumentation wird separat als Dokumentations-PR vorgelegt; kein automatisches Merge.
 

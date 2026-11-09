@@ -57,6 +57,19 @@ Diese neueren Beschlüsse ersetzen bei Widerspruch ältere Entscheidungen, ohne 
 
 Weiter offen: echtes Wearable/Klassifikationsverfahren, reale Lenovo-Prüfungen und fachlich vereinbarte Ziele. Sensorgrenzen und Zielband sind keine bestätigten medizinischen Parameter. Umsetzung und Veröffentlichung separat in IMPLEMENTATION_STATUS.md nachweisen.
 
+## Beschlüsse Präferenzen v0.5 (09.11.2026)
+
+| ID | Status | Beschluss |
+| --- | --- | --- |
+| D37 | F | Vor C2 ist beim erstmaligen Aufruf ohne vollständige Auswahl eine verpflichtende Ersteinrichtung mit drei Präferenzen erforderlich. Sie kann später erneut geöffnet und bearbeitet werden. Dies ersetzt D27 ausschliesslich bezüglich des Einstiegs; ein Info-/Demostartdialog wird dadurch nicht eingeführt. |
+| D38 | F | Die drei Präferenzen betreffen gemeinsame hohe/niedrige Pulshinweise, Aktivitätserinnerung per Vibration und gewünschte Sichtbarkeit für Gesundheitsfachpersonen. Keine reale Überwachung, Vibration, Freigabe oder Übertragung. |
+| D39 | A | Keine Vorauswahl. Erst weiter nach drei Antworten. Änderungen werden ausdrücklich übernommen; Abbruch verwirft den Entwurf. |
+| D40 | A | Gültige Präferenzen lokal im Browserprofil speichern; ungültige oder fehlende Felder führen zurück zur Ersteinrichtung. Keine Konten, Server oder echten Gesundheitsdaten. |
+| D41 | V | Drei einzeln beschriftete Zugänge mit Status im C2-Fussbereich; im ersten Entwurf vorhandene C2-Hauptgrafik und Hauptaktionen erhalten. Grössen-/Layoutprüfung N17 entscheidet, ob diese Platzierung praktikabel ist. |
+| D42 | F | „Ersteinrichtung zurücksetzen“ löscht nur die drei Präferenzen und zeigt die Pflichtseite erneut; der bestehende Interview-Reset für Demo- und Geräteszenarien bleibt getrennt erhalten. |
+
+Offen (O): medizinisch begründete Pulsgrenzen, fachlich begründete Zeit-/Aktivitätsschwelle, Wearable-Anbindung, reale Berechtigungs- und Freigabeverfahren. Bis zu einer gesonderten Entscheidung bleiben alle drei Einstellungen reine Präferenzen im Mock-up. Die verwendeten Texte und konkrete Platzierung bleiben bis zum Tablet-Test gestalterische Arbeitsvorschläge.
+
 ## Beschlüsse GUI v0.3 (08.11.2026)
 
 | ID | Status | Beschluss |

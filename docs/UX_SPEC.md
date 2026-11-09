@@ -1,6 +1,22 @@
 # Ansichten und Bedienkonzept
 
-Version 0.4 · 08.11.2026 · C2, D1 und W2 FESTGELEGT; Detailparameter als Annahmen gekennzeichnet.
+Version 0.5 · 09.11.2026 · C2, D1 und W2 FESTGELEGT; Detailparameter als Annahmen gekennzeichnet.
+
+## Präferenz-Ersteinrichtung v0.5
+
+Beim ersten Aufruf ohne vollständige Präferenzen erscheint vor C2 die Seite „Ihr Armband – Ihre Einstellungen“. Sie erklärt, dass die Person selbst über Hinweise und Sichtbarkeit entscheidet und die Optionen später ändern kann. Ein klarer Demo-Hinweis sagt, dass keine echten Warnungen, Vibrationen oder Datenfreigaben stattfinden.
+
+Drei getrennte Gruppen mit grossen, gleichwertigen Auswahlflächen, ohne vorausgewählte Antwort:
+
+1. „Pulshinweise“: ungewöhnlich hoher oder niedriger Puls; Ja/Nein ist ein gemeinsamer Schalter.
+2. „Aktivitätserinnerung“: Vibration bei längerer geringer Bewegung; Ja/Nein, neutral formuliert, ohne Intervall oder Aktivitätsschwelle.
+3. „Wer darf meine Gesundheitsinformationen sehen?“: „Nur ich“ / „Auch meine Gesundheitsfachpersonen“.
+
+„Einstellungen übernehmen und weiter“ bleibt bis zu einer Auswahl in allen drei Gruppen deaktiviert. Nach dem Speichern öffnet sich die unveränderte C2-Startseite. Konfiguration und Gesundheits-/Demodaten bleiben getrennt.
+
+Im C2-Fussbereich erscheinen drei einzelne Einstellungszugänge „Pulshinweise“, „Aktivitätserinnerung“ und „Datenfreigabe“ mit kurzem gespeicherten Status. Antippen öffnet dieselbe Einstellungsansicht; der zugehörige Bereich erhält den Fokus, alle anderen bleiben sichtbar/erreichbar. Eine Änderung wird erst mit „Änderungen übernehmen“ gespeichert. „Änderungen verwerfen“ führt ohne Speicherung zu C2 zurück. Der gewählte Vorschlag platziert die Zugänge im vorhandenen Fussbereich; zentrale Aktivitätsgrafik und drei Hauptaktionen bleiben bestehen. Bei Unterschreitung der N17-Höhenanforderung ist eine alternative Platzierung vor einer Layoutänderung gesondert freizugeben.
+
+Die Interviewsteuerung enthält zusätzlich „Ersteinrichtung zurücksetzen“. Diese Aktion löscht nur die drei Präferenzen und startet die Pflichtseite erneut. Der separate bisherige „Demo zurücksetzen“-Vorgang behält sein Verhalten.
 
 ## Gemeinsamer Rahmen
 
@@ -33,6 +49,8 @@ Tipp auf Wochenbalken, Datum oder Pulsbereich öffnet unmittelbar D1 für DIESE 
 ## Tagesverlauf, Geräte und Interviews
 
 Tagesverlauf enthält nach Bewegungsart unterscheidbare Abschnitte, Schritte, Pulszeitreihe ohne Linien über Datenlücken sowie Strecken-/Hauttemperaturdetails. „← Zur Woche“ erhält die ausgewählte Woche. Geräte-/Lade-/Übertragungssimulation bleibt erhalten. Interviewsteuerung stellt Szenarien und Reset bereit; bisherige Varianten A/B entfallen.
+
+Die Einrichtungsseite ist eine neue, eigenständige Ansicht vor C2, keine zusätzliche Messansicht. Bei späterer Änderung ist die Rückkehr ohne Speichern möglich. Die rote Startseite führt bei bearbeitbaren Einstellungen zu C2; während der verpflichtenden Ersteinrichtung gibt es keinen Umgehungsweg.
 
 Bei schmalen Ansichten dieselben Informationen in gut lesbaren Tages-/Wochenkarten statt zu kleiner sieben-/sechsspaltiger Grafiken zeigen. Kein horizontaler Seitenüberlauf. Tabellendetails bieten zusätzlich alle verfügbaren Werte in Textform.
 
