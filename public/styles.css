@@ -1092,7 +1092,7 @@ dd{
   .settings-top { min-height:48px; flex-direction:row; align-items:center; gap:8px; }
   .settings-heading { gap:8px; min-height:48px; }
   .settings-heading h1 { font-size:1.15rem; }
-  .stop-motion-strip { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 12px; }
+  .stop-motion-strip, .bracelet-gallery .stop-motion-strip { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 12px; }
   .stop-motion-frame:not(:last-child)::after { display:none; }
   .entry-main .stop-motion-frame { aspect-ratio:auto; height:clamp(96px,15vh,142px); }
   .entry-features { gap:8px; }
