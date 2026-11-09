@@ -1,6 +1,6 @@
 # Funktionale Spezifikation
 
-Version 0.4 · 08.11.2026. F = festgelegt, A = dokumentierte technische Annahme, V = Vorschlag. IDs bleiben erhalten, ersetzte Anforderungen werden explizit benannt.
+Version 0.5 · 09.11.2026. F = festgelegt, A = dokumentierte technische Annahme, V = Vorschlag. IDs bleiben erhalten, ersetzte Anforderungen werden explizit benannt.
 
 | ID | Funktion / Änderung | Status | Prüfkriterium |
 | --- | --- | --- | --- |
@@ -29,6 +29,13 @@ Version 0.4 · 08.11.2026. F = festgelegt, A = dokumentierte technische Annahme,
 | F23 | Kompakter Detailrahmen | F | W2/D1/Tag ohne Marken-/Heute-Banner; Navigation, Titel, Armbandstatus und Info gemeinsam, rote Startseite erhalten. |
 | F24 | Diagramme im Vordergrund | F | W2 drei, D1 vier kompakte Messreihen; Tag mit zwei ausgerichteten Bewegungsspuren und Pulsverlauf. Schritte/Puls und direkte Navigation bleiben erhalten. |
 | F25 | Zusätzliche Tagesangaben aufklappbar | F | Strecke, Hauttemperatur, Bewegungsabschnitte und Puls-Rohwerte vollständig über Weitere Angaben erreichbar; beim Einstieg geschlossen. |
+| F26 | Verpflichtender Einstieg in persönliche Einstellungen | F | Ohne vollständige gültige Konfiguration erscheint die Ersteinrichtung. Alle drei Felder starten unbeantwortet; Weiter ist erst nach einer Auswahl je Feld aktiv. |
+| F27 | Drei simulierte Präferenzen | F | Gemeinsame Präferenz für hohe/niedrige Pulshinweise, Aktivitätserinnerung per Vibration und Sichtbarkeit für Fachpersonen. Keine Warnung, Vibration oder Freigabe wird tatsächlich ausgeführt. |
+| F28 | Einstellungen erneut öffnen und ändern | F | C2 bietet drei einzeln beschriftete Zugänge mit gespeichertem Kurzstatus. Speichern übernimmt Änderungen; Abbruch verwirft sie und kehrt nach C2 zurück. |
+| F29 | Ersteinrichtung getrennt zurücksetzen | F | Interviewsteuerung kann ausschliesslich die Präferenzen löschen und den Einstieg erneut öffnen; der vorhandene Reset für Demo-/Geräteszenarien bleibt unverändert. |
+| F30 | Lokale Persistenz der Präferenzen | A | Vollständige, gültige Präferenzen bleiben nach Neuladen im selben Browserprofil erhalten; ungültige/fehlende Felder führen zur Ersteinrichtung. Keine Konten oder Server. |
 
 
-Annahmen: Zustand nur während der Sitzung; Neuladen beginnt neu. Erstinformation über ständig verfügbares Info statt Pflichtdialog. Appstart-Datum und -Uhrzeit werden für das Interview eingefroren. Reale Uhrzeit begrenzt heutige Beispieldaten; Beginn vor 08 Uhr zeigt keine Daten statt erfundener früher Messwerte. Kategorien sind hypothetische Klassifikation.
+Annahmen: Demodatenzustand nur während der Sitzung; Neuladen beginnt neu. Appstart-Datum und -Uhrzeit werden für das Interview eingefroren. Reale Uhrzeit begrenzt heutige Beispieldaten; Beginn vor 08 Uhr zeigt keine Daten statt erfundener früher Messwerte. Kategorien sind hypothetische Klassifikation. Präferenzen sind davon getrennt lokal persistent (F30).
+
+Die frühere Annahme D27 „kein obligatorischer Startdialog“ ist für die Präferenz-Ersteinrichtung durch D37/F26 ausdrücklich ersetzt. Ein Demo-/Info-Dialog wird dadurch nicht eingeführt.

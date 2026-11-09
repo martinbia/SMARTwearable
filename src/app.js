@@ -3,8 +3,14 @@ import { createSession, addDays, weekDates, dateLabel, shortDate, weekLabel } fr
 import { initialState, reduce, selectDay, selectWeek, selectWeeks, bestWeek } from './model.js';
 import { icon, n, bar, range, pulseLine, activityTimeline } from './charts.js';
 import { text } from './content.js';
+import { emptyPreferences, completePreferences, readPreferences, writePreferences, clearPreferences } from './settings.js';
 
 let state = initialState(createSession());
+const settingsStorage = (() => { try { return window.localStorage; } catch { return null; } })();
+let preferences = readPreferences(settingsStorage);
+let settingsMode = preferences ? null : 'setup';
+let settingsDraft = preferences ? { ...preferences } : emptyPreferences();
+let settingsFocus = null;
 let transferTimer;
 let pendingUpdate;
 let installPrompt;
@@ -28,6 +34,28 @@ function homeView() {
   const best = bestWeek(state);
   const max = Math.ceil(Math.max(120, week.movement || 0, best?.movement || 0, GOAL.upper) / 20) * 20;
   return `<section class="home-activity" aria-labelledby="activity-title"><div class="section-heading"><h1 id="activity-title" tabindex="-1">${icon('activity')} Aktivität diese Woche</h1><p class="week-caption">${weekLabel(state.session.monday)} · bisher</p></div><a class="comparison-link" href="#current-week" data-action="currentWeek" aria-label="Aktivität dieser Woche nach Tagen öffnen"><div class="comparison" data-testid="weekly-comparison">${compareRow('Diese Woche bisher', week.movement, max, 'current')}${compareRow('Mein Wochenziel', GOAL.target, max, 'goal', `<span class="tolerance" style="left:${GOAL.lower / max * 100}%;width:${(GOAL.upper - GOAL.lower) / max * 100}%"></span><span class="goal-marker" style="left:${GOAL.target / max * 100}%"></span>`)}${compareRow('Meine aktivste Woche', best?.movement ?? null, max, 'best')}<div class="comparison-axis" aria-hidden="true"><span></span><div>${Array.from({ length: 7 }, (_, i) => `<span style="left:${i / 6 * 100}%">${Math.round(max / 6 * i)}</span>`).join('')}</div><span></span></div></div></a><div class="home-summary"><p>Bewegungsminuten · Zielbereich ${GOAL.lower}–${GOAL.upper} min (fiktives Beispiel)</p><p>Woche noch nicht abgeschlossen${week.incomplete ? ' · Daten unvollständig' : ''}</p></div><span class="sr-only" data-testid="week-minutes">${n(week.movement)}</span></section><nav class="home-actions" aria-label="Aktivitätsdetails und Armband">${button('Woche nach Tagen →', 'currentWeek', 'primary')}${button('Wochen vergleichen →', 'weeks', 'primary')}${button('Mein Armband', 'device', 'secondary')}</nav>`;
+}
+const preferenceDetails = {
+  pulseAlerts: { title: 'Pulshinweise', question: 'Möchten Sie einen Hinweis erhalten, wenn Ihr Puls ungewöhnlich hoch oder niedrig ist?', yes: 'Ja, Pulshinweise erhalten', no: 'Nein, keine Pulshinweise erhalten', status: value => value ? 'Ein' : 'Aus' },
+  activityReminder: { title: 'Aktivitätserinnerung', question: 'Möchten Sie, dass das Armband vibriert, wenn Sie sich längere Zeit wenig bewegt haben?', yes: 'Ja, durch Vibration erinnern', no: 'Nein, keine Vibration', status: value => value ? 'Ein' : 'Aus' },
+  shareWithCareTeam: { title: 'Datenfreigabe', question: 'Möchten Sie Ihre Informationen nur selbst sehen oder auch Gesundheitsfachpersonen zugänglich machen?', yes: 'Auch meine Gesundheitsfachpersonen', no: 'Nur ich', status: value => value ? 'Auch Fachpersonen' : 'Nur ich' }
+};
+function preferenceShortcut(key) {
+  const item = preferenceDetails[key];
+  return button(`<span>${item.title}</span><strong>${item.status(preferences[key])}</strong>`, 'openPreference', 'preference-shortcut', `data-preference-key="${key}" aria-label="${item.title}: ${item.status(preferences[key])}. Einstellung ändern"`);
+}
+function preferenceGroup(key) {
+  const item = preferenceDetails[key];
+  const selected = settingsDraft[key];
+  const option = (value, label) => `<label class="preference-option"><input type="radio" name="${key}" value="${value}" data-preference="${key}" ${selected === value ? 'checked' : ''}><span>${label}</span></label>`;
+  return `<fieldset class="preference-group" data-setting-group="${key}" tabindex="-1"><legend>${item.title}</legend><p>${item.question}</p><div class="preference-options">${option(true, item.yes)}${option(false, item.no)}</div></fieldset>`;
+}
+function preferencesView() {
+  const setup = settingsMode === 'setup';
+  const selectedCount = Object.values(settingsDraft).filter(value => typeof value === 'boolean').length;
+  const status = selectedCount === 3 ? 'Alle drei Einstellungen ausgewählt.' : `Bitte wählen Sie noch ${3 - selectedCount} ${3 - selectedCount === 1 ? 'Einstellung' : 'Einstellungen'} aus.`;
+  const back = setup ? '<span class="setup-step">Ersteinrichtung</span>' : button('← Startseite', 'cancelSettings', 'home-button');
+  return `<div class="settings-shell"><header class="settings-top">${back}</header><main id="main" class="settings-main"><h1 tabindex="-1">Ihr Armband – Ihre Einstellungen</h1><p class="settings-intro">Sie können selbst entscheiden, welche Hinweise Sie erhalten möchten und wer Ihre Informationen sehen darf. Sie können diese Einstellungen später jederzeit ändern.</p><p class="settings-demo">Dies ist eine Demonstration mit Beispieldaten. Es finden keine echten Warnungen, Vibrationen oder Datenfreigaben statt.</p><form id="preferences-form" novalidate>${preferenceGroup('pulseAlerts')}${preferenceGroup('activityReminder')}${preferenceGroup('shareWithCareTeam')}<div class="settings-submit"><p id="settings-status" role="status">${status}</p>${button(setup ? 'Einstellungen übernehmen und weiter' : 'Änderungen übernehmen', 'savePreferences', 'primary', `id="preferences-submit" ${selectedCount < 3 ? 'disabled' : ''}`)}</div></form></main></div>`;
 }
 function metricCell(day, kind, max) {
   let inner;
@@ -86,18 +114,25 @@ function select(label, action, items, value) {
   return `<label>${label}<select data-change="${action}">${Object.entries(items).map(([id, name]) => `<option value="${id}" ${id === value ? 'selected' : ''}>${id}: ${name}</option>`).join('')}</select></label>`;
 }
 function controlsView() {
-  return heading('Interviewsteuerung', 'Alle Aktionen ändern ausschliesslich die fiktiven Daten dieser Sitzung.') + `<section class="panel control-grid">${select('Aktivitätsszenario', 'scenario', activityScenarios, state.scenario)}${select('Gerätezustand', 'device', deviceScenarios, state.deviceScenario)}${select('Grund bei S03-Datenlücke', 'gapReason', { no_signal: 'Messsignal fehlt', not_worn_demo: 'Nicht getragen (Demo)' }, state.gapReason)}<p>Sitzungsdatum: ${dateLabel(state.session.today, { year: 'numeric' })} · Datenstand beim Appstart ${time(state.session.dataMinute)} Uhr. Daten sind erfunden.</p><div class="action-row">${button(text.actions.transfer, 'transfer', 'secondary', transferTimer ? 'disabled' : '')}${button(state.device.charging ? text.actions.chargeEnd : text.actions.charge, state.device.charging ? 'chargeEnd' : 'chargeStart', 'secondary')}</div><p role="status">${text.transfer[state.device.transfer]} · ${state.device.charging ? 'Wird geladen' : `Armband-Akku ${state.device.battery} %`}</p><hr><h2>Neues Interview</h2><p>Reset stellt C2, aktuelle Woche und S01/G01 wieder her. Der Zeitanker vom Appstart bleibt erhalten.</p>${button('Demo zurücksetzen', 'reset', 'secondary')}<p>Version ${VERSION} · C2 / D1 / W2 · Tablet-Abnahme noch offen.</p><h2>Installation und Offline-Nutzung</h2><p>${offlineReady ? 'Offline vorbereitet.' : 'Offline-Vorbereitung noch nicht bestätigt. Zuerst mit Internet vollständig öffnen.'}</p>${installPrompt ? button('PWA installieren', 'install', 'primary') : '<p>Installation über das Browsermenü, falls angeboten.</p>'}</section>`;
+  return heading('Interviewsteuerung', 'Alle Aktionen ändern ausschliesslich die fiktiven Daten dieser Sitzung.') + `<section class="panel control-grid">${select('Aktivitätsszenario', 'scenario', activityScenarios, state.scenario)}${select('Gerätezustand', 'device', deviceScenarios, state.deviceScenario)}${select('Grund bei S03-Datenlücke', 'gapReason', { no_signal: 'Messsignal fehlt', not_worn_demo: 'Nicht getragen (Demo)' }, state.gapReason)}<p>Sitzungsdatum: ${dateLabel(state.session.today, { year: 'numeric' })} · Datenstand beim Appstart ${time(state.session.dataMinute)} Uhr. Daten sind erfunden.</p><div class="action-row">${button(text.actions.transfer, 'transfer', 'secondary', transferTimer ? 'disabled' : '')}${button(state.device.charging ? text.actions.chargeEnd : text.actions.charge, state.device.charging ? 'chargeEnd' : 'chargeStart', 'secondary')}</div><p role="status">${text.transfer[state.device.transfer]} · ${state.device.charging ? 'Wird geladen' : `Armband-Akku ${state.device.battery} %`}</p><hr><h2>Neues Interview</h2><p>Demo-Reset stellt C2, aktuelle Woche und S01/G01 wieder her. Der Zeitanker vom Appstart bleibt erhalten.</p>${button('Demo zurücksetzen', 'reset', 'secondary')}<p>Version ${VERSION} · C2 / D1 / W2 · Tablet-Abnahme noch offen.</p><h2>Ersteinrichtung</h2><p>Startet den verpflichtenden Einstellungsablauf erneut. Die fiktiven Aktivitäts- und Geräteszenarien bleiben unverändert.</p>${button('Ersteinrichtung zurücksetzen', 'resetPreferences', 'secondary')}<h2>Installation und Offline-Nutzung</h2><p>${offlineReady ? 'Offline vorbereitet.' : 'Offline-Vorbereitung noch nicht bestätigt. Zuerst mit Internet vollständig öffnen.'}</p>${installPrompt ? button('PWA installieren', 'install', 'primary') : '<p>Installation über das Browsermenü, falls angeboten.</p>'}</section>`;
 }
 function infoView() {
-  return heading('Über diese Demo') + `<section class="panel"><p>SMARTwearable zeigt ausschliesslich erfundene Beispieldaten. Das angelegte Armband ist nicht technisch verbunden.</p><p>Allgemeine Aktivität umfasst Schrittbewegung und sonstige Bewegung. Die Zuordnung ist eine hypothetische Auswertung, keine bestätigte Sensorfähigkeit.</p><p>Das lokale Datum des Tablets wird beim Appstart übernommen. Bewegungsdaten, Puls, Zielbereich und Gerätestatus bleiben simuliert. Es werden keine Interviewantworten gespeichert.</p><p>Der Zielbereich ist ein Beispiel, keine medizinische Belastungsvorgabe. Puls wird neutral angezeigt, ohne Leistungsziel.</p><p>Version ${VERSION}. Ein neuer Appstart liest Datum und Uhrzeit neu; die laufende Sitzung bleibt zeitlich unverändert.</p></section>`;
+  return heading('Über diese Demo') + `<section class="panel"><p>SMARTwearable zeigt ausschliesslich erfundene Beispieldaten. Das angelegte Armband ist nicht technisch verbunden.</p><p>Allgemeine Aktivität umfasst Schrittbewegung und sonstige Bewegung. Die Zuordnung ist eine hypothetische Auswertung, keine bestätigte Sensorfähigkeit.</p><p>Das lokale Datum des Tablets wird beim Appstart übernommen. Bewegungsdaten, Puls, Zielbereich und Gerätestatus bleiben simuliert. Es werden keine Interviewantworten gespeichert.</p><p>Die drei Einstellungen sind nur Präferenzen für das Mock-up und werden lokal in diesem Browser gespeichert. Es erfolgen keine echten Warnungen, Vibrationen oder Datenfreigaben.</p><p>Der Zielbereich ist ein Beispiel, keine medizinische Belastungsvorgabe. Puls wird neutral angezeigt, ohne Leistungsziel.</p><p>Version ${VERSION}. Ein neuer Appstart liest Datum und Uhrzeit neu; die laufende Sitzung bleibt zeitlich unverändert.</p></section>`;
 }
 function render() {
+  if (settingsMode) {
+    root.innerHTML = preferencesView();
+    const focusTarget = settingsFocus ? root.querySelector(`[data-setting-group="${settingsFocus}"]`) : root.querySelector('h1');
+    settingsFocus = null;
+    focusTarget?.focus({ preventScroll: false });
+    return;
+  }
   const views = { home: homeView, week: weekView, weeks: weeksView, day: dayView, device: deviceView, controls: controlsView, info: infoView };
   const status = button(icon('battery') + `<span>Armband-Akku ${state.device.battery} % · Daten bis ${time(state.device.dataThrough)}</span>`, 'device', 'status-button');
   const date = `<p class="date-label">${dateLabel(state.session.today, { year: 'numeric' })}</p>`;
   const update = pendingUpdate ? `<aside class="notice">Eine neue Version ist bereit. ${button('Neue Version laden', 'update', 'secondary')}</aside>` : '';
   if (state.view === 'home') {
-    root.innerHTML = `<div class="compact-shell"><header class="compact-header">${button('<span class="brand-name">SMARTwearable</span><span> · Beispieldaten</span>' + icon('info'), 'info', 'info-button')}${status}</header>${date}${update}<main id="main" class="compact-main">${homeView()}</main><footer class="compact-footer"><p>Alle Werte fiktiv</p><div>${button('Info', 'info', 'text-button')}${button('Interviewsteuerung', 'controls', 'text-button')}</div></footer></div>`;
+    root.innerHTML = `<div class="compact-shell"><header class="compact-header">${button('<span class="brand-name">SMARTwearable</span><span> · Beispieldaten</span>' + icon('info'), 'info', 'info-button')}${status}</header>${date}${update}<main id="main" class="compact-main">${homeView()}</main><footer class="compact-footer"><p>Alle Werte fiktiv</p><nav class="preference-shortcuts" aria-label="Meine Einstellungen">${preferenceShortcut('pulseAlerts')}${preferenceShortcut('activityReminder')}${preferenceShortcut('shareWithCareTeam')}</nav><div class="compact-footer-links">${button('Info', 'info', 'text-button')}${button('Interviewsteuerung', 'controls', 'text-button')}</div></footer></div>`;
     return;
   }
   if (['week', 'weeks', 'day'].includes(state.view)) {
@@ -112,6 +147,24 @@ root.addEventListener('click', async event => {
   if (!target || target.disabled) return;
   const action = target.dataset.action;
   if (target.tagName === 'A') event.preventDefault();
+  if (action === 'openPreference') {
+    settingsMode = 'edit'; settingsDraft = { ...preferences }; settingsFocus = target.dataset.preferenceKey; render(); return;
+  }
+  if (action === 'cancelSettings') {
+    settingsMode = null; settingsDraft = { ...preferences }; dispatch({ type: 'navigate', view: 'home' }, true); return;
+  }
+  if (action === 'savePreferences') {
+    if (!completePreferences(settingsDraft)) { announce('Bitte beantworten Sie alle drei Einstellungen.'); return; }
+    if (!writePreferences(settingsStorage, settingsDraft)) { const node = document.querySelector('#settings-status'); if (node) node.textContent = 'Die Einstellungen konnten auf diesem Gerät nicht dauerhaft gespeichert werden. Bitte erneut versuchen.'; announce('Einstellungen konnten nicht gespeichert werden.'); return; }
+    preferences = { ...settingsDraft }; settingsMode = null; settingsDraft = { ...preferences }; dispatch({ type: 'navigate', view: 'home' }, true); announce('Einstellungen gespeichert.'); return;
+  }
+  if (action === 'resetPreferences') {
+    if (window.confirm('Gespeicherte Präferenzen löschen und die Ersteinrichtung erneut starten?')) {
+      if (!clearPreferences(settingsStorage)) { announce('Einstellungen konnten nicht zurückgesetzt werden.'); return; }
+      preferences = null; settingsDraft = emptyPreferences(); settingsMode = 'setup'; render(); announce('Ersteinrichtung zurückgesetzt.');
+    }
+    return;
+  }
   if (['home', 'weeks', 'device', 'controls', 'info'].includes(action)) dispatch({ type: 'navigate', view: action }, true);
   else if (action === 'currentWeek') dispatch({ type: 'week', week: state.session.monday }, true);
   else if (action === 'selectWeek') dispatch({ type: 'week', week: target.dataset.week }, true);
@@ -129,6 +182,16 @@ root.addEventListener('click', async event => {
   else if (action === 'update') pendingUpdate?.postMessage('ACTIVATE_UPDATE');
 });
 root.addEventListener('change', event => {
+  const preference = event.target.dataset.preference;
+  if (preference && Object.hasOwn(settingsDraft, preference)) {
+    settingsDraft[preference] = event.target.value === 'true';
+    const selectedCount = Object.values(settingsDraft).filter(value => typeof value === 'boolean').length;
+    const submit = document.querySelector('#preferences-submit');
+    const status = document.querySelector('#settings-status');
+    if (submit) submit.disabled = selectedCount < 3;
+    if (status) status.textContent = selectedCount === 3 ? 'Alle drei Einstellungen ausgewählt.' : `Bitte wählen Sie noch ${3 - selectedCount} ${3 - selectedCount === 1 ? 'Einstellung' : 'Einstellungen'} aus.`;
+    return;
+  }
   const action = event.target.dataset.change;
   if (!action) return;
   dispatch({ type: action, value: event.target.value });

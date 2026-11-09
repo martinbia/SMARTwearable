@@ -1,4 +1,25 @@
-# Implementierungs- und Prüfstand v0.4
+# Implementierungs- und Prüfstand v0.5
+
+09.11.2026 · Anwendung 0.5.0 · Neue Ersteinrichtung vor C2 (F26–F30 / D37–D42). Der Codepfad zeigt ohne vollständige lokale Präferenzen die verpflichtende Auswahl; C2 bleibt nach Abschluss in seiner Grafik und Hauptnavigation erhalten. Einstellungen sind lokal änderbar und getrennt vom Demo-Reset. Alle Warnungen, Vibrationen und Datenfreigaben bleiben inaktiv und simuliert. Demodaten und Berechnungen nicht geändert.
+
+## Lokale Prüfungen v0.5
+
+Erfolgreich: Syntaxprüfung, 16 Node-Tests, statischer PWA-Build mit 13 lokalen Assets und content-versioniertem Offline-Cache, Python-Syntaxprüfung und `git diff --check`. Der neue Modul-Cache sowie Lesen/Schreiben/Löschen, ungültige Daten und blockierter Speicher werden durch Tests abgedeckt.
+
+GitHub-Browserprüfung für den PR steht beim Verfassen dieser Dokumentation noch aus. Die CI erzeugt Screenshots von Ersteinrichtung und C2 als Workflow-Artefakt; die endgültige CI-Nummer wird nach Abschluss ergänzt.
+
+## Noch am Lenovo prüfen
+
+- Ersteinrichtung vor C2; keine Vorauswahl, Bestätigung erst nach drei Entscheidungen, späteren Appstart mit gespeichertem Zustand prüfen.
+- Die drei Einstellungen unabhängig ändern, übernehmen und abbrechen; prüfen, dass der Status auf C2 stimmt.
+- Ersteinrichtung getrennt vom Demo-Reset zurücksetzen; Demo-/Geräteszenario bleibt bei Präferenz-Reset erhalten und Präferenzen bei Demo-Reset.
+- Lesbarkeit, Hoch-/Querformat, Android-Schriftvergrösserung, Touchziele und Erreichbarkeit der drei Einstellungszugänge zwischen den Systemleisten prüfen.
+- Offline-Kaltstart und erneutes Laden mit bestehender Konfiguration prüfen.
+- Verstehen, dass dies keine echten Warnungen, Vibration oder Datenübertragung auslöst.
+
+---
+
+# Historischer Implementierungs- und Prüfstand v0.4
 
 08.11.2026 · Anwendung 0.4.0 · [Pull Request #4](https://github.com/martinbia/SMARTwearable/pull/4) wurde während der abschliessenden Prüfungen auf GitHub manuell gemergt. Der übernommene Implementierungsstand ist erfolgreich geprüft. Die nachträgliche Prüfdokumentation wird separat als Dokumentations-PR vorgelegt; kein automatisches Merge.
 
