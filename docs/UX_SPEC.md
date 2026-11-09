@@ -73,3 +73,13 @@ Status: **zur Umsetzung beauftragter Vorschlag (D43)**. Nur die bestehende Erste
 - Seitenränder werden auf ungefähr 16–24 CSS-Pixel reduziert. Auswahl- und Bestätigungsflächen bleiben mindestens 48×48 CSS-Pixel.
 - In schmalen Ansichten darf das Raster einspaltig werden und scrollen. Zoom darf Inhalte umbrechen lassen; nichts wird abgeschnitten oder überlagert.
 - Alle anderen Ansichten, Einstellungen, Speicherung, Demo-Daten und Berechnungen bleiben unverändert.
+
+## Einstiegsanimation und Appstart v0.7
+
+**FESTGELEGT:** Bei jedem vollständigen Neuladen/Öffnen des PWA-Dokuments zuerst „Ihr Armband – Ihre Einstellungen“ anzeigen, unabhängig davon, ob Präferenzen gespeichert sind. Vorhandene gültige Antworten sind vorausgewählt und können unverändert übernommen werden. Das Formular wird erst nach „Einstellungen übernehmen und weiter“ verlassen. Interne Seitenwechsel und die Rückkehr von Details nach C2 bleiben innerhalb der laufenden Sitzung; sie öffnen den Einstieg nicht erneut. Diese Regel ersetzt die bisherige Beschränkung der Pflichtseite auf den ersten Aufruf ohne Konfiguration (D37).
+
+**FESTGELEGT:** Variante 1 „Armband anlegen – Daumen hoch“ wird zur Umsetzung beauftragt. Das Bildzeichen bedeutet nur, dass das Anlegen im Mock-up abgeschlossen ist. Es bestätigt weder Verbindung, Messung noch Gesundheitszustand. Die eigentliche Präferenzseite aus v0.6, besonders das kompakte zweispaltige Formular, bleibt erhalten.
+
+**VORSCHLAG zur visuellen Ausführung (D46):** Ruhige 2D-Vektorillustration mit Handgelenk und Hand, dunklem Sensorgehäuse, schliessendem Band und anschliessendem Daumen-hoch-Zeichen; optional dezentes Häkchen. CSS-Animation, ca. 3–4 Sekunden, einmalig und ohne Ton. SVG und CSS liegen lokal in der App. Das Endbild bleibt sichtbar. Auf C2 erneut geöffnete Einstellungen zeigen zunächst dieses Endbild; falls vorhanden, kann „Animation nochmals ansehen“ die Bewegung erneut starten. Systemeinstellung für reduzierte Bewegung führt unmittelbar zum Endbild; Wiederholung bleibt dann verborgen.
+
+Die Illustration steht rechts im kompakten Kopfbereich, links die Überschrift. Im Querformat erhält sie höchstens etwa 120–140 CSS-Pixel Höhe, im Hochformat wird sie kleiner. Die Animation darf die Bedienung nicht sperren oder die Formularposition während der Bewegung verändern. Bestehende Seiten ausserhalb der Einstellungsansicht bleiben GUI-Freeze.

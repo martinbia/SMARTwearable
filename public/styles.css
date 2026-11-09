@@ -995,10 +995,38 @@ dd{
   padding:8px 20px 12px;
 }
 .settings-main { width:100%; margin:0 auto; }
-.settings-top { min-height:48px; display:flex; align-items:center; gap:12px; }
-.settings-top h1 { min-width:0; margin:0; font-size:clamp(1.2rem,2vw,1.55rem); line-height:1.2; }
-.settings-top .home-button { min-height:48px; flex:0 0 auto; padding:8px 14px; }
+.settings-top { min-height:92px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.settings-heading { display:flex; align-items:center; gap:12px; flex:1 1 auto; min-width:0; }
+.settings-heading h1 { min-width:0; margin:0; font-size:clamp(1.2rem,2vw,1.55rem); line-height:1.2; }
+.settings-heading .home-button { min-height:48px; flex:0 0 auto; padding:8px 14px; }
 .setup-step { order:2; margin-left:auto; color:var(--muted); font-size:.9rem; white-space:nowrap; }
+.setup-visual { display:flex; align-items:center; justify-content:flex-end; gap:6px; flex:0 1 38%; min-width:0; }
+.wearable-animation { display:block; flex:1 1 auto; width:100%; max-width:330px; height:88px; overflow:visible; }
+.wearable-animation .band-open,.wearable-animation .closing-hand { opacity:0; }
+.wearable-animation .band-closed,.wearable-animation .thumb-hand,.wearable-animation .done-check { opacity:1; }
+.wearable-animation.is-playing .band-open { animation:band-open 3.6s ease-in-out both; }
+.wearable-animation.is-playing .band-closed { animation:band-closed 3.6s ease-in-out both; }
+.wearable-animation.is-playing .closing-hand { transform-origin:155px 12px; animation:closing-hand 3.6s ease-in-out both; }
+.wearable-animation.is-playing .thumb-hand { transform-origin:348px 120px; animation:thumb-appear 3.6s ease-in-out both; }
+.wearable-animation.is-playing .done-check { transform-origin:405px 35px; animation:check-appear 3.6s ease-in-out both; }
+@keyframes band-open { 0%,8% { opacity:1; transform:translateY(-7px) rotate(-3deg); } 34% { opacity:1; transform:translateY(-3px) rotate(0); } 49%,100% { opacity:0; transform:translateY(0); } }
+@keyframes band-closed { 0%,34% { opacity:0; } 49%,100% { opacity:1; } }
+@keyframes closing-hand { 0%,8% { opacity:0; transform:translateY(-8px); } 16%,42% { opacity:1; transform:translateY(0); } 61%,100% { opacity:0; transform:translateY(3px); } }
+@keyframes thumb-appear { 0%,66% { opacity:0; transform:translateY(5px) scale(.96); } 82%,100% { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes check-appear { 0%,76% { opacity:0; transform:scale(.85); } 91%,100% { opacity:1; transform:scale(1); } }
+.animation-replay { display:flex; align-items:center; justify-content:center; gap:4px; flex:0 0 112px; min-width:48px; min-height:48px; padding:4px 6px; border:1px solid var(--line); border-radius:10px; background:transparent; color:var(--ink); font-size:.68rem; line-height:1.1; }
+.animation-replay span { max-width:78px; }
+.animation-replay:focus-visible { outline:3px solid #994707; outline-offset:2px; }
+@media (prefers-reduced-motion: reduce) {
+  .wearable-animation.is-playing .band-open,
+  .wearable-animation.is-playing .band-closed,
+  .wearable-animation.is-playing .closing-hand,
+  .wearable-animation.is-playing .thumb-hand,
+  .wearable-animation.is-playing .done-check { animation:none; }
+  .wearable-animation.is-playing .band-open,.wearable-animation.is-playing .closing-hand { opacity:0; }
+  .wearable-animation.is-playing .band-closed,.wearable-animation.is-playing .thumb-hand,.wearable-animation.is-playing .done-check { opacity:1; }
+  .animation-replay { display:none; }
+}
 .settings-intro { margin:4px 0 8px; font-size:1rem; line-height:1.3; }
 .settings-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 12px; align-items:stretch; }
 .settings-demo { margin:0; color:var(--muted); font-size:.88rem; line-height:1.25; }
@@ -1017,8 +1045,12 @@ dd{
 .settings-submit button:disabled { opacity:.55; cursor:not-allowed; }
 @media (max-width:700px) {
   .settings-shell { padding:8px 16px 16px; }
-  .settings-top { gap:8px; }
-  .settings-top h1 { font-size:1.15rem; }
+  .settings-top { min-height:0; flex-direction:column; align-items:stretch; gap:2px; }
+  .settings-heading { gap:8px; min-height:48px; }
+  .settings-heading h1 { font-size:1.15rem; }
+  .setup-visual { align-self:flex-end; flex-basis:auto; width:min(100%,320px); height:68px; }
+  .wearable-animation { height:64px; }
+  .animation-replay { flex-basis:100px; }
   .settings-form { grid-template-columns:1fr; }
   .preference-group[data-setting-group="shareWithCareTeam"],
   .settings-submit { grid-column:1; }

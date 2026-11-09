@@ -1,6 +1,6 @@
 # SMARTwearable – Gemeinsame Projektgrundlage
 
-Version 0.5 · Stand 09.11.2026 · Präferenz-Ersteinrichtung vor C2; technischer Prüfstand separat.
+Version 0.7 · Stand 09.11.2026 · Präferenzseite bei jedem vollständigen App-Neustart, gespeicherte Antworten vorausgewählt; kurze Armband-Animation; technischer Prüfstand separat.
 
 Repository: https://github.com/martinbia/SMARTwearable
 
@@ -52,3 +52,5 @@ Seit v0.3 freigegeben: kompakte Startseite Variante 2 nur mit Aktivität; Schrit
 Aktueller Änderungsauftrag v0.4: kompakte W2/D1/Tagesdetails gemäss drei freigegebenen Entwürfen; Startseite v0.3 erhalten.
 
 Aktuelle Erweiterung v0.5: verpflichtende Präferenzauswahl vor C2, mit späterer Änderung über drei Zugänge auf C2. Nur simulierte Pulseinstellungen, Vibration und Datenfreigabe. Keine echte Überwachung oder Übertragung. D37–D42 und F26–F30 ergänzen den Umfang; Datenbasis und übrige Ansichten bleiben erhalten.
+
+Aktuelle Erweiterung v0.7: Bei jedem vollständigen App-Neustart erscheint zuerst die Einstellungsseite; bestehende Präferenzen bleiben erhalten und vorausgewählt. Eine kurze Animation „Armband anlegen – Daumen hoch“ begleitet den Einstieg. Internes Navigieren innerhalb der laufenden Sitzung startet ihn nicht erneut. D44–D46/F31–F32 ergänzen den Umfang. Die Animation bleibt eine Illustration ohne Gerätekopplung; übrige Ansichten und Datenberechnungen bleiben erhalten.

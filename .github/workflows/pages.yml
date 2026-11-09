@@ -27,7 +27,7 @@ jobs:
         if: always()
         with:
           name: browser-test-results
-          path: test-results/*.png
+          path: test-results/*
           if-no-files-found: ignore
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

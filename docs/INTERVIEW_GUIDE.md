@@ -43,3 +43,9 @@ Vor der ersten Nutzung öffnet sich die Ersteinrichtung. Die Person wählt selbs
 - „Ersteinrichtung zurücksetzen“ aus der Interviewsteuerung finden und erneut starten.
 
 Neutral klarstellen: Die Optionen sind fiktive Präferenzen. Es erfolgen weder echte Pulshinweise noch Vibration oder Datenübermittlung. Keine medizinischen Schwellenwerte oder Zeitintervalle vorschlagen. Verständlichkeit, wahrgenommene Selbstbestimmung und Erwartungen an Privatsphäre getrennt notieren.
+
+## Einstieg v0.7 – Animation und wiederholter Appstart
+
+Beim frischen Öffnen und nach einem vollständigen Neuladen erscheint zuerst die Einstellungsseite. Bei bereits gespeicherten Antworten beobachten, ob die Person diese als vorausgewählt erkennt und sie unverändert bestätigen kann. Bei fehlenden Einstellungen beobachten, ob die drei Antworten selbstständig gefunden werden.
+
+Die kurze Illustration zeigt das Anlegen des Armbands und endet mit einem Daumen-hoch-Zeichen. Neutrale Nachfragen: „Was zeigt die Animation Ihrer Meinung nach?“ und „Wofür steht der Daumen?“ Auf keinen Fall Verbindung oder Messung nahelegen. Beachten, ob die Bewegung vom Lesen oder Auswählen ablenkt und ob die Bedienelemente währenddessen erreichbar bleiben. Späteres Öffnen aus C2 und interne Rückkehrwege erneut prüfen. Falls die Person reduzierte Bewegung bevorzugt, direkt das statische Endbild verwenden.

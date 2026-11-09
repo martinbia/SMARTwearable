@@ -1,6 +1,10 @@
-# Implementierungs- und Prüfstand v0.6 (PR offen)
+# Implementierungs- und Prüfstand
 
-09.11.2026 · Anwendung 0.5.0 · D43/N21: Präferenz-Ersteinrichtung/-bearbeitung kompakter gesetzt. Im Querformat Pulshinweise/Aktivitätserinnerung nebeneinander, Datenfreigabe volle Breite; Kopfzeile, Einführung und Demo-Hinweis verkleinert, Seitenränder reduziert. Ersteinrichtung bleibt nicht überspringbar; im Editiermodus bleibt der rote Startseite-Button erhalten. Keine Änderungen an Speicherung, Präferenzregeln, übrigen Ansichten oder Demo-Daten/Berechnungen.
+## Animation und Neustart v0.7 – in Arbeit
+
+09.11.2026 · F31/F32, N22, D44–D46. Arbeitsbranch `feat/initial-setup-animation` auf dem in PR #8 gemergten Stand. Jeder neue Dokumentstart soll die Einstellungsseite mit erhaltenen/vorausgewählten Optionen zeigen; interner Routenwechsel bleibt unberührt. Eine lokale inline SVG/CSS-Animation, Einmalstart, statisches Endbild, Wiederholung und reduzierte Bewegung werden gezielt geprüft. Umsetzung/Browserresultate und Lenovo-Prüfpunkte folgen nach den CI-Screenshots.
+
+09.11.2026 · Anwendung 0.5.0 · D43/N21: Präferenz-Ersteinrichtung/-bearbeitung kompakter gesetzt. Im Querformat Pulshinweise/Aktivitätserinnerung nebeneinander, Datenfreigabe volle Breite; Kopfzeile, Einführung und Demo-Hinweis verkleinert, Seitenränder reduziert. Ersteinrichtung bleibt nicht überspringbar; im Editiermodus bleibt der rote Startseite-Button erhalten. Keine Änderungen an Speicherung, Präferenzregeln, übrigen Ansichten oder Demo-Daten/Berechnungen. [PR #8](https://github.com/martinbia/SMARTwearable/pull/8) wurde inzwischen gemergt.
 
 ## Prüfungen v0.6
 
@@ -11,7 +15,7 @@
 - Screenshots von Einrichtung und Bearbeitung in Quer- und Hochformat sowie der drei Querformat-Prüfflächen wurden visuell kontrolliert: Gruppen, Texte und Bestätigung sind erkennbar; keine abgeschnittenen Texte oder Überlagerung. [Screenshots als Workflow-Artefakt](https://github.com/martinbia/SMARTwearable/actions/runs/42669169131/artifacts/13697673335).
 - Chromium konnte lokal nicht starten (Laufzeitbeschränkung `socket() failed: Operation not permitted`); der erfolgreiche echte Browserlauf erfolgte auf GitHub Actions.
 
-Pull Request [#8](https://github.com/martinbia/SMARTwearable/pull/8) ist offen, ohne automatisches Merge.
+PR #8 ist gemergt. Die neue, noch laufende Änderung v0.7 wird separat angeboten.
 
 ## Noch am Lenovo prüfen
 

@@ -100,3 +100,13 @@ Neuer Pull Request auf dem inzwischen gemergten Stand von PR #3. Kein automatisc
 | D43 | zur Umsetzung beauftragter Vorschlag | Die bestehende Präferenzseite wird innerhalb ihres eigenen Layoutbereichs kompakter und im Querformat zweispaltig dargestellt: Pulshinweise und Aktivitätserinnerung nebeneinander, Datenfreigabe über beide Spalten. Kopfzeile, Hinweistext, Seitenränder und Bestätigungsbereich werden verdichtet. Erstmalige Einrichtung bleibt nicht überspringbar; der Startseite-Button erscheint nur beim Bearbeiten gespeicherter Einstellungen. Funktionen, Daten und übrige Ansichten sind Bestandsschutz. |
 
 Die konkrete Umsetzung ist bis zur Sichtprüfung am Lenovo ein Vorschlag und wird durch den Auftrag nicht als endgültige Designentscheidung bestätigt.
+
+## Appstart und Einstiegsanimation v0.7 (09.11.2026)
+
+| ID | Status | Beschluss |
+| --- | --- | --- |
+| D44 | F | Jeder vollständige PWA-Dokumentstart beginnt bei der Präferenzseite. Gültige gespeicherte Antworten bleiben gespeichert und werden vorausgewählt; unveränderte Bestätigung führt zu C2. Interne Navigation löst keine erneute Einrichtung aus. Dies ersetzt D37s Regel „nur beim erstmaligen Aufruf ohne vollständige Auswahl“; die Ersteinrichtung bleibt verpflichtend, wenn Einstellungen fehlen/ungültig sind. |
+| D45 | F | Variante 1, die kurze visuelle Einführung „Armband anlegen – Daumen hoch“, wird zur Umsetzung beauftragt. Das Bildzeichen bestätigt ausschliesslich das Anlegen im Mock-up und suggeriert keine Geräteverbindung/Messung. Die kompakte Einstellungsseite v0.6 bleibt erhalten. |
+| D46 | V | Exakte SVG-Illustration und Bewegungsdetails, Dauer 3–4 Sekunden, Grösse/Position im Kopfbereich, Wiederholbutton. Nur lokale Ressourcen, einmalige Wiedergabe, reduzierter Bewegungsmodus als statisches Endbild. Endgültige Gestaltung nach Sichtung der Screenshots und Tablet-Test. |
+
+D44 ersetzt die frühere Einstiegsannahme aus D27 und die nur erstmalige Anzeige gemäss D37. Die Präferenzoptionen, lokale Speicherung und der getrennte Interview-Reset aus D38–D42 bleiben gültig.

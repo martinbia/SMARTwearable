@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 test('C2 → W2 → selected D1 → day; all subpages return home and reset works', async () => {
-  const events={};const app={innerHTML:'',addEventListener:(type,fn)=>{(events[type]??=[]).push(fn);},querySelector:()=>({focus(){},scrollIntoView(){}})};
+  const events={};const app={innerHTML:'',addEventListener:(type,fn)=>{(events[type]??=[]).push(fn);},querySelector:selector=>selector==='.wearable-animation'?null:({focus(){},scrollIntoView(){}})};
   const status={textContent:''};
   const saved = new Map([['smartwearable-preferences-v1',JSON.stringify({schema:1,pulseAlerts:true,activityReminder:false,shareWithCareTeam:false})]]);
   globalThis.localStorage={getItem:key=>saved.get(key)??null,setItem:(key,value)=>saved.set(key,value),removeItem:key=>saved.delete(key)};
@@ -14,6 +14,12 @@ test('C2 → W2 → selected D1 → day; all subpages return home and reset work
   const change=(action,value)=>events.change.forEach(fn=>fn({target:{dataset:{change:action},value}}));
   try {
     await import('../src/app.js');
+    assert.match(app.innerHTML,/class="settings-shell"/);
+    assert.match(app.innerHTML,/class="wearable-animation is-playing"/);
+    assert.match(app.innerHTML,/name="pulseAlerts" value="true"[^>]*checked/);
+    assert.match(app.innerHTML,/name="activityReminder" value="false"[^>]*checked/);
+    assert.match(app.innerHTML,/name="shareWithCareTeam" value="false"[^>]*checked/);
+    await click('savePreferences');
     assert.match(app.innerHTML,/data-testid="week-minutes">80</);
     assert.doesNotMatch(app.innerHTML.slice(app.innerHTML.indexOf('<main'),app.innerHTML.indexOf('</main>')),/Schritte|Puls|metric-link|home-cards/);
     assert.match(app.innerHTML,/compact-shell/);
