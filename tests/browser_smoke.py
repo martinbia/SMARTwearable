@@ -240,12 +240,13 @@ def run():
         for action in ['home','weeks','currentWeek','today','device','controls']:
             click('home'); click(action); no_overflow()
         click('home');page.locator('[data-preference-key="activityReminder"]').click();no_overflow()
+        click('cancelSettings')
+        page.evaluate("document.documentElement.style.zoom='1'")
         page.set_viewport_size({'width':400,'height':800})
-        no_overflow()
+        page.locator('[data-preference-key="activityReminder"]').click();no_overflow()
         page.locator('#preferences-submit').scroll_into_view_if_needed()
         assert page.locator('#preferences-submit').is_visible()
         click('cancelSettings')
-        page.evaluate("document.documentElement.style.zoom='1'")
         click('home')
         for _ in range(10):
             click('weeks'); week_click('2026-11-02'); day_click('2026-11-05');click('back');click('home')
