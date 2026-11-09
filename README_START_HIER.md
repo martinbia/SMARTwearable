@@ -53,4 +53,6 @@ Aktueller Änderungsauftrag v0.4: kompakte W2/D1/Tagesdetails gemäss drei freig
 
 Aktuelle Erweiterung v0.5: verpflichtende Präferenzauswahl vor C2, mit späterer Änderung über drei Zugänge auf C2. Nur simulierte Pulseinstellungen, Vibration und Datenfreigabe. Keine echte Überwachung oder Übertragung. D37–D42 und F26–F30 ergänzen den Umfang; Datenbasis und übrige Ansichten bleiben erhalten.
 
-Aktuelle Erweiterung v0.7: Bei jedem vollständigen App-Neustart erscheint zuerst die Einstellungsseite; bestehende Präferenzen bleiben erhalten und vorausgewählt. Eine kurze Animation „Armband anlegen – Daumen hoch“ begleitet den Einstieg. Internes Navigieren innerhalb der laufenden Sitzung startet ihn nicht erneut. D44–D46/F31–F32 ergänzen den Umfang. Die Animation bleibt eine Illustration ohne Gerätekopplung; übrige Ansichten und Datenberechnungen bleiben erhalten.
+Aktuelle Erweiterung v0.7: Bei jedem vollständigen App-Neustart erscheint zuerst die Einstellungsseite; bestehende Präferenzen bleiben erhalten und vorausgewählt. Internes Navigieren innerhalb der laufenden Sitzung startet ihn nicht erneut. D44–D46/F31–F32 ergänzen den Umfang. Die Animation bleibt eine Illustration ohne Gerätekopplung; übrige Ansichten und Datenberechnungen bleiben erhalten.
+
+Aktuelle Erweiterung v0.8: Die vereinfachte SVG-Animation wird gemäss D47/F32 durch sechs lokale Stop-Motion-Bilder ersetzt. Die Startlogik und Präferenzdaten aus v0.7 bleiben erhalten. Die KI-Bildfolge ist illustrativ und weder verifiziertes Produktfoto noch verbindliche Anlegeanleitung.
