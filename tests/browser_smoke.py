@@ -41,42 +41,62 @@ def run():
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.on('request', lambda request: frame_requests.append(request.url) if '/images/initial-setup/frame-' in request.url else None)
         page.goto(url)
+        def open_settings():
+            assert page.get_by_role('heading', name='Gut vorbereitet mit Ihrem Armband').is_visible()
+            page.locator('[data-action="openSetup"]').click()
+        assert page.get_by_role('heading', name='Gut vorbereitet mit Ihrem Armband').is_visible()
+        assert page.locator('[data-testid="entry-countdown"]').inner_text() == 'Automatischer Wechsel in 20 s'
+        assert page.locator('#preferences-submit').count() == 0, 'settings must follow the introduction'
+        animation = page.locator('.entry-main .stop-motion')
+        assert animation.get_attribute('data-animation-state') == 'playing'
+        assert page.locator('.entry-main .stop-motion-frame').count() == 6
+        assert animation.get_attribute('data-active-frame') == '0'
+        assert len(frame_requests) == 6, frame_requests
+        assert page.locator('.entry-main .stop-motion-frame img').evaluate_all("els => els.map(e => getComputedStyle(e).objectFit)") == ['contain'] * 6
+        page.screenshot(path='test-results/entry-landscape.png', full_page=True)
+        page.wait_for_timeout(720)
+        assert animation.get_attribute('data-active-frame') == '1', 'highlight must move to the second image after about 700 ms'
+        page.wait_for_function("document.querySelector('.entry-main .stop-motion')?.dataset.animationState==='complete'", timeout=6000)
+        assert animation.get_attribute('data-active-frame') == '5', 'the final thumb-up frame must remain highlighted'
+        page.wait_for_timeout(750)
+        assert animation.get_attribute('data-animation-state') == 'complete', 'sequence must not loop'
+        assert page.locator('.entry-main .stop-motion-frame img').evaluate_all('els => els.length===6 && els.every(e=>e.complete && e.naturalWidth>0)')
+        page.screenshot(path='test-results/entry-animation-complete.png', full_page=True)
+        page.set_viewport_size({'width':820,'height':1020})
+        page.screenshot(path='test-results/entry-portrait.png', full_page=True)
+        entry_sizes = [
+            {'width':1280,'height':640}, {'width':1180,'height':620},
+            {'width':1024,'height':560}, {'width':820,'height':1020}
+        ]
+        for size in entry_sizes:
+            page.set_viewport_size(size)
+            page.screenshot(path=f"test-results/entry-{size['width']}x{size['height']}.png", full_page=True)
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), f"entry horizontal overflow at {size}"
+            columns = page.locator('.entry-main .stop-motion-strip').evaluate('(el) => getComputedStyle(el).gridTemplateColumns.trim().split(/\\s+/).length')
+            assert columns == (3 if size['width'] <= 900 else 6), (size, columns)
+            cta = page.locator('.entry-cta').bounding_box()
+            assert cta and cta['width'] >= 48 and cta['height'] >= 48, (size, cta)
+        page.set_viewport_size({'width':1280,'height':640})
+        # Automatic navigation after the visible 20 second countdown.
+        page.wait_for_function("document.querySelector('[data-testid=entry-countdown]')?.textContent!=='Automatischer Wechsel in 20 s'", timeout=3000)
+        page.wait_for_function("document.querySelector('.settings-shell')", timeout=23000)
         assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
         assert page.locator('#preferences-submit').is_disabled()
         assert page.locator('.preference-option input:checked').count() == 0
         assert page.locator('.settings-top .home-button').count() == 0, 'setup must not offer a route around required preferences'
-        assert page.locator('.settings-top h1').is_visible()
-        animation = page.locator('.stop-motion')
-        assert animation.get_attribute('data-animation-state') == 'playing'
-        assert page.locator('.stop-motion-frame').count() == 6
-        assert animation.get_attribute('data-active-frame') == '0'
-        assert page.locator('.animation-replay').is_visible()
-        assert len(frame_requests) == 6, frame_requests
-        assert page.locator('.stop-motion-frame img').evaluate_all("els => els.map(e => getComputedStyle(e).objectFit)") == ['contain'] * 6
-        page.screenshot(path='test-results/settings-animation-phase1.png', full_page=True)
-        # The input remains operable while the animation is in progress.
-        form_top = page.locator('#preferences-form').bounding_box()['y']
+        assert page.locator('.settings-bracelet-image').is_visible()
+        assert page.locator('.bracelet-gallery').locator('summary').is_visible()
+        page.screenshot(path='test-results/settings-setup.png', full_page=True)
+        page.locator('.bracelet-gallery summary').click()
+        assert page.locator('.bracelet-gallery .stop-motion-frame').count() == 6
+        assert page.locator('.bracelet-gallery .stop-motion-frame img').evaluate_all('els => els.every(e=>e.complete && e.naturalWidth>0)')
+        page.locator('.bracelet-gallery summary').click()
+        # Settings remain fully interactive after arriving from the timed intro.
         page.locator('input[name="pulseAlerts"][value="true"]').check()
         assert page.locator('input[name="pulseAlerts"][value="true"]').is_checked()
-        page.wait_for_timeout(720)
-        assert animation.get_attribute('data-active-frame') == '1', 'highlight must move to the second image after about 700 ms'
-        assert page.locator('#preferences-form').bounding_box()['y'] == form_top, 'animation must not shift the form'
-        page.screenshot(path='test-results/settings-animation-phase2.png', full_page=True)
-        page.wait_for_function("document.querySelector('.stop-motion')?.dataset.animationState==='complete'", timeout=6000)
-        assert animation.get_attribute('data-active-frame') == '5', 'the final thumb-up frame must remain highlighted'
-        page.wait_for_timeout(750)
-        assert animation.get_attribute('data-animation-state') == 'complete', 'sequence must not loop'
-        assert page.locator('.stop-motion-frame img').evaluate_all('els => els.length===6 && els.every(e=>e.complete && e.naturalWidth>0)')
-        page.screenshot(path='test-results/settings-animation-phase3.png', full_page=True)
-        page.locator('.animation-replay').click()
-        assert animation.get_attribute('data-animation-state') == 'playing'
-        assert animation.get_attribute('data-active-frame') == '0'
-        page.wait_for_function("document.querySelector('.stop-motion')?.dataset.animationState==='complete'", timeout=6000)
-        assert len(frame_requests) == 6, 'replay must reuse the six already-loaded local images'
-        page.evaluate("localStorage.removeItem('smartwearable-preferences-v1')")
         page.reload()
+        open_settings()
         assert page.locator('.preference-option input:checked').count() == 0
-        page.wait_for_function("document.querySelector('.stop-motion')?.dataset.animationState==='complete'", timeout=6000)
         settings_sizes = [
             {'width':1280,'height':640}, {'width':1180,'height':620},
             {'width':1024,'height':560}, {'width':820,'height':1020}
@@ -88,11 +108,7 @@ def run():
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), f"settings horizontal overflow at {size}"
             columns = page.locator('.stop-motion-strip').evaluate('(el) => getComputedStyle(el).gridTemplateColumns.trim().split(/\\s+/).length')
             assert columns == (3 if size['width'] <= 900 else 6), (size, columns)
-            if size['width'] <= 900:
-                step = page.locator('.setup-step').bounding_box()
-                visual = page.locator('.setup-visual').bounding_box()
-                assert step and visual and step['y'] + step['height'] <= visual['y'], f"setup heading and illustration must not overlap at {size}: {step}, {visual}"
-            for control in page.locator('.preference-option, #preferences-submit, .animation-replay').all():
+            for control in page.locator('.preference-option, #preferences-submit, .bracelet-gallery summary').all():
                 box = control.bounding_box()
                 assert box and box['width'] >= 48 and box['height'] >= 48, (size, box)
             page.locator('#preferences-submit').scroll_into_view_if_needed()
@@ -110,7 +126,7 @@ def run():
         page.set_viewport_size({'width':1280,'height':900})
         page.evaluate("localStorage.setItem('smartwearable-preferences-v1', JSON.stringify({schema:1,pulseAlerts:true}))")
         page.reload()
-        assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
+        open_settings()
         assert page.locator('#preferences-submit').is_disabled()
         preference_fields = ['pulseAlerts', 'activityReminder', 'shareWithCareTeam']
         for combination in range(8):
@@ -125,24 +141,20 @@ def run():
             if combination < 7:
                 page.evaluate("localStorage.removeItem('smartwearable-preferences-v1')")
                 page.reload()
-                assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
+                open_settings()
 
-        # A complete app restart always returns to settings, retaining valid choices for confirmation.
+        # A complete app restart returns to the introduction, then settings retain valid choices.
         saved_before_restart = page.evaluate("localStorage.getItem('smartwearable-preferences-v1')")
         page.reload()
-        assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
+        assert page.get_by_role('heading', name='Gut vorbereitet mit Ihrem Armband').is_visible()
+        open_settings()
         assert page.locator('#preferences-submit').is_enabled()
         for field in preference_fields:
             assert page.locator(f'input[name="{field}"]:checked').count() == 1
-        assert page.locator('.stop-motion').get_attribute('data-animation-state') == 'playing'
-        page.wait_for_timeout(720)
-        assert page.locator('.stop-motion').get_attribute('data-active-frame') == '1'
+        assert page.locator('.bracelet-gallery .stop-motion').get_attribute('data-animation-state') == 'complete'
         page.locator('#preferences-submit').click()
-        assert page.locator('.stop-motion').count() == 0
-        page.wait_for_timeout(800)
-        assert page.locator('.stop-motion').count() == 0, 'leaving settings must stop the sequence timer'
         page.reload()
-        page.wait_for_function("document.querySelector('.stop-motion')?.dataset.animationState==='complete'", timeout=6000)
+        open_settings()
         page.screenshot(path='test-results/settings-restart-saved.png', full_page=True)
         page.locator('#preferences-submit').click()
         assert page.locator('[data-testid=week-minutes]').inner_text() == '80'
@@ -155,7 +167,7 @@ def run():
         page.locator('[data-preference-key="pulseAlerts"]').click()
         assert page.locator('[data-setting-group="pulseAlerts"]').evaluate('(el) => el === document.activeElement')
         assert page.locator('.settings-top .home-button').is_visible(), 'saved settings must retain Startseite button'
-        assert page.locator('.stop-motion').get_attribute('data-animation-state') == 'complete', 'settings opened from C2 should show the static image sequence'
+        assert page.locator('.settings-bracelet-image').is_visible() and page.locator('.bracelet-gallery summary').is_visible(), 'settings opened from C2 should keep the image sequence accessible'
         page.evaluate('document.activeElement.blur()')
         for size in [{'width':1280,'height':640}, {'width':820,'height':1020}]:
             page.set_viewport_size(size)
@@ -349,16 +361,19 @@ def run():
             click('weeks'); week_click('2026-11-02'); day_click('2026-11-05');click('back');click('home')
         page.emulate_media(reduced_motion='reduce')
         page.reload()
-        assert page.get_by_role('heading', name='Ihr Armband – Ihre Einstellungen').is_visible()
-        assert page.locator('.stop-motion').get_attribute('data-animation-state') == 'complete'
-        assert page.locator('.animation-replay').is_hidden()
-        assert page.locator('.stop-motion-frame').count() == 6
-        assert page.locator('.stop-motion-frame img').evaluate_all('els => els.every(e=>e.complete && e.naturalWidth>0)')
+        assert page.get_by_role('heading', name='Gut vorbereitet mit Ihrem Armband').is_visible()
+        assert page.locator('.entry-main .stop-motion').get_attribute('data-animation-state') == 'complete'
+        assert page.locator('.entry-main .stop-motion-frame').count() == 6
+        assert page.locator('.entry-main .stop-motion-frame img').evaluate_all('els => els.every(e=>e.complete && e.naturalWidth>0)')
+        page.locator('[data-action=openSetup]').click()
+        assert page.locator('.bracelet-gallery .stop-motion-frame').count() == 6
         page.locator('#preferences-submit').click()
         context.set_offline(True)
         page.reload()
-        assert page.locator('.settings-shell').count() == 1
-        assert page.locator('.stop-motion-frame img').evaluate_all('els => els.length===6 && els.every(e=>e.complete && e.naturalWidth>0)'), 'all six frames must be available offline'
+        assert page.get_by_role('heading', name='Gut vorbereitet mit Ihrem Armband').is_visible()
+        page.locator('[data-action=openSetup]').click()
+        page.locator('.bracelet-gallery summary').click()
+        assert page.locator('.bracelet-gallery .stop-motion-frame img').evaluate_all('els => els.length===6 && els.every(e=>e.complete && e.naturalWidth>0)'), 'all six frames must be available offline'
         offline_images = page.evaluate("""async () => { const cache=await caches.open((await caches.keys()).find(k=>k.startsWith('smartwearable-'))); return await Promise.all(Array.from({length:6},(_,i)=>cache.match(new URL(`images/initial-setup/frame-${String(i+1).padStart(2,'0')}.png`,document.baseURI).href).then(Boolean))); }""")
         assert offline_images == [True] * 6, offline_images
         page.locator('#preferences-submit').click()
@@ -373,16 +388,16 @@ def run():
             preview_context = browser.new_context(viewport={'width':1280,'height':640}, record_video_dir='test-results', record_video_size={'width':1280,'height':640})
             preview_page = preview_context.new_page()
             preview_page.goto(url)
-            preview_page.wait_for_function("document.querySelector('.stop-motion')?.dataset.animationState==='complete'", timeout=6000)
+            preview_page.wait_for_function("document.querySelector('.entry-main .stop-motion')?.dataset.animationState==='complete'", timeout=6000)
             preview_video = preview_page.video
             preview_page.close()
             preview_context.close()
             if preview_video:
-                preview_video.save_as('test-results/settings-animation-preview.webm')
+                preview_video.save_as('test-results/entry-animation-preview.webm')
         except Exception as error:
             print(f'Optional animation video skipped: {error}')
         browser.close()
-        print('Chromium passed: six-frame stop-motion, one-shot playback, replay, reduced motion, saved-preference restart, all eight combinations, internal navigation, responsive settings, unchanged C2/D1/W2 routes and offline image reload.')
+        print('Chromium passed: introduction countdown and immediate navigation, six-frame stop-motion, one-shot playback, reduced motion, saved-preference restart, all eight combinations, internal navigation, responsive settings, unchanged C2/D1/W2 routes and offline image reload.')
 
 
 if __name__ == '__main__':

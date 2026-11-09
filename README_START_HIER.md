@@ -1,6 +1,6 @@
 # SMARTwearable – Gemeinsame Projektgrundlage
 
-Version 0.7 · Stand 09.11.2026 · Präferenzseite bei jedem vollständigen App-Neustart, gespeicherte Antworten vorausgewählt; kurze Armband-Animation; technischer Prüfstand separat.
+Version 0.9 · Stand 09.11.2026 · Einstiegsseite bei jedem vollständigen App-Neustart, anschliessend verpflichtende Präferenzen; sechs lokale Armbandbilder; Prüfstand separat.
 
 Repository: https://github.com/martinbia/SMARTwearable
 
@@ -53,6 +53,6 @@ Aktueller Änderungsauftrag v0.4: kompakte W2/D1/Tagesdetails gemäss drei freig
 
 Aktuelle Erweiterung v0.5: verpflichtende Präferenzauswahl vor C2, mit späterer Änderung über drei Zugänge auf C2. Nur simulierte Pulseinstellungen, Vibration und Datenfreigabe. Keine echte Überwachung oder Übertragung. D37–D42 und F26–F30 ergänzen den Umfang; Datenbasis und übrige Ansichten bleiben erhalten.
 
-Aktuelle Erweiterung v0.7: Bei jedem vollständigen App-Neustart erscheint zuerst die Einstellungsseite; bestehende Präferenzen bleiben erhalten und vorausgewählt. Internes Navigieren innerhalb der laufenden Sitzung startet ihn nicht erneut. D44–D46/F31–F32 ergänzen den Umfang. Die Animation bleibt eine Illustration ohne Gerätekopplung; übrige Ansichten und Datenberechnungen bleiben erhalten.
+Aktuelle Erweiterung v0.9: Bei jedem vollständigen Start erscheint zuerst die Einstiegsseite mit sechs Stop-Motion-Bildern, zwei fiktiven Demo-Informationsfeldern und einem 20-Sekunden-Countdown. Danach oder über „Einstellungen öffnen“ folgen die Präferenzen; bestehende gültige Antworten bleiben vorausgewählt. Internes Navigieren startet den Einstieg nicht erneut. D48/F31–F33 ergänzen und präzisieren den Umfang. Das Armband ist nicht verbunden; Demoangaben sind keine Produkt- oder medizinischen Aussagen.
 
-Aktuelle Erweiterung v0.8: Die vereinfachte SVG-Animation wird gemäss D47/F32 durch sechs lokale Stop-Motion-Bilder ersetzt. Die Startlogik und Präferenzdaten aus v0.7 bleiben erhalten. Die KI-Bildfolge ist illustrativ und weder verifiziertes Produktfoto noch verbindliche Anlegeanleitung.
+Aktuelle Bildgrundlage v0.8: Die vereinfachte SVG-Animation wurde gemäss D47/F32 durch sechs lokale Stop-Motion-Bilder ersetzt. Sie werden auf der neuen Einstiegsseite abgespielt und bleiben in den Einstellungen als statische Bildfolge aufklappbar erreichbar. Die KI-Bildfolge ist illustrativ und weder verifiziertes Produktfoto noch verbindliche Anlegeanleitung.

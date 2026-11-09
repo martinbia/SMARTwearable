@@ -8,11 +8,13 @@ import { emptyPreferences, completePreferences, readPreferences, writePreference
 let state = initialState(createSession());
 const settingsStorage = (() => { try { return window.localStorage; } catch { return null; } })();
 let preferences = readPreferences(settingsStorage);
-// Every fresh document load begins at the preference entry. Saved answers remain the draft.
+// Every fresh document load begins with the short introduction, then the required preferences.
 let settingsMode = 'setup';
 let settingsDraft = preferences ? { ...preferences } : emptyPreferences();
 let settingsFocus = null;
-let settingsAnimation = 'play';
+let entryPage = true;
+let entryCountdownTimer = null;
+let entryDeadline = 0;
 let stopMotionTimer = null;
 let transferTimer;
 let pendingUpdate;
@@ -53,9 +55,9 @@ function preferenceGroup(key) {
   const option = (value, label) => `<label class="preference-option"><input type="radio" name="${key}" value="${value}" data-preference="${key}" ${selected === value ? 'checked' : ''}><span>${label}</span></label>`;
   return `<fieldset class="preference-group" data-setting-group="${key}" tabindex="-1"><legend>${item.title}</legend><p>${item.question}</p><div class="preference-options">${option(true, item.yes)}${option(false, item.no)}</div></fieldset>`;
 }
-function stopMotionIntro() {
+function stopMotionIntro({ animate = false, label = 'Armband anlegen' } = {}) {
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  const playing = settingsAnimation === 'play' && !reducedMotion;
+  const playing = animate && !reducedMotion;
   const steps = [
     ['frame-01.png', 'Geöffnetes Armband in den Händen', 212],
     ['frame-02.png', 'Sensorgehäuse auf dem Handgelenk positionieren', 192],
@@ -65,7 +67,7 @@ function stopMotionIntro() {
     ['frame-06.png', 'Fertig angelegtes Armband und Daumen hoch', 196]
   ];
   const frames = steps.map(([src, label, width], index) => `<figure class="stop-motion-frame ${playing && index === 0 ? 'is-active' : ''}" data-frame-index="${index}" role="group" aria-label="Schritt ${index + 1} von 6: ${label}"><img src="./images/initial-setup/${src}" alt="" loading="eager" decoding="async" width="${width}" height="150" ${playing && index === 0 ? 'aria-current="step"' : ''}></figure>`).join('');
-  return `<div class="setup-visual stop-motion" data-animation-state="${playing ? 'playing' : 'complete'}" data-active-frame="${playing ? '0' : ''}" role="group" aria-label="Armband anlegen – sechs Bildschritte. Die Illustration zeigt nur das Mock-up, keine echte Verbindung."><div class="stop-motion-strip">${frames}</div></div>`;
+  return `<div class="setup-visual stop-motion" data-animation-state="${playing ? 'playing' : 'complete'}" data-active-frame="${playing ? '0' : ''}" role="group" aria-label="${label} – sechs Bildschritte. Die Illustration zeigt nur das Mock-up, keine echte Verbindung."><div class="stop-motion-strip">${frames}</div></div>`;
 }
 function stopSetupAnimation() {
   window.clearTimeout(stopMotionTimer);
@@ -99,12 +101,43 @@ function startSetupAnimation(container) {
   };
   stopMotionTimer = window.setTimeout(advance, 700);
 }
+function clearEntryCountdown() {
+  window.clearTimeout(entryCountdownTimer);
+  entryCountdownTimer = null;
+}
+function startEntryCountdown() {
+  if (entryCountdownTimer !== null || !entryPage) return;
+  entryDeadline = performance.now() + 20000;
+  const tick = () => {
+    if (!entryPage) return;
+    const remaining = Math.max(0, Math.ceil((entryDeadline - performance.now()) / 1000));
+    const status = root.querySelector('[data-testid="entry-countdown"]');
+    if (status) status.textContent = remaining ? `Automatischer Wechsel in ${remaining} s` : 'Einstellungen werden geöffnet …';
+    if (remaining === 0) { openEntrySettings(); return; }
+    entryCountdownTimer = window.setTimeout(tick, 1000);
+  };
+  tick();
+}
+function openEntrySettings() {
+  if (!entryPage) return;
+  entryPage = false;
+  clearEntryCountdown();
+  stopSetupAnimation();
+  render();
+}
+function braceletGallery() {
+  return `<details class="bracelet-gallery"><summary>Armband in sechs Bildern ansehen</summary>${stopMotionIntro({ label: 'Anlegefolge' })}</details>`;
+}
+function entryView() {
+  return `<div class="entry-shell"><header class="entry-brand"><span class="entry-wordmark">${icon('pulse')}<strong>SMARTwearable</strong></span><span class="entry-demo-tag">Beispieldaten</span></header><main id="main" class="entry-main"><h1 tabindex="-1">Gut vorbereitet mit Ihrem Armband</h1>${stopMotionIntro({ animate: true, label: 'Armband anlegen' })}<section class="entry-features" aria-label="Informationen zum Armband"><article class="entry-feature"><span class="entry-feature-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 5C20 13 11 22 11 30a13 13 0 0 0 26 0c0-8-9-17-13-25Z"/><path d="M7 39c4-3 8-3 12 0s8 3 12 0 8-3 12 0"/></svg></span><div><h2>Wasserdicht</h2><p>Beispielangabe im Mock-up</p></div></article><article class="entry-feature"><span class="entry-feature-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="8" y="12" width="32" height="29" rx="4"/><path d="M16 7v10m16-10v10M8 21h32M17 30l5 5 10-11"/></svg></span><div><h2>Bitte möglichst den ganzen Tag tragen</h2><p>Beispielhinweis im Mock-up</p></div></article></section><p class="entry-disclaimer">Die Angaben sind nicht als Produkteigenschaften oder medizinische Empfehlung bestätigt.</p><button type="button" class="primary entry-cta" data-action="openSetup">Einstellungen öffnen <span aria-hidden="true">→</span></button><p class="entry-countdown" data-testid="entry-countdown" role="timer" aria-live="off">Automatischer Wechsel in 20 s</p></main></div>`;
+}
 function preferencesView() {
   const setup = settingsMode === 'setup';
   const selectedCount = Object.values(settingsDraft).filter(value => typeof value === 'boolean').length;
   const status = selectedCount === 3 ? 'Alle drei Einstellungen ausgewählt.' : `Bitte wählen Sie noch ${3 - selectedCount} ${3 - selectedCount === 1 ? 'Einstellung' : 'Einstellungen'} aus.`;
   const back = setup ? '<span class="setup-step">Ersteinrichtung</span>' : button('← Startseite', 'cancelSettings', 'home-button');
-  return `<div class="settings-shell"><main id="main" class="settings-main"><header class="settings-top"><div class="settings-heading">${back}<h1 tabindex="-1">Ihr Armband – Ihre Einstellungen</h1></div>${button('↻', 'replayAnimation', 'animation-replay', 'aria-label="Animation nochmals ansehen" title="Animation nochmals ansehen"')}</header><p class="settings-intro">Wählen Sie Ihre Hinweise und wer die Informationen sehen darf. Sie können die Auswahl später ändern.</p>${stopMotionIntro()}<form id="preferences-form" class="settings-form" novalidate>${preferenceGroup('pulseAlerts')}${preferenceGroup('activityReminder')}${preferenceGroup('shareWithCareTeam')}<div class="settings-submit"><p class="settings-demo">Demo mit Beispieldaten – keine echten Warnungen, Vibrationen oder Datenübertragungen.</p><p id="settings-status" role="status">${status}</p>${button(setup ? 'Einstellungen übernehmen und weiter' : 'Änderungen übernehmen', 'savePreferences', 'primary', `id="preferences-submit" ${selectedCount < 3 ? 'disabled' : ''}`)}</div></form></main></div>`;
+  const braceletImage = `<img class="settings-bracelet-image" src="./images/initial-setup/frame-05.png" alt="Illustration eines angelegten Armbands" width="186" height="150">`;
+  return `<div class="settings-shell"><main id="main" class="settings-main"><header class="settings-top"><div class="settings-heading">${braceletImage}<div class="settings-heading-copy"><div class="settings-title-row">${back}<h1 tabindex="-1">Ihr Armband – Ihre Einstellungen</h1></div><p class="settings-intro">Wählen Sie Ihre Hinweise und wer die Informationen sehen darf. Sie können die Auswahl später ändern.</p>${braceletGallery()}</div></div></header><form id="preferences-form" class="settings-form" novalidate>${preferenceGroup('pulseAlerts')}${preferenceGroup('activityReminder')}${preferenceGroup('shareWithCareTeam')}<div class="settings-submit"><p class="settings-demo">Demo mit Beispieldaten – keine echten Warnungen, Vibrationen oder Datenübertragungen.</p><p id="settings-status" role="status">${status}</p>${button(setup ? 'Einstellungen übernehmen und weiter' : 'Änderungen übernehmen', 'savePreferences', 'primary', `id="preferences-submit" ${selectedCount < 3 ? 'disabled' : ''}`)}</div></form></main></div>`;
 }
 function metricCell(day, kind, max) {
   let inner;
@@ -170,14 +203,15 @@ function infoView() {
 }
 function render() {
   stopSetupAnimation();
+  if (entryPage) {
+    if (root.querySelector('.entry-shell')) return;
+    root.innerHTML = entryView();
+    startSetupAnimation(root.querySelector('.stop-motion'));
+    startEntryCountdown();
+    return;
+  }
   if (settingsMode) {
     root.innerHTML = preferencesView();
-    const animation = root.querySelector('.stop-motion');
-    if (animation?.dataset.animationState === 'playing') {
-      // Consume autoplay now so incidental re-renders cannot restart the sequence.
-      settingsAnimation = 'static';
-      startSetupAnimation(animation);
-    }
     const focusTarget = settingsFocus ? root.querySelector(`[data-setting-group="${settingsFocus}"]`) : root.querySelector('h1');
     settingsFocus = null;
     focusTarget?.focus({ preventScroll: false });
@@ -203,14 +237,9 @@ root.addEventListener('click', async event => {
   if (!target || target.disabled) return;
   const action = target.dataset.action;
   if (target.tagName === 'A') event.preventDefault();
-  if (action === 'replayAnimation') {
-    const animation = root.querySelector('.stop-motion');
-    if (!animation || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
-    startSetupAnimation(animation);
-    return;
-  }
+  if (action === 'openSetup') { openEntrySettings(); return; }
   if (action === 'openPreference') {
-    settingsMode = 'edit'; settingsAnimation = 'static'; settingsDraft = { ...preferences }; settingsFocus = target.dataset.preferenceKey; render(); return;
+    settingsMode = 'edit'; settingsDraft = { ...preferences }; settingsFocus = target.dataset.preferenceKey; render(); return;
   }
   if (action === 'cancelSettings') {
     settingsMode = null; settingsDraft = { ...preferences }; dispatch({ type: 'navigate', view: 'home' }, true); return;
@@ -223,7 +252,7 @@ root.addEventListener('click', async event => {
   if (action === 'resetPreferences') {
     if (window.confirm('Gespeicherte Präferenzen löschen und die Ersteinrichtung erneut starten?')) {
       if (!clearPreferences(settingsStorage)) { announce('Einstellungen konnten nicht zurückgesetzt werden.'); return; }
-      preferences = null; settingsDraft = emptyPreferences(); settingsMode = 'setup'; settingsAnimation = 'static'; render(); announce('Ersteinrichtung zurückgesetzt.');
+      preferences = null; settingsDraft = emptyPreferences(); settingsMode = 'setup'; render(); announce('Ersteinrichtung zurückgesetzt.');
     }
     return;
   }

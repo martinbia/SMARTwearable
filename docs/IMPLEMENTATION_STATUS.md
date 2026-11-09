@@ -1,8 +1,12 @@
 # Implementierungs- und Prüfstand
 
-## Stop-Motion und Appstart v0.8 – Umsetzung im neuen PR
+## Einstiegsseite und Einstellungen v0.9 – Umsetzung im neuen PR
 
-09.11.2026 · F32/D47/N22. Sechs bereitgestellte lokale PNG-Bilder ersetzen die vereinfachte SVG-Animation. Die einmalige Stop-Motion hebt alle sechs Frames im Abstand von 700 ms hervor (4,2 s); danach bleibt die Reihe ruhig sichtbar. Auswahl, Startlogik, Formulardaten, sichtbare Anwendungsversion 0.6.0 und übrige Ansichten bleiben erhalten. Lokal erfolgreich: Syntaxcheck, 16 Node-Tests, Build (19 lokale Assets), Python-Syntax und `git diff --check`. [GitHub Actions Lauf #41](https://github.com/martinbia/SMARTwearable/actions/runs/42683033868) erfolgreich: Syntax, Tests, Build und Chromium-Browserprüfung einschliesslich sechs Frames, Ablauf ohne Schleife, Wiederholung, reduzierter Bewegung, 200-%-Zoom, gespeicherter Einstellungen und Offline-Bilder. Prüfansichten 1280×640, 1180×620, 1024×560 und 820×1020 wurden erzeugt und visuell kontrolliert; in den drei Querformaten waren Einstellungen und Bestätigung sichtbar. [Screenshots und Animationsvorschau](https://github.com/martinbia/SMARTwearable/actions/runs/42683033868/artifacts/13703766449). Lenovo Tab TB311FU bleibt praktisch zu prüfen.
+09.11.2026 · F31–F33/D48/N22–N23. Geplant ist eine Einstiegsseite mit den sechs vorhandenen lokalen Bildern, zwei klar als fiktiv gekennzeichneten Beispielangaben, einem Countdown von 20 Sekunden und der sofortigen Navigation zu den verpflichtenden Einstellungen. Das grüne SMARTwearable-Farbschema bleibt massgeblich. Die volle Bildfolge soll in den Einstellungen kompakt aufklappbar bleiben. Speicherung, Pflichtauswahl, C2/D1/W2, Daten und weitere Navigation sind Bestandsschutz. Lokal erfolgreich: Syntaxcheck, 16 Node-Tests, Build (19 lokale Assets), Python-Syntax und `git diff --check`. Der angepasste Chromium-Smoke-Test und CI-Screenshots stehen nach Einreichung des PR noch aus. Lenovo Tab TB311FU bleibt praktisch zu prüfen.
+
+## Stop-Motion und Appstart v0.8 – umgesetzt, PR #10 gemergt
+
+09.11.2026 · F32/D47/N22. Sechs bereitgestellte lokale PNG-Bilder ersetzen die vereinfachte SVG-Animation. Einmalige Hervorhebung aller Frames alle 700 ms, danach bleibt die Reihe ruhig sichtbar. Startlogik und Formulardaten blieben erhalten. Anwendungsversion 0.6.0. Lokal bestanden: Syntaxcheck, 16 Node-Tests, Build mit 19 lokalen Assets, Python-Syntax und `git diff --check`. [GitHub Actions Lauf #41](https://github.com/martinbia/SMARTwearable/actions/runs/42683033868) bestand Syntax, Tests, Build und Chromium-Prüfung einschliesslich Zoom, Viewports, Speicherung, reduced-motion und Offline-Bildern. [Screenshots und Animationsvorschau](https://github.com/martinbia/SMARTwearable/actions/runs/42683033868/artifacts/13703766449). Lenovo Tab TB311FU bleibt praktisch zu prüfen.
 
 ## Animation und Neustart v0.7 – umgesetzt, PR #9 gemergt
 
