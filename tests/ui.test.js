@@ -2,22 +2,31 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 test('C2 → W2 → selected D1 → day; all subpages return home and reset works', async () => {
-  const events={};const app={innerHTML:'',addEventListener:(type,fn)=>{(events[type]??=[]).push(fn);},querySelector:selector=>selector==='.stop-motion'?null:({focus(){},scrollIntoView(){}})};
+  const events={};const app={innerHTML:'',addEventListener:(type,fn)=>{(events[type]??=[]).push(fn);},querySelector:selector=>selector==='.stop-motion'?null:selector==='.entry-shell'?(app.innerHTML.includes('class="entry-shell"')?{}:null):({focus(){},scrollIntoView(){}})};
   const status={textContent:''};
   const saved = new Map([['smartwearable-preferences-v1',JSON.stringify({schema:1,pulseAlerts:true,activityReminder:false,shareWithCareTeam:false})]]);
   globalThis.localStorage={getItem:key=>saved.get(key)??null,setItem:(key,value)=>saved.set(key,value),removeItem:key=>saved.delete(key)};
   globalThis.document={querySelector:s=>s==='#app'?app:s==='#announcement'?status:{focus(){}}};
-  globalThis.window={addEventListener(){},confirm:()=>true,scrollTo(){},clearTimeout(){},localStorage:globalThis.localStorage};
+  let timerId=0;const scheduled=[];globalThis.window={addEventListener(){},confirm:()=>true,scrollTo(){},setTimeout:fn=>{scheduled.push(fn);return ++timerId;},clearTimeout(){},matchMedia:()=>({matches:false}),localStorage:globalThis.localStorage};
   const RealDate=Date;const fixed=new RealDate(2026,10,12,14,30).getTime();
   globalThis.Date=class extends RealDate {constructor(...args){super(...(args.length?args:[fixed]));}static now(){return fixed;}};
   const click=async(action,data={})=>{for(const fn of events.click)await fn({target:{closest:()=>({dataset:{action,...data}})}});};
   const change=(action,value)=>events.change.forEach(fn=>fn({target:{dataset:{change:action},value}}));
   try {
     await import('../src/app.js');
+    assert.match(app.innerHTML,/class="entry-shell"/);
+    assert.match(app.innerHTML,/Gut vorbereitet mit Ihrem Armband/);
+    assert.match(app.innerHTML,/Automatischer Wechsel in 20 s/);
+    assert.match(app.innerHTML,/Wasserdicht/);
+    assert.match(app.innerHTML,/Bitte möglichst den ganzen Tag tragen/);
+    await click('openSetup');
     assert.match(app.innerHTML,/class="settings-shell"/);
-    assert.match(app.innerHTML,/class="setup-visual stop-motion" data-animation-state="playing"/);
+    scheduled[0]?.();
+    assert.match(app.innerHTML,/class="settings-shell"/,'a stale countdown callback must not navigate twice');
+    assert.match(app.innerHTML,/class="bracelet-gallery"/);
     assert.match(app.innerHTML,/frame-01\.png/);assert.match(app.innerHTML,/frame-06\.png/);
     assert.equal((app.innerHTML.match(/class="stop-motion-frame/g)||[]).length,6);
+    assert.match(app.innerHTML,/frame-05\.png/);
     assert.match(app.innerHTML,/name="pulseAlerts" value="true"[^>]*checked/);
     assert.match(app.innerHTML,/name="activityReminder" value="false"[^>]*checked/);
     assert.match(app.innerHTML,/name="shareWithCareTeam" value="false"[^>]*checked/);

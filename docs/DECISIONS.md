@@ -110,4 +110,12 @@ Die konkrete Umsetzung ist bis zur Sichtprüfung am Lenovo ein Vorschlag und wir
 | D46 | V, durch D47 ersetzt | Frühere Ausführungsidee: vereinfachte SVG-Illustration im Kopfbereich. Diese wird nicht weiterverwendet. |
 | D47 | F | Die vorhandene SVG/CSS-Animation wird durch die sechs im Auftrag bereitgestellten lokalen Stop-Motion-PNGs ersetzt. Im Querformat eine horizontale Reihe, im Hochformat zwei Reihen zu je drei Bildern. Hervorhebung wandert einmalig alle etwa 700 ms durch die Folge (ca. 4,2 s); danach bleibt Bild 6 betont. Bilder bleiben sichtbar, unverzerrt und unbeschnitten; Wiederholen-Schaltfläche und vollständige statische Reihe bei `prefers-reduced-motion`. Assets offline verfügbar. Layoutreferenz bestimmt nur die Bildreihen-Anordnung. Die KI-Bilder sind keine verifizierten Produktfotos oder Anlegeanleitung. Andere GUI und Einstellungen bleiben unverändert. |
 
+## Einstiegsseite und Einstellungsseite v0.9 (09.11.2026)
+
+| ID | Status | Beschluss |
+| --- | --- | --- |
+| D48 | zur Umsetzung beauftragter Vorschlag | Vor jeder vollständigen PWA-Sitzung eine Einstiegsseite mit sechs lokalen Anlegebildern, fiktiven Informationsfeldern, sichtbarem 20-Sekunden-Countdown und sofortigem Button „Einstellungen öffnen“ anzeigen. Danach die verpflichtenden Einstellungen öffnen. Bildanordnung aus den Referenzen übernehmen, aber bestehendes grünes SMARTwearable-Farbschema verwenden. Präferenzen und ihre Speicherung bleiben unverändert. Volle Bildsequenz in den Einstellungen nur noch aufklappbar erreichbar. „Wasserdicht“ und Ganztagstragen bleiben nicht verifizierte Demo-Platzhalter, keine realen Produkt-/Medizinbehauptungen. Alle weiteren Ansichten GUI-Freeze. |
+
+D48 ersetzt für vollständige Appstarts D44s direkten Einstieg in die Einstellungsseite; D44s gespeicherte Antworten und Regel gegen erneuten Einstieg bei interner Navigation bleiben bestehen. D47 bleibt Quelle für die Bildassets, Darstellungsqualität und Animationsfolge; die Folge wird auf der Einstiegsseite abgespielt.
+
 D44 ersetzt die frühere Einstiegsannahme aus D27 und die nur erstmalige Anzeige gemäss D37. Die Präferenzoptionen, lokale Speicherung und der getrennte Interview-Reset aus D38–D42 bleiben gültig.
