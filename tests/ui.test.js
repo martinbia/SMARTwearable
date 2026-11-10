@@ -17,8 +17,10 @@ test('C2 → W2 → selected D1 → day; all subpages return home and reset work
     assert.match(app.innerHTML,/class="entry-shell"/);
     assert.match(app.innerHTML,/Gut vorbereitet mit Ihrem Armband/);
     assert.match(app.innerHTML,/Automatischer Wechsel in 20 s/);
-    assert.match(app.innerHTML,/Wasserdicht/);
-    assert.match(app.innerHTML,/Bitte möglichst den ganzen Tag tragen/);
+    assert.match(app.innerHTML,/<h2>Wasserdicht<\/h2><p>Sie können das Armband auch beim Duschen tragen\.<\/p>/);
+    assert.match(app.innerHTML,/<h2>Möglichst den ganzen Tag tragen<\/h2><p>So erhalten Sie ein vollständigeres Bild Ihrer Aktivitäten im Alltag\.<\/p>/);
+    assert.doesNotMatch(app.innerHTML,/Beispielangabe im Mock-up|Beispielhinweis im Mock-up/);
+    assert.equal((app.innerHTML.match(/class="entry-disclaimer"/g)??[]).length,1);
     await click('openSetup');
     assert.match(app.innerHTML,/class="settings-shell"/);
     scheduled[0]?.();
