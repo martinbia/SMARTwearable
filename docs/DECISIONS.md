@@ -114,7 +114,10 @@ Die konkrete Umsetzung ist bis zur Sichtprüfung am Lenovo ein Vorschlag und wir
 
 | ID | Status | Beschluss |
 | --- | --- | --- |
-| D48 | zur Umsetzung beauftragter Vorschlag | Vor jeder vollständigen PWA-Sitzung eine Einstiegsseite mit sechs lokalen Anlegebildern, fiktiven Informationsfeldern, sichtbarem 20-Sekunden-Countdown und sofortigem Button „Einstellungen öffnen“ anzeigen. Danach die verpflichtenden Einstellungen öffnen. Bildanordnung aus den Referenzen übernehmen, aber bestehendes grünes SMARTwearable-Farbschema verwenden. Präferenzen und ihre Speicherung bleiben unverändert. Volle Bildsequenz in den Einstellungen nur noch aufklappbar erreichbar. „Wasserdicht“ und Ganztagstragen bleiben nicht verifizierte Demo-Platzhalter, keine realen Produkt-/Medizinbehauptungen. Alle weiteren Ansichten GUI-Freeze. |
+| D48 | zur Umsetzung beauftragter Vorschlag | Vor jeder vollständigen PWA-Sitzung eine Einstiegsseite mit sechs lokalen Anlegebildern, zwei Informationskarten, sichtbarem 20-Sekunden-Countdown und sofortigem Button „Einstellungen öffnen“ anzeigen. Danach die verpflichtenden Einstellungen öffnen. Bildanordnung aus den Referenzen übernehmen, aber bestehendes grünes SMARTwearable-Farbschema verwenden. Präferenzen und ihre Speicherung bleiben unverändert. Volle Bildsequenz in den Einstellungen nur noch aufklappbar erreichbar. Texte gemäss F34; das vorhandene Kartenlayout und die Symbole bleiben unverändert. Alle weiteren Ansichten GUI-Freeze. |
+| D49 | A | Das fiktive SMARTwearable-Demogerät wird für den Informationstext als beim Duschen tragbar angenommen. Diese Annahme bestätigt keine Eigenschaft eines realen Wearables und begründet keine technische Schutzklasse oder Eignung für Baden, Schwimmen oder andere Situationen. |
+
+Die Textänderung der Willkommensseite vom 10.11.2026 aktualisiert F34/D49. Die bisherigen karteninternen Mock-up-Vermerke entfallen; der vorhandene kompakte Demo-Hinweis am unteren Seitenrand bleibt unverändert. Es werden keine zusätzlichen Funktionen oder Layoutänderungen beauftragt.
 
 D48 ersetzt für vollständige Appstarts D44s direkten Einstieg in die Einstellungsseite; D44s gespeicherte Antworten und Regel gegen erneuten Einstieg bei interner Navigation bleiben bestehen. D47 bleibt Quelle für die Bildassets, Darstellungsqualität und Animationsfolge; die Folge wird auf der Einstiegsseite abgespielt.
 
